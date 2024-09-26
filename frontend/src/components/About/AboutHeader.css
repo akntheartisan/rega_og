@@ -1,0 +1,62 @@
+.About-Head {
+    height: 420px;
+    /* background-image: url('../../assets/images/About.jpg'); */
+    background-size: cover;
+    background-position: center;
+    padding: 0 20px;
+    position: relative;
+    /* flex-direction: column; */
+}
+
+.About-Head::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+    z-index: 1; /* Ensure overlay is above background */
+}
+
+.about-content {
+    position: relative; /* Ensure the section is positioned relative */
+    padding: 20px;
+    border-radius: 15px;
+    color: white;
+    z-index: 2; /* Ensure content is above the overlay */
+}
+
+.about-content h1 {
+    font-size: 4rem; /* Large font size for prominence */
+    margin-top: 40px;
+    /* color: transparent;  */
+    /* -webkit-text-stroke: 4px #F28123;  */
+    background: none; 
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: white;
+}
+
+
+
+/* Button styles */
+.btn-flip {
+    margin-top: 40px; /* Adjust margin as needed */
+    z-index: 3; /* Ensure button is above other content */
+    /* Center the button horizontally */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .about-content h1 {
+        font-size: 3rem; /* Adjust font size for smaller screens */
+    }
+    
+    .btn-flip {
+        width: 80%; /* Make button responsive on smaller screens */
+    }
+}

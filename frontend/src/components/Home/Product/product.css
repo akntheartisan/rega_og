@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap");
+
+span {
+  font-family: "Montserrat", sans-serif;
+  font-style: italic;
+}
+
+.productshow {
+  transition: 750ms;
+}
+
+.productshow:hover {
+  transform: scale(1.05);
+}

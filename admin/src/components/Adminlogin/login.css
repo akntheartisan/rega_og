@@ -1,0 +1,12 @@
+.form{
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+    background-image:url('./admin.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.forgotAdminpass:hover{
+    color: yellowgreen !important;
+}

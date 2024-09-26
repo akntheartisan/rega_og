@@ -1,0 +1,193 @@
+/* Global styles */
+.facilities {
+  padding: 0;
+  margin-top: 50px;
+}
+
+.section-mission {
+  background-image: url('../../assets/images/scooty-bg.jpg');
+  background-size: cover; /* Ensures the image covers the entire section */
+  background-repeat: no-repeat; /* Prevents image from repeating */
+  background-attachment: fixed; /* Keeps the background image fixed */
+  background-position: center; /* Centers the background image */
+  padding: 20px 0; 
+  margin: 0px !important;
+ 
+}
+.vm-head
+{
+  font-size: 30px;
+}
+/* .fac-heading h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #F28123;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px #ffffff
+} */
+
+.fac {
+  background-color: #051922;
+  position: relative;
+  border: 5px solid #ffffff;
+  /* overflow: hidden;  */
+}
+
+.fac-content {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+
+.fac-item {
+  width: 45%;
+  margin-bottom: 20px; 
+}
+
+.fac-img img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fac-img {
+  position: relative;
+  padding: 20px 0;
+  transition: all 800ms;
+  left: 20px;
+}
+
+.fac-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white !important;
+  z-index: -1;
+  transition: z-index 300ms;
+  width: 80%;
+  max-width: 800px;
+  box-sizing: border-box; /* Prevents overflow */
+  padding: 10px; /* Add padding for better readability */
+  overflow: hidden; /* Prevent text from overflowing */
+}
+
+/* Hover effects */
+.fac:hover .fac-img {
+  transform: translateX(80%);
+}
+
+.fac:hover .fac-text {
+  z-index: 1;
+  transition: z-index 700ms;
+}
+
+.fac-text h3 {
+  color: #F28123;
+}
+
+.fac-text p {
+  color: #ffffff;
+}
+
+.fac:hover .fac-img > img {
+  box-shadow: 30px 0px 100px 2px black;
+}
+
+/* Media Queries */
+@media (max-width: 1290px) {
+  .fac:hover .fac-img {
+    opacity: 0; /* Hide image on hover */
+  }
+  .fac-text {
+    width: 100%; /* Make text width 100% */
+    padding: 20px; /* Adjust padding as needed */
+  }
+  .vm-head
+{
+  font-size: 28px;
+}
+}
+
+@media (max-width: 992px) {
+  .fac-item {
+    width: 80%; /* Adjust width for tablets and smaller screens */
+  }
+  .vm-head
+{
+  font-size: 25px;
+}
+}
+
+@media (max-width: 768px) {
+  .fac-item {
+    width: 100%; 
+  }
+
+  .facilities {
+    padding: 0 15px; /* Add padding to prevent content from touching edges */
+  }
+
+  .fac-heading h2 {
+    font-size: 1.5rem; /* Adjust heading size for smaller screens */
+  }
+
+  .fac-text {
+    width: 90%; /* Adjust text width for smaller screens */
+  }
+  .vm-head
+{
+  font-size: 22px;
+}
+}
+@media (max-width: 489px) {
+  .fac-item {
+    width: 100%; /* Full width on very small screens */
+  }
+
+  .fac-text {
+    width: 100%; /* Ensure text takes full width on very small screens */
+    padding: 15px; /* Adjust padding for better readability on very small screens */
+    font-size: 0.9rem; /* Optionally adjust font size */
+  }
+
+  .fac-heading h2 {
+    font-size: 1.2rem; /* Adjust heading size for very small screens */
+  }
+  .vm-head
+{
+  font-size: 20px;
+}
+}
+
+@media (max-width: 320px) {
+  .fac-item {
+    width: 100%; /* Full width on extremely small screens */
+    margin-bottom: 10px; 
+  }
+
+  .fac-text {
+    width: 100%;
+    padding: 2px;
+    font-size: 0.6rem; 
+  }
+
+  .fac-heading h2 {
+    font-size: 1rem; 
+  }
+  .vm-head
+  {
+    font-size: 18px;
+  }
+  .fac-text h3 
+  {
+    font-size: 18px;
+  }
+  .fac-text p
+  {
+    font-size: 12px;
+  }
+}

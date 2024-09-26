@@ -1,0 +1,27 @@
+.checkhead {
+  background-color: #051922;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.checkhead .checklogo {
+  width: 150px;
+}
+
+.checkfooter {
+  background-color: white;
+  padding: 20px;
+}
+
+@media (min-width: 1024px) {
+  .header_toggle {
+    display: none;
+  }
+}
+
+@media (max-width:1000px){
+    .sidemenu{
+        display: none;
+    }
+}

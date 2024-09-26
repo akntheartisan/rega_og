@@ -1,0 +1,42 @@
+.drawer
+{
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #1ecf73, #b7e56a);
+}
+.sidebar-logo
+{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    color: white;
+}
+/* .sidebar-link {
+    font-weight: 800;
+    color: white;
+
+  }
+.sidebar-link:hover{
+    background-color: rgba(255,255, 255, 0.4);
+    padding: 5px;
+    border-radius: 0 25px 25px 0;
+} */
+.sidebar-link {
+    font-weight: 100;
+    color: white;
+    transition: all 0.3s ease; 
+}
+
+.sidebar-link:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: 6px;
+    border-radius: 0 25px 25px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    transform: translateX(5px);
+}
+.no-hover:hover {
+    background-color: transparent !important; 
+  }
+  
+  .no-hover .MuiListItemButton-root:hover {
+    background-color: transparent !important; 
+  }

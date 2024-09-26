@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+.responsive_link {
+  color: white;
+  font-size: 20px;
+}
+
+.responsive_link:hover {
+  color: #f28123;
+}
+
+.active_link {
+  color: red;
+}
+
+.responsive_link_wrapper {
+  text-align: center;
+  padding: 10px;
+}
+
+.signin_userdash {
+  display: inline-block;
+  background-color: #f28123;
+  border-color: #f28123;
+  font-family: 'roboto';
+  color: white;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+}
+

@@ -1,0 +1,87 @@
+.aboutus-container1 {
+    background-color: #051922;
+    border: 2px solid white;
+    padding: 20px 0;
+}
+
+.aboutus-container2 {
+    padding: 30px;
+    border-radius: 10px;
+    margin: auto;
+}
+
+.Aboutus-head1 {
+    font-size: 40px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 15px;
+    position: relative;
+}
+
+.Aboutus-head1::after {
+    content: '';
+    display: block;
+    width: 100%; 
+    height: 3px; 
+    background-color: white; 
+    margin: 5px auto 0;
+    transition: width 0.3s ease; /* Smooth transition when resizing */
+}
+
+
+.About-us-head h3 {
+    color: white;
+    font-size: 1.75rem;
+    margin-bottom: 20px;
+}
+
+.Aboutus-content p {
+    color: white;
+    font-weight: 600;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin: 20px auto;
+}
+
+.Aboutus-image {
+    border: 3px solid white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.Aboutus-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* For larger screens (desktops) */
+@media (min-width: 1200px) {
+    .Aboutus-head1 {
+        font-size: 40px; /* Default size */
+    }
+    .Aboutus-head1::after {
+        width: 20%; /* Default width */
+    }
+}
+
+/* For medium screens (tablets, small desktops) */
+@media (max-width: 1199px) and (min-width: 768px) {
+    .Aboutus-head1 {
+        font-size: 32px; /* Decrease font size for medium screens */
+    }
+    .Aboutus-head1::after {
+        width: 30%; /* Increase line width */
+    }
+}
+
+/* For small screens (phones) */
+@media (max-width: 767px) {
+    .Aboutus-head1 {
+        font-size: 24px; /* Further decrease font size for small screens */
+    }
+    .Aboutus-head1::after {
+        width: 40%; /* Increase line width for small screens */
+    }
+}
