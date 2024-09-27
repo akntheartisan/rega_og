@@ -138,6 +138,8 @@ exports.addCartOnline = async (req, res, next) => {
   const { userId } = req.body.userDetails;
 
   const { cartData, total, order_id, payment_id } = req.body;
+
+  const deliverystatus = "Not Delivered";
   try {
 
     const orderPlace = await cartmodel.updateOne(
@@ -146,7 +148,12 @@ exports.addCartOnline = async (req, res, next) => {
         $push: {
           PurchasedData: {
             total,
-            cartData: cartData.map((item) => item),
+            deliverystatus: deliverystatus,
+            cartData: cartData.map((item) => ({
+              ...item,
+              deliverystatus: deliverystatus,
+              cartId: new mongoose.Types.ObjectId(),
+            })),
           },
         },
       },
@@ -162,7 +169,12 @@ exports.addCartOnline = async (req, res, next) => {
           $push: {
             Purchased: {
               total,
-              cartData: cartData.map((item) => item),
+              deliverystatus: deliverystatus,
+              cartData: cartData.map((item) => ({
+                ...item,
+                deliverystatus: deliverystatus,
+                cartId: new mongoose.Types.ObjectId(),
+              })),
               order_id,
               payment_id,
             },

@@ -122,6 +122,17 @@ export default function OrderTable({ product, setProduct }) {
                 >
                   Customer Name
                 </TableCell>
+                  <TableCell
+                  align="center"
+                  style={{
+                    minWidth: 170,
+                    backgroundColor: "black",
+                    color: "white",
+                    fontSize: "18px",
+                  }}
+                >
+                  Phone
+                </TableCell>  
                 <TableCell
                   align="center"
                   style={{
@@ -144,17 +155,7 @@ export default function OrderTable({ product, setProduct }) {
                 >
                   Quantity
                 </TableCell>
-                <TableCell
-                  align="center"
-                  style={{
-                    minWidth: 170,
-                    backgroundColor: "black",
-                    color: "white",
-                    fontSize: "18px",
-                  }}
-                >
-                  Phone
-                </TableCell>
+              
                 <TableCell
                   align="center"
                   style={{
@@ -211,12 +212,14 @@ export default function OrderTable({ product, setProduct }) {
                     <TableCell component="th" scope="row" align="center">
                       {each.name}
                     </TableCell>
+                    <TableCell align="center">{each.mobile}</TableCell>
                     <TableCell align="center">
                       {each.Purchased.map((eachPurchased) => {
                         return eachPurchased.cartData.map((eachCartData) => {
                           return (
                             <>
                               <div>
+                                <hr />
                                 <p>
                                   {eachCartData.model} -{" "}
                                   {eachCartData.subModelDetails.battery}
@@ -233,6 +236,7 @@ export default function OrderTable({ product, setProduct }) {
                           return (
                             <>
                               <div>
+                                <hr />
                                 <p>{eachCartData.quantity}</p>
                               </div>
                             </>
@@ -240,19 +244,36 @@ export default function OrderTable({ product, setProduct }) {
                         });
                       })}
                     </TableCell>
-                    <TableCell align="center">{each.mobile}</TableCell>
+                    
                     <TableCell align="center">
                       {each.Purchased.map((eachPurchased) => {
                         if (eachPurchased.hasOwnProperty("order_id")) {
                           return (
                             <>
-                              <p>{eachPurchased.order_id}</p>
+                              {/* <hr/> */}
+                              {eachPurchased.cartData.map((eachOrder) => {
+                                return (
+                                  <>
+                                    <hr />
+                                    <p>{eachPurchased.order_id}</p>
+                                  </>
+                                );
+                              })}
                             </>
                           );
                         } else {
                           return (
                             <>
-                              <p>Offline</p>
+                                 {eachPurchased.cartData.map((eachOrder) => {
+                                return (
+                                  <>
+                                    <hr />
+                                    <p>offline</p>
+                                  </>
+                                );
+                              })}
+                              {/* <hr/>
+                            {each.Purchased.map((eachPurchased)=><p>Offline</p>)} */}
                             </>
                           );
                         }
@@ -264,9 +285,15 @@ export default function OrderTable({ product, setProduct }) {
                           return (
                             <div className="mt-2" key={eachCartData.cartId}>
                               {eachCartData.deliverystatus === "cancelled" ? (
-                                <p>-</p>
+                                <>
+                                  <hr />
+                                  <p>-</p>
+                                </>
                               ) : eachCartData.hasOwnProperty("trackId") ? (
-                                <p>{eachCartData.trackId}</p>
+                                <>
+                                  <hr />
+                                  <p>{eachCartData.trackId}</p>
+                                </>
                               ) : (
                                 <input
                                   className="form-control"
@@ -311,25 +338,31 @@ export default function OrderTable({ product, setProduct }) {
                                 </button>
                               ) : eachCartData.deliverystatus ===
                                 "cancelled" ? (
-                                <p
-                                  style={{
-                                    color: "red",
-                                    fontSize: "15px",
-                                    fontWeight: "540",
-                                  }}
-                                >
-                                  Cancelled
-                                </p>
+                                <>
+                                  <hr />
+                                  <p
+                                    style={{
+                                      color: "red",
+                                      fontSize: "15px",
+                                      fontWeight: "540",
+                                    }}
+                                  >
+                                    Cancelled
+                                  </p>
+                                </>
                               ) : (
-                                <p
-                                  style={{
-                                    color: "green",
-                                    fontSize: "15px",
-                                    fontWeight: "540",
-                                  }}
-                                >
-                                  Delivered
-                                </p>
+                                <>
+                                  <hr />
+                                  <p
+                                    style={{
+                                      color: "green",
+                                      fontSize: "15px",
+                                      fontWeight: "540",
+                                    }}
+                                  >
+                                    Delivered
+                                  </p>
+                                </>
                               )}
                             </div>
                           );
