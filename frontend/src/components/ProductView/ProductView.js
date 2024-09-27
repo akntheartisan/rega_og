@@ -22,33 +22,36 @@ import { client } from "../Client/Client";
 import CheckoutFooter from "../Checkout/CheckoutFooter";
 import CheckoutHeader from "../Checkout/CheckoutHeader";
 import ProductViewHeader from "./ProductViewHeader";
-
+import Loader from "./Loader";
+import { Rating } from "@mui/material";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 const ProductView = () => {
   const { userData, setUserData } = useContext(UserContext);
-
 
   const navigate = useNavigate();
   const location = useLocation();
   const product = location.state;
   console.log(product);
-  
+
   const [selected, setSelected] = useState("");
-
-
+  const [loader, setLoader] = useState(false);
 
   const getSelectModel = (battery) => {
+    setLoader(true);
     const selectedModel = product.SubModel.find(
       (each) => each.battery === battery
     );
 
-    setSelected(selectedModel);
+    setTimeout(() => {
+      setSelected(selectedModel);
+      setLoader(false);
+    }, 3000);
   };
 
   const buynow = () => {
-
     console.log(product);
-    
+
     const image = product.image.url;
     const model = product.model;
     // let battery;
@@ -108,7 +111,7 @@ const ProductView = () => {
   return (
     <>
       <ProductViewHeader />
-  
+
       <div className="container-fluid">
         <div className="row">
           <div
@@ -194,8 +197,27 @@ const ProductView = () => {
             </div>
           </div>
           <div className="col-md-8 mt-5">
-            <h4>{product.model}</h4>
-            <h6>₹ {!selected ? product.SubModel[0].price : selected.price}</h6>
+            <div className="mb-2">
+              <h4 style={{marginBottom:'3px'}}>{product.model}</h4>&nbsp;
+              <span style={{fontSize:'15px',fontWeight:'500'}}>{!selected ? product.SubModel[0].motor:selected.motor}</span>&nbsp;&nbsp;
+              <span style={{fontSize:'15px',fontWeight:'500'}}>{!selected ? product.SubModel[0].battery:selected.battery}</span>&nbsp;&nbsp;
+              <span style={{fontSize:'15px',fontWeight:'500'}}>{!selected ? product.SubModel[0].range:selected.range}</span>
+            </div>
+
+            <span className="starrating">
+              {!selected ? product.SubModel[0].rating : selected.rating}{" "}
+              <StarBorderIcon />
+            </span>
+
+            <div style={{ display: "flex" }}>
+              <p style={{ fontSize: "23px" }}>
+                ₹ {!selected ? product.SubModel[0].price : selected.price}
+              </p>
+              {/* &nbsp;&nbsp;
+              <span className="starrating">
+               {!selected ? (product.SubModel[0].rating) : selected.rating }<StarBorderIcon/>
+               </span> */}
+            </div>
 
             <h5>Battery Variants</h5>
             <div
@@ -207,12 +229,13 @@ const ProductView = () => {
             >
               {product.SubModel.map((each) => (
                 <button
-                className="batteryvariant"
+                  className="batteryvariant"
                   variant="contained"
                   key={each._id}
                   onClick={() => getSelectModel(each.battery)}
                 >
-                  <img src={smallbattery} alt="battery"/>&nbsp;&nbsp;
+                  <img src={smallbattery} alt="battery" />
+                  &nbsp;&nbsp;
                   {each.battery}
                 </button>
               ))}
@@ -404,6 +427,7 @@ const ProductView = () => {
           </div>
         </div>
       </div>
+      {loader && <Loader />}
       <Footer />
     </>
   );
