@@ -79,14 +79,14 @@ const Signup = () => {
         passwordLength < 8
       ) {
         setErrors({ passwordCheck:  <>
-        Password Must Contain:
-        <ol>
-          <li>One Capital Letter</li>
-          <li>One Small Letter</li>
-          <li>One Special character</li>
-          <li>One Number</li>
-          <li>Minimum 8 characters</li>
-        </ol>          
+        Password Must Contain:<br/>
+        
+          One Capital Letter<br/>
+          One Small Letter<br/>
+          One Special character<br/>
+          One Number<br/>
+          Minimum 8 characters<br/>
+               
         </> 
         });
       } else {

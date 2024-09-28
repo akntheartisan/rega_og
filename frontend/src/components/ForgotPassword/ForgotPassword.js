@@ -52,8 +52,12 @@ const ForgotPassword = () => {
                 sx={{ width: "100%" }}
                 value={mail}
                 onChange={(e) => {
-                  setMail(e.target.value);
+                  const value = e.target.value;
+                  if (value.charCodeAt(0) !== 32) {
+                    setMail(value);
+                  }
                 }}
+                
                 required
               />
               <div

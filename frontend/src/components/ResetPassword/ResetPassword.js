@@ -39,7 +39,22 @@ const ResetPassword = () => {
       ) {
         setError((prevError) => ({
           ...prevError,
-          passwordCheck: "Password must contain 8 characters",
+          passwordCheck: (
+            <>
+              Password Must Contain:
+              <br />
+              One Capital Letter
+              <br />
+              One Small Letter
+              <br />
+              One Special character
+              <br />
+              One Number
+              <br />
+              Minimum 8 characters
+              <br />
+            </>
+          ),
         }));
       } else {
         setError((prevError) => ({
@@ -69,8 +84,13 @@ const ResetPassword = () => {
   const submitResetPassword = async () => {
     if (credential.password === "" && credential.confirmPassword === "") {
       toast.error("please fill all the field");
-    }
-      const {password,confirmPassword} = credential;
+    } else if (
+      error.passwordCheck !== "" ||
+      error.confirmPasswordCheck !== ""
+    ) {
+      return false;
+    } else {
+      const { password, confirmPassword } = credential;
 
       try {
         const passwordReset = await client.post("/user/resetPassword", {
@@ -79,15 +99,14 @@ const ResetPassword = () => {
           resetToken: id,
         });
 
-        if(passwordReset.status === 200){
-          toast.success('Password has been successfully changed');
-          navigate('/register');
-
+        if (passwordReset.status === 200) {
+          toast.success("Password has been successfully changed");
+          navigate("/register");
         }
       } catch (error) {
         console.log(error);
       }
-  
+    }
   };
   return (
     <>

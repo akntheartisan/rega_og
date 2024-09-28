@@ -23,7 +23,6 @@ import CheckoutFooter from "../Checkout/CheckoutFooter";
 import CheckoutHeader from "../Checkout/CheckoutHeader";
 import ProductViewHeader from "./ProductViewHeader";
 import Loader from "./Loader";
-import { Rating } from "@mui/material";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 const ProductView = () => {
@@ -36,9 +35,11 @@ const ProductView = () => {
 
   const [selected, setSelected] = useState("");
   const [loader, setLoader] = useState(false);
+  const [goToCart, setGoToCart] = useState(false);
 
   const getSelectModel = (battery) => {
     setLoader(true);
+    setGoToCart(false);
     const selectedModel = product.SubModel.find(
       (each) => each.battery === battery
     );
@@ -97,6 +98,7 @@ const ProductView = () => {
 
       const details = { userId, model, modelId };
       addBucketList(details);
+      setGoToCart(true);
     }
   };
 
@@ -106,6 +108,11 @@ const ProductView = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const goCart = () => {
+    const id = userData._id;
+    navigate("/cart", { state: { id } });
   };
 
   return (
@@ -132,7 +139,7 @@ const ProductView = () => {
               }}
             >
               <button
-                onClick={addcart}
+                onClick={goToCart ? goCart : addcart}
                 style={{
                   backgroundColor: "#ff9f00",
                   borderColor: "#ff9f00",
@@ -145,7 +152,7 @@ const ProductView = () => {
                 }}
               >
                 <ShoppingCartIcon />
-                &nbsp; ADD TO CART
+                &nbsp; {goToCart ? "GO TO CART" : "ADD TO CART"}
               </button>
               &nbsp;
               <button
@@ -198,10 +205,18 @@ const ProductView = () => {
           </div>
           <div className="col-md-8 mt-5">
             <div className="mb-2">
-              <h4 style={{marginBottom:'3px'}}>{product.model}</h4>&nbsp;
-              <span style={{fontSize:'15px',fontWeight:'500'}}>{!selected ? product.SubModel[0].motor:selected.motor}</span>&nbsp;&nbsp;
-              <span style={{fontSize:'15px',fontWeight:'500'}}>{!selected ? product.SubModel[0].battery:selected.battery}</span>&nbsp;&nbsp;
-              <span style={{fontSize:'15px',fontWeight:'500'}}>{!selected ? product.SubModel[0].range:selected.range}</span>
+              <h4 style={{ marginBottom: "3px" }}>{product.model}</h4>&nbsp;
+              <span style={{ fontSize: "15px", fontWeight: "500" }}>
+                {!selected ? product.SubModel[0].motor : selected.motor}
+              </span>
+              &nbsp;&nbsp;
+              <span style={{ fontSize: "15px", fontWeight: "500" }}>
+                {!selected ? product.SubModel[0].battery : selected.battery}
+              </span>
+              &nbsp;&nbsp;
+              <span style={{ fontSize: "15px", fontWeight: "500" }}>
+                {!selected ? product.SubModel[0].range : selected.range}
+              </span>
             </div>
 
             <span className="starrating">
