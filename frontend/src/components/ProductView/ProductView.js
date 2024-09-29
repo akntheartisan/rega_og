@@ -1,5 +1,4 @@
-import React, { useState, useContext, createContext, useEffect } from "react";
-import Header from "../Header/Header";
+import React, { useState, useContext} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./ProductView.css";
 import motor from "./car-engine (2).png";
@@ -13,20 +12,20 @@ import bikereceive from "./bikereceive.png";
 import smallbattery from "./car-battery (2).png";
 import CallIcon from "@mui/icons-material/Call";
 import Footer from "../Footer/Footer";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
 import { UserContext } from "../../App";
 import { client } from "../Client/Client";
-import CheckoutFooter from "../Checkout/CheckoutFooter";
 import CheckoutHeader from "../Checkout/CheckoutHeader";
-import ProductViewHeader from "./ProductViewHeader";
 import Loader from "./Loader";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
+import { useMediaQuery } from "@mui/material";
+import BottomNav from "../BottomNav/BottomNav";
 
 const ProductView = () => {
   const { userData, setUserData } = useContext(UserContext);
+
+  const smallScreen = useMediaQuery('(max-width:990px)')
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -117,7 +116,8 @@ const ProductView = () => {
 
   return (
     <>
-      <ProductViewHeader />
+      {/* <ProductViewHeader /> */}
+      <CheckoutHeader/>
 
       <div className="container-fluid">
         <div className="row">
@@ -443,7 +443,8 @@ const ProductView = () => {
         </div>
       </div>
       {loader && <Loader />}
-      <Footer />
+      {smallScreen ? <BottomNav/> : <Footer />}
+      
     </>
   );
 };

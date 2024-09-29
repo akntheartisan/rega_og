@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import CheckoutHeader from "./CheckoutHeader";
 import minus from "./minus-button.png";
 import add from "./add.png";
+import { useMediaQuery } from "@mui/material";
+import BottomNav from "../BottomNav/BottomNav";
 
 const intial = {
   name: "",
@@ -33,6 +35,8 @@ const Checkout = () => {
   const [totalShow, setTotalShow] = useState(true);
   const [singleQuantity, setSingleQuantity] = useState(0);
   const [cartData, setCartData] = useState();
+
+  const smallScreen = useMediaQuery('(max-width:768px)')
 
   console.log(userData);
 
@@ -828,7 +832,7 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      {smallScreen ? <BottomNav/> : <Footer />}
     </>
   );
 };

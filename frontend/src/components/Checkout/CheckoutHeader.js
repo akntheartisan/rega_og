@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import UserProfile from "../Header/UserProfile";
 import './checkout.css'
+import { NavLink } from "react-router-dom";
 
 const AccountButton = styled(Button)({
   textTransform: "none",
@@ -40,6 +41,47 @@ const CheckoutHeader = () => {
             <img src="assets/img/logo.png" alt />
          
         </div>
+        <nav className="main-menu">
+                  <ul>
+                    <li className="current-list-item">
+                      <NavLink style={{fontSize:"16px"}}
+                        exact
+                        to="/"
+                        className={({ isActive }) => (isActive ? "active" : undefined)}
+                      >
+                        Home
+                      </NavLink>
+                    </li>
+
+                    <li>
+                      <NavLink style={{fontSize:"16px"}}
+                      
+                        to="/about"
+                        className={({ isActive }) => (isActive ? "active" : undefined)}
+                      >
+                        About
+                      </NavLink>
+                    </li>
+
+                    <li>
+                      <NavLink style={{fontSize:"16px"}}
+                        to="/product"
+                        className={({ isActive }) => (isActive ? "active" : undefined)}
+                      >
+                        Product
+                      </NavLink>
+                    </li>
+
+                    <li>
+                      <NavLink style={{fontSize:"16px"}}
+                        to="/contact"
+                        className={({ isActive }) => (isActive ? "active" : undefined)}
+                      >
+                        Contact
+                      </NavLink>
+                    </li>
+                  </ul>
+                </nav>
         <div className="sign">
           {userData ? (
             <UserProfile />

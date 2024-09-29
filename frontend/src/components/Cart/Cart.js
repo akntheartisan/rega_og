@@ -4,18 +4,22 @@ import CartDetails from "./CartDetails/CartDetails";
 import Footer from "../Footer/Footer";
 import { useLocation } from "react-router-dom";
 import CheckoutHeader from "../Checkout/CheckoutHeader";
-import ProductViewHeader from "../ProductView/ProductViewHeader";
+import { useMediaQuery } from "@mui/material";
+import BottomNav from "../BottomNav/BottomNav";
 
 const Cart = () => {
     const location = useLocation();
     const {id} = location.state;
     console.log(id);
+
+    const smallScreen = useMediaQuery('(max-width:768px)')
     
   return (
     <>
       <CheckoutHeader/>
       <CartDetails id={id}/>
-      <p>hi</p>
+      {smallScreen ? <BottomNav/> : <Footer />}
+        
     
     </>
   );
