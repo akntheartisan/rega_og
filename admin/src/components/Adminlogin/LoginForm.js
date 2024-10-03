@@ -56,10 +56,20 @@ const LoginForm = ({ setAdmin, admin }) => {
       if (response.status === 200) {
         toast.success("Login Successfull");
         getProtected();
-      }
+      } 
+
+
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message)
+      // toast.error(error.response.data.message)
+
+      if(error.response.status === 404){
+        toast.error('Invalid username, please try again');
+      }else if(error.response.status === 401){
+        toast.error('Invalid Password, please try again');
+      } else{
+        toast.error('Invalid Credentials, please try again')
+      }
     }
   };
 

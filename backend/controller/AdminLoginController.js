@@ -8,8 +8,8 @@ exports.adminsignin = async (req, res, next) => {
     //console.log(username, password);
 
     if (!username || !password) {
-      console.log('no admin password');
-      
+      console.log("no admin password");
+
       return res.status(400).json({
         status: "fail",
         message: "Username and Password are required",
@@ -24,49 +24,37 @@ exports.adminsignin = async (req, res, next) => {
     const dbPassword = adminCheck.password;
 
     if (!adminCheck) {
-      return res.status(401).json({
+      return res.status(404).json({
         status: "fail",
         error: "Invalid Username, Please try again",
       });
-    }
-
-    // if (!(await adminCheck.correctPassword(password, adminCheck.password))) {
-    //   return res.status(401).json({
-    //     status: "fail",
-    //     error: "Incorrect password. Please try again",
-    //   });
-    // }
-
-    if (dbPassword !== password) {
+    } else if (dbPassword !== password) {
       return res.status(401).json({
         status: "fail",
         error: "Incorrect password. Please try again",
       });
+    } else {
+      const jwtSecret = "sdflkjsadlfhasldfjsdlk";
+      const jwtExpiration = "1hr";
+
+      const token = jwt.sign({ id: adminCheck._id }, jwtSecret, {
+        expiresIn: jwtExpiration,
+      });
+
+      const cookieOptions = {
+        expires: new Date(Date.now() + 90 * 24 * 3600 * 1000),
+        httpOnly: true,
+      };
+
+      res.cookie("jwt", token, cookieOptions).status(200).json({
+        status: "success",
+        message: "Successfully logged in",
+      });
     }
-
-    const jwtSecret = "sdflkjsadlfhasldfjsdlk";
-    const jwtExpiration = "1hr";
-
-    const token = jwt.sign({ id: adminCheck._id }, jwtSecret, {
-      expiresIn: jwtExpiration,
-    });
-
-    //console.log(token);
-
-    const cookieOptions = {
-      expires: new Date(Date.now() + 90 * 24 * 3600 * 1000),
-      httpOnly: true,
-    };
-
-    res.cookie("jwt", token, cookieOptions).status(200).json({
-      status: "success",
-      message: "Successfully logged in",
-    });
   } catch (err) {
     console.error(err);
-    res.status(500).json({
+    res.status(302).json({
       status: "error",
-      message: "An error occurred. Please try again later.",
     });
   }
 };
@@ -109,8 +97,8 @@ exports.protect = async (req, res, next) => {
     return res.status(401).json({
       status: "fail",
       message: "Token expired or invalid. Please log in again",
-   });
-  }
+    });
+  }
 };
 
 exports.passwordUpdate = async (req, res) => {
@@ -141,16 +129,14 @@ exports.passwordUpdate = async (req, res) => {
   }
 };
 
-exports.logout = async(req,res,next)=>{
-
+exports.logout = async (req, res, next) => {
   const cookieOptions = {
     expires: new Date(0),
     httpOnly: true,
   };
 
-  res.cookie("jwt", '', cookieOptions).status(200).json({
+  res.cookie("jwt", "", cookieOptions).status(200).json({
     status: "success",
     message: "Successfully logged in",
   });
-
-}
+};
