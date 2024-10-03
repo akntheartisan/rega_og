@@ -18,7 +18,9 @@ const Cart = () => {
     <>
       <CheckoutHeader/>
       <CartDetails id={id}/>
-      {smallScreen ? <BottomNav/> : <Footer />}
+      <div className="mt-3">
+        {smallScreen ? <BottomNav /> : <Footer />}
+      </div>
         
     
     </>

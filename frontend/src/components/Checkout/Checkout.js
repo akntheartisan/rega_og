@@ -832,7 +832,9 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-      {smallScreen ? <BottomNav/> : <Footer />}
+      <div className="mt-3">
+        {smallScreen ? <BottomNav /> : <Footer />}
+      </div>
     </>
   );
 };

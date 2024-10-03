@@ -1,4 +1,4 @@
-import React, { useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./ProductView.css";
 import motor from "./car-engine (2).png";
@@ -25,7 +25,7 @@ import BottomNav from "../BottomNav/BottomNav";
 const ProductView = () => {
   const { userData, setUserData } = useContext(UserContext);
 
-  const smallScreen = useMediaQuery('(max-width:990px)')
+  const smallScreen = useMediaQuery("(max-width:990px)");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -117,7 +117,7 @@ const ProductView = () => {
   return (
     <>
       {/* <ProductViewHeader /> */}
-      <CheckoutHeader/>
+      <CheckoutHeader />
 
       <div className="container-fluid">
         <div className="row">
@@ -388,7 +388,7 @@ const ProductView = () => {
                 </div>
               </div>
             </div>
-            <div className="payingmethod mt-4 mb-5">
+            <div className="payingmethod mt-4">
               <h6
                 style={{
                   margin: "15px 0 0 15px",
@@ -442,9 +442,10 @@ const ProductView = () => {
           </div>
         </div>
       </div>
+      <div className="mt-3">
+        {smallScreen ? <BottomNav /> : <Footer />}
+      </div>
       {loader && <Loader />}
-      {smallScreen ? <BottomNav/> : <Footer />}
-      
     </>
   );
 };
