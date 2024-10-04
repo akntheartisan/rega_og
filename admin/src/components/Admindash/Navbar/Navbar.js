@@ -26,6 +26,9 @@ const Navbar = () => {
         <div className="listitem">
           <Link to="/admin/users">Users</Link>
         </div>
+        <div className="listitem">
+          <Link to="/admin/enquiry">Enquiry</Link>
+        </div>
       </div>
     </>
   );

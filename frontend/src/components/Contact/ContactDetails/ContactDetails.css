@@ -1,0 +1,131 @@
+.contact-details {
+  padding: 50px 0;
+  background-image: url('../../../assets/images/scooter2.png'); /* Replace with your image path */
+  background-size: cover; /* Ensures the image covers the entire container */
+  background-position: center; /* Centers the image */
+  background-attachment: fixed; /* Keeps the image fixed during scrolling */
+  background-repeat: no-repeat; /* Prevents image from repeating */
+  position: relative; /* Ensures proper positioning of the scooter animation */
+}
+
+.phone-list {
+  display: flex;
+  flex-direction: column; /* Stack phone numbers vertically */
+  align-items: flex-start; /* Align to the left */
+  margin-left: 20px; /* Optional: Indent the phone numbers for styling */
+}
+
+.phone-number {
+  margin-bottom: 5px; /* Space between phone numbers */
+}
+
+/* Other styles remain the same */
+
+.contact-details h1 {
+  text-align: center;
+  color: #fff;
+  font-size: 28px;
+  margin-bottom: 30px;
+}
+
+.contact-details-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-content: center;
+  /* align-items: center; */
+}
+
+.section {
+  position: relative; /* Position relative to contain the scooter image */
+  flex: 1;
+  width: 200px; /* Adjust as needed */
+  margin: 0 15px;
+  background-color: #fff;
+  border: 3px solid #F98740;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 42px 20px;
+  box-sizing: border-box;
+  transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out; /* Transition for shadow and scale */
+  overflow: hidden;
+}
+
+.section:hover {
+  -webkit-box-shadow: 2px 2px 20px  rgba(255, 255, 255, 0.4);
+  -moz-box-shadow: 2px 2px 20px  rgba(101, 96, 94, 0.4);
+  box-shadow: 2px 2px 20px  rgb(254, 254, 254);
+  transform: scale(1.03); /* Slight scale effect on hover */
+}
+
+.section h2 {
+  color: #F28123;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.section p {
+  font-size: 16px;
+}
+
+.contact-box p {
+  line-height: 1.5; /* Adjust line height for readability */
+}
+
+
+.section a {
+  color: #F28123;
+  text-decoration: none;
+}
+
+.section a:hover {
+  text-decoration: underline;
+}
+
+/* Scooter animation */
+.scooter-animation {
+  position: absolute; /* Position the image */
+  width: 80px; /* Adjust size as needed */
+  bottom: 10px; /* Adjust position */
+  left: 10px; /* Adjust position */
+  animation: moveScooter 5s infinite; /* Apply animation */
+  -webkit-transform: scaleX(-1); /* For Safari and Chrome */
+  -moz-transform: scaleX(-1);    /* For Firefox */
+  -o-transform: scaleX(-1);      /* For older Opera versions */
+  transform: scaleX(-1); 
+  
+  
+}
+.scooter-animation::after {
+  content: '';
+  position: absolute;  /* Position relative to the scooter */
+  width: 100%;  /* Full width to act as the road */
+  height: 5px;  /* Adjust height for the road */
+  bottom: 0;  /* Position it at the bottom */
+  left: 0;  /* Align it to the left */
+  background-color: #000000;  /* Road-like dark grey color */
+  box-shadow: 0px 0px 3px #000; /* Slight shadow for depth */
+  z-index: -1; /* Ensure it stays behind the scooter */
+}
+
+
+/* Keyframes for scooter animation */
+@keyframes moveScooter {
+  0% {
+    left: 10px;
+  }
+  100% {
+    left: 110%; /* Adjust as needed to define how far the scooter moves */
+  }
+}
+
+/* Optional: Adjustments for responsiveness */
+@media (max-width: 768px) {
+  .contact-details-container {
+    flex-direction: column;
+  }
+
+  .section {
+    margin-bottom: 20px;
+  }
+}

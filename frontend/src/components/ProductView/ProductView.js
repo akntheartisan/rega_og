@@ -117,23 +117,26 @@ const ProductView = () => {
   return (
     <>
       {/* <ProductViewHeader /> */}
+
       <CheckoutHeader />
 
       <div className="container-fluid">
         <div className="row">
-          <div
-            className="col-md-4"
-            style={{ display: "flex", flexDirection: "column" }}
-          >
+          <div className="col-md-4">
             <img
               src={product.image.url}
               alt="img"
-              style={{ objectFit: "cover", marginTop: "-160px" }}
+              style={{
+                objectFit: "cover",
+                width: "100%",
+                height: "350px",
+                objectFit: "cover",
+                marginTop: "-20px",
+              }}
             />
 
             <div
               style={{
-                marginTop: "-100px",
                 display: "flex",
                 justifyContent: "center",
               }}
@@ -143,7 +146,7 @@ const ProductView = () => {
                 style={{
                   backgroundColor: "#ff9f00",
                   borderColor: "#ff9f00",
-                  width: "50%",
+                  flex: "1",
                   borderRadius: "12px",
                   color: "white",
                   padding: "10px",
@@ -160,7 +163,7 @@ const ProductView = () => {
                 style={{
                   backgroundColor: "#f28123",
                   borderColor: "#f28123",
-                  width: "50%",
+                  flex: "1",
                   borderRadius: "12px",
                   color: "white",
                   padding: "10px",
@@ -434,7 +437,7 @@ const ProductView = () => {
                     Complete purchase & get riding
                   </p>
                   <p style={{ fontSize: "13px" }}>
-                    3-day money back guarantee & hassle free RC transfer
+                    Enjoy hassle free ride after complete purchase
                   </p>
                 </div>
               </div>
@@ -442,9 +445,7 @@ const ProductView = () => {
           </div>
         </div>
       </div>
-      <div className="mt-3">
-        {smallScreen ? <BottomNav /> : <Footer />}
-      </div>
+      <div className="mt-3">{smallScreen ? <BottomNav /> : <Footer />}</div>
       {loader && <Loader />}
     </>
   );

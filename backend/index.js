@@ -8,7 +8,9 @@ const productroute = require("./route/ProductRoute");
 const cartroute = require("./route/CartRoute");
 const bucketroute = require("./route/BucketRoute");
 const pdfdownroute = require("./route/PdfRoute");
-const ratingRoute = require("./route/ratingRoute")
+const ratingRoute = require("./route/ratingRoute");
+const contactroute = require('./route/ContactRoute');
+const enquiryRoutes = require('./route/EnquiryRoutes');
 const cookieParser = require("cookie-parser");
 // const pdfdownroute= require("./route/pdfRoute");
 // const ratingRoute = require("./route/ratingRoute")
@@ -40,6 +42,8 @@ app.use("/user", userroute);
 app.use("/cart", cartroute);
 app.use("/bucket", bucketroute);
 app.use("/pdfdown", pdfdownroute);
+app.use('/contact', contactroute);
+app.use('/enquiryUser', enquiryRoutes);
 app.use("/rating", ratingRoute);
 const mongo_uri =
   "mongodb+srv://aravinthkumaran410:iRPBg1ArJBqv3ayN@cluster0.2eiliwy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";

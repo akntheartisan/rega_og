@@ -124,7 +124,7 @@ const Checkout = () => {
         setPod(false);
         setModel(false);
         setTotalShow(false);
-        // navigate("/");
+        navigate('/');
       }
 
       if (cartOffline.data.error === "Amount exceed") {
@@ -208,7 +208,12 @@ const Checkout = () => {
       
 
       if(cartOnline.status === 200){
-        toast.success('Order has been placed successfully')
+        toast.success('Order has been placed successfully');
+        setChecked(false);
+        setPod(false);
+        setModel(false);
+        setTotalShow(false);
+        navigate('/');
       }
       
     } catch (error) {
@@ -610,7 +615,7 @@ const Checkout = () => {
 
                     {multiCartData && (
                       <div className="card single-accordion">
-                        <div className="card-header" id="headingSummary">
+                          <div className="card-header" id="headingSummary">
                           <h5 className="mb-0">
                             <button
                               className="btn btn-link collapsed"
@@ -625,7 +630,7 @@ const Checkout = () => {
                           </h5>
                         </div>
                         <div
-                          id="headingSummary2"
+                          id="headingSummary1"
                           className="collapse"
                           aria-labelledby="headingSummary"
                           data-parent="#accordionExample"

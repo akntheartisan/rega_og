@@ -1,0 +1,42 @@
+.faq-section {
+    margin-top: 20px;
+    /* border: 2px solid #F28123; */ /* Add border around the FAQ section */
+    /* border-radius: 8px;  *//* Optional: Add rounded corners */
+    /* padding: 10px;  *//* Optional: Add some padding */
+    /* background-color: #fff; */
+  }
+
+  .faq-section h3{
+    color: #F28123;
+  }
+  
+  .faq-item {
+    cursor: pointer;
+    padding: 10px;
+    /* border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #F28123; */
+  }
+  
+  .faq-item:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .faq-question {
+    font-weight: bold;
+  }
+  
+  .faq-answer {
+    margin-top: 10px;
+    color: #555;
+  }
+  
+  .faq-item.active .faq-answer {
+    display: block;
+  }
+  
+  .faq-answer {
+    display: none;
+  }
+
+
+  

@@ -1,0 +1,177 @@
+/* Container for form and video */
+.contact-form-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Video Background */
+.video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1; /* Ensure the video is behind the form */
+}
+
+/* Form Section */
+.contact-form-section {
+  position: relative; /* Ensure form is above the video */
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contact Form */
+.contact-form {
+  background: rgba(255, 255, 255, 0.5); /* Make the background semi-transparent */
+  padding: 30px;
+  border-radius: 10px;
+  width: 100%;
+  /* max-width: 600px; */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+/* Headings */
+.contact-form h2 {
+  margin-bottom: 20px;
+  color: #F28123;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.contact-form p {
+  /* display: flex; */
+  justify-content: space-between;
+  gap: 20px; /* Add gap between input boxes */
+  margin-bottom: 20px;
+}
+
+/* Input Fields */
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="tel"],
+.contact-form textarea {
+  width: 100%; /* Ensure all inputs are 100% width */
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.8); /* Softer transparency */
+  margin-bottom: 15px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form input[type="tel"]:focus,
+.contact-form textarea:focus {
+  background-color: rgba(255, 255, 255, 1); /* Fully opaque on focus */
+  box-shadow: 0 0 10px 3px rgba(243, 195, 0, 0.5);
+}
+
+/* Submit Button */
+.contact-form input[type="submit"] {
+  background-color: #F28123;
+  border: none;
+  color: #fff;
+  padding: 15px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.contact-form input[type="submit"]:hover {
+  background-color: #d65a0e;
+}
+
+/* Pulsing effect with yellow color */
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form input[type="tel"]:focus,
+.contact-form textarea:focus {
+  outline: none; /* Remove default outline */
+  border: 2px solid #F3C300; /* Yellow border color */
+  animation: pulse 1.5s infinite; /* Apply the pulse animation */
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(243, 195, 0, 0.7); /* Yellow color */
+  }
+  50% {
+    box-shadow: 0 0 10px 5px rgba(243, 195, 0, 0.5); /* Yellow color */
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(243, 195, 0, 0.7); /* Yellow color */
+  }
+}
+
+/* Additional Styles */
+.contact-form textarea {
+  resize: vertical;
+}
+
+.error {
+  color: #d9534f;
+  font-size: 14px;
+  display: block;
+  margin-top: 5px;
+}
+
+/* Center the Snackbar in the middle of the screen */
+.snackbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Optional: Additional styling for the Alert component */
+.alert {
+  width: 100%;
+  max-width: 500px; /* Adjust the width as needed */
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .contact-form {
+    padding: 15px;
+  }
+
+  .contact-form h2 {
+    font-size: 20px;
+  }
+
+  /* Ensure all input fields are uniform in mobile view */
+  .contact-form input[type="text"],
+  .contact-form input[type="email"],
+  .contact-form input[type="tel"],
+  .contact-form textarea {
+    width: 100%; /* Ensure uniform width for all inputs */
+    max-width: 100%; /* Prevent any input from exceeding container */
+    padding: 12px; /* Adjust padding */
+  }
+}
+
+/* Chat Widget */
+.chat-widget-container {
+  position: fixed;
+  bottom: 20px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+  z-index: 1000; /* Ensure it appears above other content */
+}

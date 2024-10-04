@@ -11,6 +11,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
+import Aboutus from '../About/Aboutus';
+import AboutSection from '../About/AboutSection';
+import MVission from '../About/MVission';
+import AboutCircle from '../About/AboutCircle';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -46,9 +50,13 @@ const Home = () => {
       <Header />
     
       <Carousel />
-      <Features />
+      <Aboutus/>
+      <AboutSection/>
       <Product />
-      <SelfAd />
+      <MVission/>
+     
+      <AboutCircle/>
+      
       <Footer />
 
       {/* Existing Dialog */}

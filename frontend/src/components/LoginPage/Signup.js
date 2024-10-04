@@ -124,11 +124,17 @@ const Signup = () => {
         withCredentials: true,
       });
 
-  
+      console.log(response);
       
+
+
+    if(response.status === 200){
+      toast.success('OTP send to Your mailId');
       setMailOTP(response.data.otp);
       setUser(intial);
       setTypeOTP(true);
+    }
+  
       
     } catch (error) {
       console.log(error);
@@ -156,6 +162,7 @@ const Signup = () => {
       });
       const user = response.data.user;
       if (response.status === 200) {
+        
         setUserData(user);
         navigate('/');
         localStorage.setItem("user","kansha");

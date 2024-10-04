@@ -1,0 +1,38 @@
+
+.contact2 {
+    background-image: url('../../../assets/images/contact2.png'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+.contact2::after
+{
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background: rgba(0, 0, 0, 0.3);
+z-index: 1;
+}
+.contact-text 
+{
+    position: relative;
+    z-index: 100 !important;
+    /* color: #F28123; */
+}
+.contact-text h1{
+    color: #ffffff;
+}
+.contact-text p{
+    font-size: 18px;
+    font-weight: 600;
+    color: #F28123;
+    letter-spacing: 5px;
+}

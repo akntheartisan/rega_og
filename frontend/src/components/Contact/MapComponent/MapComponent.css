@@ -1,0 +1,8 @@
+.map-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    width: 100%;  /* Make the container take full width */
+  }
+  
