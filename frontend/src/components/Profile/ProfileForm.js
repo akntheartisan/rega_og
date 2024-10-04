@@ -375,27 +375,23 @@ const ProfileForm = () => {
               <h6>FAQs</h6>
               <div style={{ marginBottom: "15px" }}>
                 <p style={{ fontSize: "16px", fontWeight: "550" }}>
-                  What happens when I update my email address (or mobile
-                  number)?
+                  Can I update my name and username?
                 </p>
                 <p>
-                  Your login email id (or mobile number) changes, likewise.
-                  You'll receive all your account related communication on your
-                  updated email address (or mobile number).
+                  No, you can't update your name and username.
                 </p>
               </div>
 
               <div style={{ marginBottom: "15px" }}>
                 <p style={{ fontSize: "16px", fontWeight: "550" }}>
-                  When will my Flipkart account be updated with the new email
+                  When will my Flipkart account be updated with the new contact
                   address?
                 </p>
                 <p>
-                  It happens as soon as you confirm the verification code sent
-                  to your email and save the changes.
+                  It happens as soon as you submit the details.
                 </p>
               </div>
-
+{/* 
               <div style={{ marginBottom: "15px" }}>
                 <p style={{ fontSize: "16px", fontWeight: "550" }}>
                   What happens to my existing Flipkart account when I update my
@@ -406,7 +402,7 @@ const ProfileForm = () => {
                   Your account remains fully functional. You'll continue seeing
                   your Order history, saved information and personal details.
                 </p>
-              </div>
+              </div> */}
             </div>
 
             {/* <div>

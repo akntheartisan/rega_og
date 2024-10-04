@@ -104,7 +104,7 @@ const MobileViewMenu = () => {
               <NavLink
                 className="responsive_link"
                 activeClassName="active_link"
-                to={"/"}
+                to={"/product"}
               >
                 Product
               </NavLink>

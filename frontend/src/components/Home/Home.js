@@ -45,6 +45,10 @@ const Home = () => {
     setShowAnotherDialog(false);
   };
 
+  const navToLogIn = ()=>{
+    navigate('/register');
+  }
+
   return (
     <>
       <Header />
@@ -91,7 +95,7 @@ const Home = () => {
       {/* New Dialog for Unauthenticated Users */}
       <Dialog
         open={showAnotherDialog}
-        onClose={handleCloseAnotherDialog}
+        // onClose={handleCloseAnotherDialog}
         aria-labelledby="another-dialog-title"
         aria-describedby="another-dialog-description"
       >
@@ -113,6 +117,19 @@ const Home = () => {
             }}
           >
             Close
+          </Button>
+
+          <Button
+            onClick={navToLogIn}
+            sx={{
+              bgcolor: '#F28123',
+              color: '#fff', 
+              '&:hover': {
+                bgcolor: '#d96b1b', 
+              },
+            }}
+          >
+            Ok
           </Button>
         </DialogActions>
       </Dialog>

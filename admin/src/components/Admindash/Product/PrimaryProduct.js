@@ -208,11 +208,13 @@ const PrimaryProduct = () => {
   return (
     <>
       <div className="container">
-        <Paper elevation={3} className="p-4">
+        <div className="row">
+          <div className="col-md-6 offset-md-3">
+          <Paper elevation={3} className="p-4">
           {" "}
           {/* Wrap content in Paper */}
           <div className="row">
-            <div className="col-md-4 offset-md-4 mt-4">
+            <div className="col-md-8 offset-md-2 mt-4">
               <div>
                 <label className="form-label">Product Name</label>
                 <input
@@ -226,7 +228,7 @@ const PrimaryProduct = () => {
               </div>
             </div>
 
-            <div className="col-md-4 offset-md-4 mt-4">
+            <div className="col-md-8 offset-md-2 mt-4">
               <div>
                 <label className="form-label">Image</label>
                 <input
@@ -251,7 +253,7 @@ const PrimaryProduct = () => {
                   }}
                 >
                   Cancel
-                </button>
+                </button>&nbsp;&nbsp;
                 <button
                   className="btn btn-success"
                   onClick={submit}
@@ -263,6 +265,9 @@ const PrimaryProduct = () => {
             </div>
           </div>
         </Paper>
+          </div>
+        </div>
+
       </div>
 
       {loading && (
