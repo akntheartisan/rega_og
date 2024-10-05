@@ -36,6 +36,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 //routes
+app.get('/',(req,res)=>{
+  res.send('hi')
+  
+});
 app.use("/admin", adminroute);
 app.use("/project", productroute);
 app.use("/user", userroute);
