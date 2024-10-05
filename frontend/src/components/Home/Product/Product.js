@@ -54,7 +54,7 @@ const Product = () => {
               console.log(each.SubModel);
               return (
                 <div
-                  className="col-md-4 productshow"
+                  className="col-lg-4 col-md-6 productshow mt-3"
                   style={{
                     display: "flex",
                     justifyContent: "center",

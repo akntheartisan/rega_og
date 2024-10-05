@@ -155,7 +155,7 @@ const ProductView = () => {
                 }}
               >
                 <ShoppingCartIcon />
-                &nbsp; {goToCart ? "GO TO CART" : "ADD TO CART"}
+                &nbsp; {goToCart ? "GO TO CART" : "ADD CART"}
               </button>
               &nbsp;
               <button

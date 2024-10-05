@@ -58,9 +58,7 @@ const Home = () => {
       <AboutSection/>
       <Product />
       <MVission/>
-     
       <AboutCircle/>
-      
       <Footer />
 
       {/* Existing Dialog */}

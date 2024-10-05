@@ -8,20 +8,16 @@ const sendMail = require("../Utility/Mail");
 const crypto = require("crypto");
 const { isErrored } = require("stream");
 
-usermodel.createIndexes({username:1});
-usermodel.createIndexes({passwordResetToken:1});
+usermodel.createIndexes({ username: 1 });
+usermodel.createIndexes({ passwordResetToken: 1 });
 
-exports.userSignUp = async (req, res, next) => {
-  const { name, username, password, confirmpassword } = req.body;
+exports.userOTP = async (req, res, next) => {
+  console.log('otp method');
+  
+  const { username } = req.body;
 
   try {
-    if (password !== confirmpassword) {
-      return res.status(400).json({
-        status: "fail",
-        error: "Passwords should match",
-      });
-    }
-
+   
     const exist = await usermodel.findOne({ username });
 
     if (exist) {
@@ -31,6 +27,31 @@ exports.userSignUp = async (req, res, next) => {
       });
     }
 
+    const otp = Math.floor(1000 + Math.random() * 9000);
+
+    const message = `Your 4 digit otp is ${otp}`;
+
+    await sendMail({
+      email: username,
+      subject: "Your SignUp OTP",
+      message: message,
+    });
+
+    return res.status(200).json({ otp });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: error.message,
+    });
+  }
+};
+
+exports.userSignUp = async (req, res, next) => {
+
+  console.log('user creation method');
+  const { name, username, password, confirmpassword } = req.body;
+
+  try {
     const newuser = await usermodel.create({
       name,
       username,
@@ -38,29 +59,15 @@ exports.userSignUp = async (req, res, next) => {
       confirmpassword,
     });
 
-    // const newuserId = newuser._id;
-
-    // const userprofile = await userprofilemodel.save(newuserId);
-
     const token = jwt.sign({ id: newuser._id }, JWT_SECRET, {
       expiresIn: JWT_EXPIRATION,
     });
 
     if (newuser) {
-      const otp = Math.floor(1000 + Math.random() * 9000);
-
-      const message = `Your 4 digit otp is ${otp}`;
-
-      await sendMail({
-        email: newuser.username,
-        subject: "Your SignUp OTP",
-        message: message,
-      });
-
       return res
         .status(200)
         .cookie("token", token, { httpOnly: true })
-        .json({ newuser, otp });
+        .json({ newuser });
     }
   } catch (error) {
     res.status(400).json({
@@ -87,7 +94,7 @@ exports.userSignIn = async (req, res, next) => {
     if (!checkUser) {
       return res.status(400).json({
         status: "fail",
-        error: "Invalid Username",
+        error: "Username is not registered",
       });
     }
 
@@ -156,11 +163,20 @@ exports.protect = async (req, res, next) => {
 
 exports.profileUpdate = async (req, res, next) => {
   console.log(req.body);
-  
-  const { id, name, username, mobile, address, landmark, district, state, pincode } = req.body;
+
+  const {
+    id,
+    name,
+    username,
+    mobile,
+    address,
+    landmark,
+    district,
+    state,
+    pincode,
+  } = req.body;
 
   try {
-
     // const exist = await usermodel.findOne({ username });
 
     // if (exist) {
@@ -172,7 +188,7 @@ exports.profileUpdate = async (req, res, next) => {
 
     const profileData = await usermodel.findByIdAndUpdate(
       id,
-      {name, username, mobile, address, landmark, district, state, pincode },
+      { name, username, mobile, address, landmark, district, state, pincode },
       { new: true }
     );
     return res.status(200).json({ profileData });
@@ -183,8 +199,6 @@ exports.profileUpdate = async (req, res, next) => {
     });
   }
 };
-
-
 
 exports.getProfileData = async (req, res, next) => {
   //console.log(req.query.id);
@@ -299,7 +313,7 @@ exports.deliveryStatus = async (req, res) => {
     const userId = new mongoose.Types.ObjectId(user_id);
     const purchasedId = new mongoose.Types.ObjectId(purchased_id);
     const productId = new mongoose.Types.ObjectId(product_id);
-    const invoice = Math.floor(100000 + Math.random()*900000);
+    const invoice = Math.floor(100000 + Math.random() * 900000);
 
     const result = await usermodel.updateOne(
       {
@@ -361,12 +375,11 @@ exports.cancelProducts = async (req, res) => {
           { "purchase._id": purchaseId },
           { "cart.cartId": cart_Id },
         ],
-        new:true
-      },
-      
+        new: true,
+      }
     );
 
-    if(cancelProduct){
+    if (cancelProduct) {
       return res.status(200).json({
         status: "success",
         message: cancelProduct,
@@ -374,6 +387,5 @@ exports.cancelProducts = async (req, res) => {
     }
 
     console.log(cancelProduct);
-    
   } catch (error) {}
 };

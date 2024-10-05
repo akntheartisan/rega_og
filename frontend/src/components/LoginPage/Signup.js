@@ -10,7 +10,7 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import { client } from "../Client/Client";
 import { UserContext } from "../../App";
 import PinIcon from "@mui/icons-material/Pin";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 
 const intial = { name: "", username: "", password: "", confirmpassword: "" };
 
@@ -26,7 +26,6 @@ const Signup = () => {
   const [mailOTP, setMailOTP] = useState();
   const [userOTP, setUserOTP] = useState();
   const [typeOTP, setTypeOTP] = useState(false);
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -78,16 +77,23 @@ const Signup = () => {
         !SpecialChar ||
         passwordLength < 8
       ) {
-        setErrors({ passwordCheck:  <>
-        Password Must Contain:<br/>
-        
-          One Capital Letter<br/>
-          One Small Letter<br/>
-          One Special character<br/>
-          One Number<br/>
-          Minimum 8 characters<br/>
-               
-        </> 
+        setErrors({
+          passwordCheck: (
+            <>
+              Password Must Contain:
+              <br />
+              One Capital Letter
+              <br />
+              One Small Letter
+              <br />
+              One Special character
+              <br />
+              One Number
+              <br />
+              Minimum 8 characters
+              <br />
+            </>
+          ),
         });
       } else {
         setErrors({ passwordCheck: "" });
@@ -116,26 +122,24 @@ const Signup = () => {
   console.log(user);
 
   const submit = async () => {
-    if(!user.name || !user.username || !user.password || !user.confirmpassword){
-      toast.error('Please fill all the fields');
+    if (
+      !user.name ||
+      !user.username ||
+      !user.password ||
+      !user.confirmpassword
+    ) {
+      toast.error("Please fill all the fields");
     }
     try {
-      const response = await client.post("/user/usersignup", user, {
-        withCredentials: true,
-      });
+      const response = await client.post("/user/userOTP", user);
 
       console.log(response);
-      
 
-
-    if(response.status === 200){
-      toast.success('OTP send to Your mailId');
-      setMailOTP(response.data.otp);
-      setUser(intial);
-      setTypeOTP(true);
-    }
-  
-      
+      if (response.status === 200) {
+        toast.success("OTP send to Your mailId");
+        setMailOTP(response.data.otp);
+        setTypeOTP(true);
+      }
     } catch (error) {
       console.log(error);
       if (error.response.data.error) {
@@ -149,9 +153,24 @@ const Signup = () => {
   const verifyOtp = async () => {
     if (mailOTP == userOTP) {
       toast.success("OTP verified successfully!");
-      await getUserData();
+      await userCreate();
+      // await getUserData();
     } else {
       toast.error("Invalid OTP. Please try again.");
+    }
+  };
+
+  const userCreate = async () => {
+    try {
+      const newUser = await client.post("/user/usersignup", user, {
+        withCredentials: true,
+      });
+      if (newUser.status === 200) {
+        setUser(intial);
+        getUserData();
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -162,13 +181,11 @@ const Signup = () => {
       });
       const user = response.data.user;
       if (response.status === 200) {
-        
         setUserData(user);
-        navigate('/');
-        localStorage.setItem("user","kansha");
-        localStorage.setItem("authToken","rega");
-        // navigate('/', { state: { fromSignup: true } }); 
-
+        navigate("/");
+        localStorage.setItem("user", "kansha");
+        localStorage.setItem("authToken", "rega");
+        // navigate('/', { state: { fromSignup: true } });
       }
     } catch (error) {
       console.log(error);
@@ -178,10 +195,7 @@ const Signup = () => {
   return (
     <>
       {/* {typeOTP ? } */}
-     
-    
-     
-     
+
       {!typeOTP ? (
         <Stack direction="column" spacing={4}>
           {" "}
@@ -236,7 +250,7 @@ const Signup = () => {
               },
               "& .MuiFormHelperText-root.Mui-error": {
                 color: "#f28123",
-                fontSize:'13px'
+                fontSize: "13px",
               },
             }}
             value={user.username}
@@ -273,7 +287,7 @@ const Signup = () => {
               },
               "& .MuiFormHelperText-root.Mui-error": {
                 color: "#f28123",
-                fontSize:'13px'
+                fontSize: "13px",
               },
             }}
             helperText={errors.passwordCheck}
@@ -310,7 +324,7 @@ const Signup = () => {
               },
               "& .MuiFormHelperText-root.Mui-error": {
                 color: "#f28123",
-                fontSize:'13px'
+                fontSize: "13px",
               },
             }}
             helperText={errors.confirmPasswordCheck}
@@ -340,51 +354,49 @@ const Signup = () => {
         </Stack>
       ) : (
         <>
-        
-        <Stack direction="column" spacing={4}>
-          <TextField
-            label="OTP"
-            name="tyotp"
-            size="small"
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "white", // Default border color
+          <Stack direction="column" spacing={4}>
+            <TextField
+              label="OTP"
+              name="tyotp"
+              size="small"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "white", // Default border color
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "white", // Border color on hover
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "white", // Border color when focused
+                  },
                 },
-                "&:hover fieldset": {
-                  borderColor: "white", // Border color on hover
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "white", // Border color when focused
-                },
-              },
-            }}
-            value={userOTP}
-            onChange={handleChangeOtp}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <PinIcon sx={{ color: "white" }} />
-                </InputAdornment>
-              ),
-              sx: { color: "white" },
-            }}
-            InputLabelProps={{
-              style: { color: "#fff" },
-            }}
-          />
+              }}
+              value={userOTP}
+              onChange={handleChangeOtp}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <PinIcon sx={{ color: "white" }} />
+                  </InputAdornment>
+                ),
+                sx: { color: "white" },
+              }}
+              InputLabelProps={{
+                style: { color: "#fff" },
+              }}
+            />
 
-          <Button
-            type="button"
-            class="btn"
-            style={{ color: "white", backgroundColor: "#f28123" }}
-            onClick={verifyOtp}
-          >
-            Ok
-          </Button>
-        </Stack>
+            <Button
+              type="button"
+              class="btn"
+              style={{ color: "white", backgroundColor: "#f28123" }}
+              onClick={verifyOtp}
+            >
+              Ok
+            </Button>
+          </Stack>
         </>
-   
       )}
     </>
   );

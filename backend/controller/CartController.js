@@ -70,7 +70,7 @@ exports.addCart = async (req, res, next) => {
       });
 
       const options = {
-        amount: 200 * 100,
+        amount: total * 100,
         currency: "INR",
         receipt: crypto.randomBytes(10).toString("hex"),
       };
