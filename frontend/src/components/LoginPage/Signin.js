@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import "./Signin.css";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Stack, TextField, InputAdornment } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Button from "@mui/material/Button";
@@ -8,6 +8,8 @@ import { toast } from "react-hot-toast";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import PasswordIcon from "@mui/icons-material/Password";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import { client } from "../Client/Client";
 import { UserContext } from "../../App";
 
@@ -18,8 +20,14 @@ const Signin = () => {
   const [password, setPassword] = useState("");
   const [checked, setChecked] = useState(false);
   const [errors, setErrors] = useState({ username: "", password: "" });
+  const [terms, setTerms] = useState(false);
+  const [termsShow, setTermsShow] = useState(true);
 
   async function verify() {
+    if (!terms) {
+      setTermsShow(false);
+      return false;
+    }
 
     const credential = { username, password };
     try {
@@ -51,8 +59,7 @@ const Signin = () => {
       if (response.status === 200) {
         setUserData(user);
         navigate("/");
-        localStorage.setItem('authToken', 'rega');
-
+        localStorage.setItem("authToken", "rega");
       }
     } catch (error) {
       console.log(error);
@@ -67,18 +74,23 @@ const Signin = () => {
     const { name, value } = e.target;
 
     if (name === "username") {
-      if(value.charCodeAt(0) === 32){
+      if (value.charCodeAt(0) === 32) {
         return false;
       }
       setUserName(value);
     }
 
     if (name === "password") {
-      if(value.charCodeAt(0) === 32){
+      if (value.charCodeAt(0) === 32) {
         return false;
       }
       setPassword(value);
     }
+  };
+
+  const eyeOpener = (boo) => {
+    console.log("eyeopener");
+    setChecked(boo);
   };
 
   return (
@@ -142,7 +154,17 @@ const Signin = () => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <PasswordIcon sx={{ color: "white" }} />
+                  {!checked ? (
+                    <VisibilityOffIcon
+                      sx={{ color: "white", cursor: "pointer" }}
+                      onClick={() => eyeOpener(true)}
+                    />
+                  ) : (
+                    <VisibilityIcon
+                      sx={{ color: "white", cursor: "pointer" }}
+                      onClick={() => eyeOpener(false)}
+                    />
+                  )}
                 </InputAdornment>
               ),
               style: { color: "white" },
@@ -153,23 +175,25 @@ const Signin = () => {
           />
         </Stack>
 
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={checked}
-              onChange={(e) => setChecked(e.target.checked)}
-              size="small"
-              sx={{
-                color: "white",
-                "&.Mui-checked": {
+        <div style={{ marginTop: "20px" }}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={terms}
+                onChange={(e) => setTerms(e.target.checked)}
+                size="small"
+                sx={{
                   color: "white",
-                },
-              }}
-            />
-          }
-          label="Show Password"
-          sx={{ color: "white", marginTop: "20px" }}
-        />
+                  "&.Mui-checked": {
+                    color: "white",
+                  },
+                }}
+              />
+            }
+            sx={{ color: "white" }}
+          />
+          <NavLink>Terms & Conditions</NavLink>
+        </div>
 
         <Stack>
           <button
@@ -180,6 +204,13 @@ const Signin = () => {
           >
             LogIn
           </button>
+          {termsShow ? (
+            ""
+          ) : (
+            <p style={{ color: "#f28123",marginTop:'5px',fontWeight:'600' }}>
+              Please Check the terms & conditions
+            </p>
+          )}
         </Stack>
         <Stack>
           <button

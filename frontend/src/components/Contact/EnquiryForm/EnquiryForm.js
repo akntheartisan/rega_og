@@ -84,8 +84,15 @@ const EnquiryForm = () => {
 
   const handleEmailChange = (e) => {
     const value = e.target.value;
-    if (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value) || value === '') {
-      setEmail(value);
+    setEmail(value);
+
+    if (value === "" || /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)) {
+      setErrors((prevErrors) => ({ ...prevErrors, email: "" }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: "Invalid email format",
+      }));
     }
   };
 

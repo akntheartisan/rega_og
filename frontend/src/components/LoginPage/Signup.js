@@ -10,7 +10,8 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import { client } from "../Client/Client";
 import { UserContext } from "../../App";
 import PinIcon from "@mui/icons-material/Pin";
-import Alert from "@mui/material/Alert";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const intial = { name: "", username: "", password: "", confirmpassword: "" };
 
@@ -26,6 +27,8 @@ const Signup = () => {
   const [mailOTP, setMailOTP] = useState();
   const [userOTP, setUserOTP] = useState();
   const [typeOTP, setTypeOTP] = useState(false);
+  const [checked,setChecked] = useState(false);
+  const [checkConfirm,setCheckConfirm] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -192,6 +195,16 @@ const Signup = () => {
     }
   };
 
+  const eyeOpener = (boo) => {
+    console.log("eyeopener");
+    setChecked(boo);
+  };
+
+  const eyeOpenerConfirm = (boo) => {
+    console.log("eyeopener");
+    setCheckConfirm(boo);
+  };
+
   return (
     <>
       {/* {typeOTP ? } */}
@@ -271,6 +284,7 @@ const Signup = () => {
           />
           <TextField
             label="Password"
+            type={checked ? 'text' : 'password'}
             name="password"
             size="small"
             sx={{
@@ -297,10 +311,20 @@ const Signup = () => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <PasswordIcon sx={{ color: "white" }} />
+                  {!checked ? (
+                    <VisibilityOffIcon
+                      sx={{ color: "white", cursor: "pointer" }}
+                      onClick={()=>eyeOpener(true)}
+                    />
+                  ) : (
+                    <VisibilityIcon
+                      sx={{ color: "white", cursor: "pointer" }}
+                      onClick={()=>eyeOpener(false)}
+                    />
+                  )}
                 </InputAdornment>
               ),
-              sx: { color: "white" },
+              style: { color: "white" },
             }}
             InputLabelProps={{
               style: { color: "#fff" },
@@ -308,6 +332,7 @@ const Signup = () => {
           />
           <TextField
             label="confirmpassword"
+            type={checkConfirm ? 'text' : 'password'}
             name="confirmpassword"
             size="small"
             sx={{
@@ -334,10 +359,20 @@ const Signup = () => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <PasswordIcon sx={{ color: "white" }} />
+                  {!checkConfirm ? (
+                    <VisibilityOffIcon
+                      sx={{ color: "white", cursor: "pointer" }}
+                      onClick={()=>eyeOpenerConfirm(true)}
+                    />
+                  ) : (
+                    <VisibilityIcon
+                      sx={{ color: "white", cursor: "pointer" }}
+                      onClick={()=>eyeOpenerConfirm(false)}
+                    />
+                  )}
                 </InputAdornment>
               ),
-              sx: { color: "white" },
+              style: { color: "white" },
             }}
             InputLabelProps={{
               style: { color: "#fff", borderColor: "white" },

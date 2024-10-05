@@ -29,7 +29,6 @@ const Product = () => {
       }
     };
 
-
     fetchData();
   }, []);
 
@@ -43,9 +42,9 @@ const Product = () => {
             <h3 style={{ textAlign: "center" }}>
               <span className="orange-text">Our</span> Products
             </h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid,
-              fuga quas itaque eveniet beatae option.
+            <p style={{ textAlign: "center", fontWeight: "600" }}>
+              Electric scooters offer a sleek, eco-friendly transportation
+              solution, combining modern design with zero emissions.
             </p>
           </div>
 
@@ -150,7 +149,7 @@ const Product = () => {
                           style={{
                             display: "flex",
                             justifyContent: "space-between",
-                            alignItems:'center'
+                            alignItems: "center",
                           }}
                         >
                           <span
@@ -163,15 +162,18 @@ const Product = () => {
                             ₹ {each.SubModel[0].price}
                           </span>
 
-                          <div style={{display: "flex",gap:'3px'}}>
+                          <div style={{ display: "flex", gap: "3px" }}>
                             <Rating
                               name="half-rating-read"
                               value={each.SubModel[0].rating}
                               precision={0.1}
                               readOnly
                             />
-                            <span style={{fontStyle:'normal',fontWeight:'500'}}
-                            >{each.SubModel[0].rating}</span>
+                            <span
+                              style={{ fontStyle: "normal", fontWeight: "500" }}
+                            >
+                              {each.SubModel[0].rating}
+                            </span>
                           </div>
                         </div>
                         {/* <div style={{ display: "flex" }}>
