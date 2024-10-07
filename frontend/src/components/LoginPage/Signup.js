@@ -1,17 +1,18 @@
 import React, { useState, useContext, useEffect } from "react";
 import "./Signin.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { Stack, TextField, InputAdornment, Box } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Button from "@mui/material/Button";
 import { toast } from "react-hot-toast";
-import PasswordIcon from "@mui/icons-material/Password";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import { client } from "../Client/Client";
 import { UserContext } from "../../App";
 import PinIcon from "@mui/icons-material/Pin";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 const intial = { name: "", username: "", password: "", confirmpassword: "" };
 
@@ -27,8 +28,10 @@ const Signup = () => {
   const [mailOTP, setMailOTP] = useState();
   const [userOTP, setUserOTP] = useState();
   const [typeOTP, setTypeOTP] = useState(false);
-  const [checked,setChecked] = useState(false);
-  const [checkConfirm,setCheckConfirm] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const [checkConfirm, setCheckConfirm] = useState(false);
+  const [terms, setTerms] = useState(false);
+  const [termsShow, setTermsShow] = useState(true);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -125,6 +128,10 @@ const Signup = () => {
   console.log(user);
 
   const submit = async () => {
+    if (!terms) {
+      setTermsShow(false);
+      return false;
+    }
     if (
       !user.name ||
       !user.username ||
@@ -284,7 +291,7 @@ const Signup = () => {
           />
           <TextField
             label="Password"
-            type={checked ? 'text' : 'password'}
+            type={checked ? "text" : "password"}
             name="password"
             size="small"
             sx={{
@@ -314,12 +321,12 @@ const Signup = () => {
                   {!checked ? (
                     <VisibilityOffIcon
                       sx={{ color: "white", cursor: "pointer" }}
-                      onClick={()=>eyeOpener(true)}
+                      onClick={() => eyeOpener(true)}
                     />
                   ) : (
                     <VisibilityIcon
                       sx={{ color: "white", cursor: "pointer" }}
-                      onClick={()=>eyeOpener(false)}
+                      onClick={() => eyeOpener(false)}
                     />
                   )}
                 </InputAdornment>
@@ -332,7 +339,7 @@ const Signup = () => {
           />
           <TextField
             label="confirmpassword"
-            type={checkConfirm ? 'text' : 'password'}
+            type={checkConfirm ? "text" : "password"}
             name="confirmpassword"
             size="small"
             sx={{
@@ -362,12 +369,12 @@ const Signup = () => {
                   {!checkConfirm ? (
                     <VisibilityOffIcon
                       sx={{ color: "white", cursor: "pointer" }}
-                      onClick={()=>eyeOpenerConfirm(true)}
+                      onClick={() => eyeOpenerConfirm(true)}
                     />
                   ) : (
                     <VisibilityIcon
                       sx={{ color: "white", cursor: "pointer" }}
-                      onClick={()=>eyeOpenerConfirm(false)}
+                      onClick={() => eyeOpenerConfirm(false)}
                     />
                   )}
                 </InputAdornment>
@@ -378,14 +385,56 @@ const Signup = () => {
               style: { color: "#fff", borderColor: "white" },
             }}
           />
-          <button
+          <div style={{ margin:'20px 0px -20px 0' }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={terms}
+                  onChange={(e) => setTerms(e.target.checked)}
+                  size="small"
+                  sx={{
+                    color: "white",
+                    "&.Mui-checked": {
+                      color: "white",
+                    },
+                  }}
+                />
+              }
+              sx={{ color: "white" }}
+            />
+            <NavLink>Terms & Conditions</NavLink>
+          </div>
+          {/* <button
             type="button"
             class="btn"
             style={{ color: "white", backgroundColor: "#f28123" }}
             onClick={submit}
           >
             Register
-          </button>{" "}
+          </button>{" "} */}
+          <Stack>
+            <button
+              type="button"
+              class="btn"
+              onClick={submit}
+              style={{ color: "white", backgroundColor: "#f28123" }}
+            >
+              Register
+            </button>
+            {termsShow ? (
+              ""
+            ) : (
+              <p
+                style={{
+                  color: "#f28123",
+                  marginTop: "5px",
+                  fontWeight: "600",
+                }}
+              >
+                Please Check the terms & conditions
+              </p>
+            )}
+          </Stack>
         </Stack>
       ) : (
         <>
