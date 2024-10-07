@@ -42,8 +42,7 @@ exports.adminsignin = async (req, res, next) => {
       });
 
       const cookieOptions = {
-        expires: new Date(Date.now() + 90 * 24 * 3600 * 1000),
-        httpOnly: true,
+        httpOnly: true,secure:true,sameSite:"none" 
       };
 
       res.cookie("jwt", token, cookieOptions).status(200).json({
