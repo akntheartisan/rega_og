@@ -83,7 +83,7 @@ const LoginForm = ({ setAdmin, admin }) => {
       if (adminDetails) {
         setAdmin(adminDetails);
         console.log("admin:" + admin);
-        navigate("/admin/profile");
+        navigate("/admin/dashboard");
       }
     } catch (error) {
       console.log(error);

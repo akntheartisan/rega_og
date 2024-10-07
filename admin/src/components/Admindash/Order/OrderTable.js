@@ -27,8 +27,92 @@ export default function OrderTable({ product, setProduct }) {
   const [deleteOpen, setDeleteOpen] = React.useState("");
   const [openOrderView, setOpenOrderView] = React.useState(false);
   const [values, setValues] = useState({});
+  const [onlineCount, setOnlineCount] = useState(0);
+  const [offlineCount, setOfflineCount] = useState(0);
 
   console.log(orderData);
+//   let totalPrice = 0; 
+//  let districts=[];
+//   orderData.forEach((user) => {
+//     user.Purchased.forEach((purchased) => {
+//       purchased.cartData.forEach((cartData) => {
+//         console.log("Checking cartData:", cartData); 
+  
+      
+//         if (cartData.deliverystatus === "Delivered") {
+          
+//           console.log(cartData.subModelDetails); 
+          
+         
+//           console.log("Delivery Status:", cartData.deliveryStatus);
+//           console.log("Price:", cartData.subModelDetails.price);
+          
+  
+//           districts.push(user.district)
+//           totalPrice += Number(cartData.subModelDetails.price); 
+//         }
+//       });
+//     });
+//   });
+//   console.log(districts);
+// let totalPrice = 0; 
+// let districts = [];
+
+// Keep track of which user has already added their district
+// let userDistricts = new Set(); 
+
+// orderData.forEach((user) => {
+//   user.Purchased.forEach((purchased) => {
+//     purchased.cartData.forEach((cartData) => {
+//       // Normalize district name to lowercase
+//       let normalizedDistrict = user.district.toLowerCase();
+      
+//       if (cartData.deliverystatus === "Delivered") {
+//         if (cartData.subModelDetails && cartData.subModelDetails.price) {
+//           // Check if this user's district has already been added
+//           if (!userDistricts.has(user.id + normalizedDistrict)) {
+//             districts.push(user.district); // Add the district in its original form
+//             userDistricts.add(user.id + normalizedDistrict); // Mark this user's district as added
+//           }
+
+//           // Calculate total price
+//           totalPrice += Number(cartData.subModelDetails.price);
+//         }
+//       }
+//     });
+//   });
+// });
+
+// console.log("Total Price:", totalPrice);
+// console.log("Districts with delivered orders (allowing different users to add the same district):", districts);
+
+let totalPrice = 0; 
+let districts = []; // To hold final districts
+
+orderData.forEach((user) => {
+  let userDistricts = new Set();
+
+  user.Purchased.forEach((purchased) => {
+    purchased.cartData.forEach((cartData) => {
+      console.log("Checking cartData:", cartData); 
+  
+      if (cartData.deliverystatus === "Delivered") {
+        console.log(cartData.subModelDetails); 
+        console.log("Delivery Status:", cartData.deliveryStatus);
+        console.log("Price:", cartData.subModelDetails.price);
+        
+      
+        userDistricts.add(user.district);
+        totalPrice += Number(cartData.subModelDetails.price); 
+      }
+    });
+  });
+
+  districts = districts.concat(Array.from(userDistricts)); 
+});
+localStorage.setItem("regaDistrict", districts);
+localStorage.setItem("TotalPrize", totalPrice);
+
 
   const openEdit = (order) => {
     console.log("particular order");
@@ -37,22 +121,58 @@ export default function OrderTable({ product, setProduct }) {
     setOpenOrderView(true);
   };
 
+  // const getOrder = async () => {
+  //   console.log("getorder");
+  //   try {
+  //     const response = await client.get("/cart/getCart");
+  //     console.log(response.data.data);
+  //     const orderData = response.data.data;
+  //     setOrderData(orderData);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getOrder();
+  // }, []);
+  // console.log("kansha",orderData);
   const getOrder = async () => {
-    console.log("getorder");
     try {
       const response = await client.get("/cart/getCart");
-      console.log(response.data.data);
       const orderData = response.data.data;
       setOrderData(orderData);
+      countProducts(orderData); // Call count function after fetching orders
     } catch (error) {
       console.log(error);
     }
   };
 
+  const countProducts = (data) => {
+    let online = 0;
+    let offline = 0;
+
+    data.forEach((order) => {
+      order.Purchased.forEach((purchased) => {
+        if (purchased.hasOwnProperty("order_id")) {
+          online += purchased.cartData.length; 
+        } else {
+          offline += purchased.cartData.length; 
+        }
+      });
+    });
+
+    setOnlineCount(online); 
+    setOfflineCount(offline); 
+  };
+
   useEffect(() => {
     getOrder();
   }, []);
-
+ console.log(onlineCount, offlineCount);
+ localStorage.setItem('onlineCount', onlineCount);
+ localStorage.setItem('offlineCount', offlineCount);
+ 
   const handleChangeValues = (values, cartId) => {
     setValues((prev) => ({
       ...prev,
@@ -70,7 +190,7 @@ export default function OrderTable({ product, setProduct }) {
         purchased_id,
         values,
       });
-      console.log(deliveryStatus.status);
+      console.log(deliveryStatus);
 
       if (deliveryStatus.status === 200) {
         getOrder();

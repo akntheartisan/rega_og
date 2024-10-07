@@ -8,8 +8,8 @@ const Navbar = () => {
       <h4 className="logo" style={{ color: "white" }}>Admin Dashboard</h4>
 
       <div className="list mt-5">
-        <div className="listitem">
-          <Link to="/admin/profile">Profile</Link>
+        <div className="listitem rega-dashboard">
+          <Link to="/admin/dashboard">DashBoard</Link>
         </div>
         <div className="listitem">
           <Link to="/admin/primary">Products</Link>
