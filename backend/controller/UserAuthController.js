@@ -66,7 +66,7 @@ exports.userSignUp = async (req, res, next) => {
     if (newuser) {
       return res
         .status(200)
-        .cookie("token", token, { httpOnly: true })
+        .cookie("token", token, { httpOnly: true,secure:true,sameSite:"none" })
         .json({ newuser });
     }
   } catch (error) {
@@ -113,7 +113,7 @@ exports.userSignIn = async (req, res, next) => {
 
     res
       .status(200)
-      .cookie("token", token, { httpOnly: true })
+      .cookie("token", token, { httpOnly: true,secure:true,sameSite:"none" })
       .json({ checkUser });
   } catch (error) {
     res.status(400).json({
