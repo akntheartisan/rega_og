@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const usermodel = require("../model/AdminLoginModel");
 const sendMail = require("../Utility/Mail");
 const crypto = require('crypto');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 exports.forgotpassword = async (req, res, next) => {
     const { mail } = req.body;
