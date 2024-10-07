@@ -8,22 +8,22 @@ import ProductDoughnutChart from "./ProductDoughnutChart";
 import DistrictChart from "./DistrictChart";
 import "./Dashboard.css";
 
-const Dashboard = ({ userCount, users }) => {
-  const totalPrice = parseFloat(localStorage.getItem("TotalPrize")) || 0;
-  const onlineCount = parseFloat(localStorage.getItem("onlineCount")) || 0;
-  const offlineCount = parseFloat(localStorage.getItem("offlineCount")) || 0;
-  console.log(users);
+const RegaDashboard = ({ userCount, users }) => {
 
-  // const districts = users
-  //   .filter(user => user.district)
-  //   .map(user => user.district);
-
-  // console.log(districts);
-  const rega = localStorage.getItem("regaDistrict");
-  console.log(rega);
-  const regaArray = rega ? rega.split(",") : [];
-  console.log("Converted array:", regaArray);
-
+    const totalPrice = parseFloat(localStorage.getItem("TotalPrize")) || 0;
+    const onlineCount = parseFloat(localStorage.getItem("onlineCount")) || 0;
+    const offlineCount = parseFloat(localStorage.getItem("offlineCount")) || 0;
+    console.log(users);
+  
+    // const districts = users
+    //   .filter(user => user.district)
+    //   .map(user => user.district);
+  
+    // console.log(districts);
+    const rega = localStorage.getItem("regaDistrict");
+    console.log(rega);
+    const regaArray = rega ? rega.split(",") : [];
+    console.log("Converted array:", regaArray);
   return (
     <>
       <div className="container-fluid dashboard-container">
@@ -94,7 +94,7 @@ const Dashboard = ({ userCount, users }) => {
         </Box>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default RegaDashboard
