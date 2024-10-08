@@ -6,6 +6,7 @@ import {
   CategoryScale,
   LinearScale,
   BarElement,
+  LineController,
   LineElement,
   PointElement,
   Title,
@@ -13,9 +14,9 @@ import {
   Legend,
 } from 'chart.js';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, LineElement,PointElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement,LineController, LineElement,PointElement, Title, Tooltip, Legend);
 
-const MixedChartComponent = ({ userCount, totalEarnings, onlineCount, offlineCount }) => {
+const ChartComponent = ({ userCount, totalEarnings, onlineCount, offlineCount }) => {
   const data = {
     labels: ['Users', 'Total Earnings', 'Online Products', 'Offline Products'],
     datasets: [
@@ -70,4 +71,4 @@ const MixedChartComponent = ({ userCount, totalEarnings, onlineCount, offlineCou
   return <Bar data={data} options={options} />;
 };
 
-export default MixedChartComponent;
+export default ChartComponent;
