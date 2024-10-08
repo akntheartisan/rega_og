@@ -64,7 +64,6 @@ const Home = () => {
       {/* Existing Dialog */}
       <Dialog
         open={showConfirmation}
-        onClose={() => setShowConfirmation(false)}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >

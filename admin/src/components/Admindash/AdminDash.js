@@ -22,11 +22,13 @@ const AdminDash = () => {
     setIsDrawerOpen(open);
   };
   const menuItems = [
-    { text: 'Profile', path: '/admin/profile' },
+    { text: 'Dashboard', path: '/admin/dashboard' },
     { text: 'Products', path: '/admin/primary' },
     { text: 'SubProducts', path: '/admin/project' },
     { text: 'Orders', path: '/admin/order' },
-    { text: 'Contact', path: '/admin/contact' }
+    { text: 'Contact', path: '/admin/contact' },
+    { text: 'User', path: '/admin/users' },
+    { text: 'Enquiry', path: '/admin/enquiry' },
   ];
   return (
     <>

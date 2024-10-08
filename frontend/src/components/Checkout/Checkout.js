@@ -36,7 +36,11 @@ const Checkout = () => {
   const [singleQuantity, setSingleQuantity] = useState(0);
   const [cartData, setCartData] = useState();
 
-  const smallScreen = useMediaQuery('(max-width:768px)')
+  const smallScreen = useMediaQuery("(max-width:768px)");
+
+  const isShipAddressEmpty = (address) => {
+   return Object.keys(address).every((key) => shipAddress[key] === intial[key]);
+  };
 
   console.log(userData);
 
@@ -64,14 +68,26 @@ const Checkout = () => {
     }));
   };
 
+  const scrollToTop = ()=>{
+    let position;
+    if(window.innerWidth >= 890){
+      position=0;
+      window.scrollTo({top:position,behavior:'smooth'})
+
+    }
+  }
+
   const handlePaymentDelivery = (e) => {
     setPod(e.target.checked);
     setOnline(false);
+    scrollToTop();
+
   };
 
   const handlePaymentOnline = (e) => {
     setOnline(e.target.checked);
     setPod(false);
+    scrollToTop();
   };
 
   const placeorder = () => {
@@ -94,7 +110,10 @@ const Checkout = () => {
     let singleCartArray = [];
 
     if (typeof singleCartData === "object") {
-      const updateSingleCartData = {...singleCartData,'quantity':singleQuantity}
+      const updateSingleCartData = {
+        ...singleCartData,
+        quantity: singleQuantity,
+      };
       singleCartArray.push(updateSingleCartData);
     }
 
@@ -107,7 +126,7 @@ const Checkout = () => {
       userDetails = { ...shipAddress, userId };
       console.log(userDetails);
     }
-    
+
     try {
       const cartOffline = await client.post("/cart/addCart", {
         userDetails,
@@ -124,7 +143,7 @@ const Checkout = () => {
         setPod(false);
         setModel(false);
         setTotalShow(false);
-        navigate('/');
+        navigate("/");
       }
 
       if (cartOffline.data.error === "Amount exceed") {
@@ -181,9 +200,11 @@ const Checkout = () => {
 
     let singleCartArray = [];
 
-
     if (typeof singleCartData === "object") {
-      const updateSingleCartData = {...singleCartData,'quantity':singleQuantity}
+      const updateSingleCartData = {
+        ...singleCartData,
+        quantity: singleQuantity,
+      };
       singleCartArray.push(updateSingleCartData);
     }
 
@@ -205,17 +226,15 @@ const Checkout = () => {
       });
 
       console.log(cartOnline);
-      
 
-      if(cartOnline.status === 200){
-        toast.success('Order has been placed successfully');
+      if (cartOnline.status === 200) {
+        toast.success("Order has been placed successfully");
         setChecked(false);
         setPod(false);
         setModel(false);
         setTotalShow(false);
-        navigate('/');
+        navigate("/");
       }
-      
     } catch (error) {
       console.log(error);
     }
@@ -488,10 +507,11 @@ const Checkout = () => {
                               data-target="#headingSummary1"
                               aria-expanded="false"
                               aria-controls="collapseThree"
-                              disabled={!checked}
+                              disabled={isShipAddressEmpty(shipAddress) && !checked}
                             >
                               NEXT
-                            </button>&nbsp;&nbsp;
+                            </button>
+                            &nbsp;&nbsp;
                             <button
                               className="stepper_button_back"
                               type="button"
@@ -585,7 +605,6 @@ const Checkout = () => {
                                   </button>
                                 </div>
                               </div>
-                              
                             </div>
                             <button
                               className="stepper_button"
@@ -596,7 +615,8 @@ const Checkout = () => {
                               aria-controls="collapseThree"
                             >
                               NEXT
-                            </button>&nbsp;&nbsp;
+                            </button>
+                            &nbsp;&nbsp;
                             <button
                               className="stepper_button_back"
                               type="button"
@@ -607,7 +627,6 @@ const Checkout = () => {
                             >
                               BACK
                             </button>
-                            
                           </div>
                         </div>
                       </div>
@@ -615,7 +634,7 @@ const Checkout = () => {
 
                     {multiCartData && (
                       <div className="card single-accordion">
-                          <div className="card-header" id="headingSummary">
+                        <div className="card-header" id="headingSummary">
                           <h5 className="mb-0">
                             <button
                               className="btn btn-link collapsed"
@@ -669,25 +688,26 @@ const Checkout = () => {
                             <hr />
                           </div>
                           <button
-                              className="stepper_button"
-                              type="button"
-                              data-toggle="collapse"
-                              data-target="#collapseThree"
-                              aria-expanded="false"
-                              aria-controls="collapseThree"
-                            >
-                              NEXT
-                            </button>&nbsp;&nbsp;
-                             <button
-                              className="stepper_button_back"
-                              type="button"
-                              data-toggle="collapse"
-                              data-target="#collapseTwo"
-                              aria-expanded="true"
-                              aria-controls="collapseTwo"
-                            >
-                              BACK
-                            </button>
+                            className="stepper_button"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#collapseThree"
+                            aria-expanded="false"
+                            aria-controls="collapseThree"
+                          >
+                            NEXT
+                          </button>
+                          &nbsp;&nbsp;
+                          <button
+                            className="stepper_button_back"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#collapseTwo"
+                            aria-expanded="true"
+                            aria-controls="collapseTwo"
+                          >
+                            BACK
+                          </button>
                         </div>
                       </div>
                     )}
@@ -766,7 +786,6 @@ const Checkout = () => {
                                   </label>
                                 </div>
                               </div>
-                           
                             </div>
                             <button
                               className="stepper_button_back"
@@ -837,9 +856,7 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-      <div className="mt-3">
-        {smallScreen ? <BottomNav /> : <Footer />}
-      </div>
+      <div className="mt-3">{smallScreen ? <BottomNav /> : <Footer />}</div>
     </>
   );
 };

@@ -6,6 +6,7 @@ import EmptyCart from "./EmptyCart";
 import IconButton from "@mui/material/IconButton";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import toast from "react-hot-toast";
+import Loader from "../../ProductView/Loader";
 
 const CartDetails = ({ id }) => {
 
@@ -18,18 +19,25 @@ const CartDetails = ({ id }) => {
   const [bucket, setBucket] = useState([]);
   const cartItemsQuantity = bucket.length;
   console.log(bucket);
+  const [loader,setLoader] = useState(false);
 
   useEffect(() => {
     getBucketList();
   }, [id]);
 
   const getBucketList = async () => {
+    setLoader(true);
     try {
       const getBucketList = await client.get("/bucket/getBucket", {
         params: { id: id },
       });
       console.log(getBucketList);
-      setBucket(getBucketList.data.data);
+      if(getBucketList.status === 200){
+        setBucket(getBucketList.data.data);
+        setLoader(false);
+
+      }
+      
     } catch (error) {
       console.log(error);
     }
@@ -231,6 +239,7 @@ const CartDetails = ({ id }) => {
           </div>
         )}
       </div>
+      {loader && <Loader/>}
     </>
   );
 };
