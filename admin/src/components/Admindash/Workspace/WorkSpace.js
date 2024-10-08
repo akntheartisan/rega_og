@@ -6,10 +6,10 @@ import Order from "../Order/Order";
 import PrimaryProduct from "../Product/PrimaryProduct";
 import AdminContact from "../Contact/AdminContact";
 import UserLogin from "../Users/UserLogin";
-import Dashboard from "../Dashboard/Dashboard";
 import AdminEnquiry from "../Enquiry/AdminEnquiry";
 import { useEffect, useState } from "react";
 import { client } from "../../../Client/Clientaxios";
+import RegaDashboard from "../Dashboard/RegaDashboard";
 const WorkSpace = () => {
   const [users, setUsers] = useState([]);
   useEffect(() => {
@@ -36,7 +36,7 @@ const WorkSpace = () => {
         <Route path="/users" element={<UserLogin users={users} />} />
         <Route
           path="/dashboard"
-          element={<Dashboard userCount={summa} users={users} />}
+          element={<RegaDashboard userCount={summa} users={users} />}
         />
         <Route path="/enquiry" element={<AdminEnquiry />} />
       </Routes>
