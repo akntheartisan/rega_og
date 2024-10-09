@@ -139,16 +139,20 @@ const Signup = () => {
       !user.confirmpassword
     ) {
       toast.error("Please fill all the fields");
+      return false
+     
     }
+    setTypeOTP(true);
+    toast.success("OTP send to Your mailId");
     try {
       const response = await client.post("/user/userOTP", user);
 
       console.log(response);
 
       if (response.status === 200) {
-        toast.success("OTP send to Your mailId");
+        
         setMailOTP(response.data.otp);
-        setTypeOTP(true);
+     
       }
     } catch (error) {
       console.log(error);
@@ -251,6 +255,7 @@ const Signup = () => {
             InputLabelProps={{
               style: { color: "#fff" },
             }}
+          
           />
           <TextField
             label="username"
@@ -288,6 +293,7 @@ const Signup = () => {
             }}
             helperText={errors.mailCheck}
             error={!!errors.mailCheck}
+           
           />
           <TextField
             label="Password"
@@ -336,6 +342,7 @@ const Signup = () => {
             InputLabelProps={{
               style: { color: "#fff" },
             }}
+            
           />
           <TextField
             label="confirmpassword"
@@ -384,6 +391,7 @@ const Signup = () => {
             InputLabelProps={{
               style: { color: "#fff", borderColor: "white" },
             }}
+            
           />
           <div style={{ margin:'20px 0px -20px 0' }}>
             <FormControlLabel

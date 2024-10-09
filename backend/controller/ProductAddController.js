@@ -152,6 +152,7 @@ exports.getPrimary = async (req, res, next) => {
 };
 
 exports.getProduct = async (req, res, next) => {
+
   try {
     let data = await projectmodel.find();
 
@@ -165,6 +166,27 @@ exports.getProduct = async (req, res, next) => {
     //console.log(error);
   }
 };
+
+exports.getSelected = async (req, res, next) => {
+  console.log('selectedproduct');
+  
+  const {id} = req.query;
+  console.log(id);
+  
+  try {
+    let selected = await projectmodel.findById(id);
+
+    if (selected) {
+      return res.status(200).json({
+        status: "success",
+        selected,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 exports.updateProject = async (req, res) => {
   //console.log("this update get triggered");

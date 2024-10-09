@@ -19,6 +19,7 @@ router.post(
 );
 
 router.get("/getproduct", prodcont.getProduct);
+router.get("/getSelected", prodcont.getSelected);
 router.post("/updateproject", prodcont.updateProject);
 router.post("/deleteproduct", prodcont.deleteProduct);
 

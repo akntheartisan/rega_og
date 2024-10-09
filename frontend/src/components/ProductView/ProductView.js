@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import "./ProductView.css";
 import motor from "./car-engine (2).png";
 import accumulator from "./accumulator.png";
@@ -28,13 +28,41 @@ const ProductView = () => {
   const smallScreen = useMediaQuery("(max-width:990px)");
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const product = location.state;
-  console.log(product);
+  const { id } = useParams();
+  console.log(id);
+
+  // const location = useLocation();
+  // const product = location.state;
+  // console.log(product);
 
   const [selected, setSelected] = useState("");
   const [loader, setLoader] = useState(false);
   const [goToCart, setGoToCart] = useState(false);
+  const [product, setProduct] = useState();
+
+  useEffect(() => {
+    
+    getSelectedProducts();
+  
+}, []);
+
+  const getSelectedProducts = async () => {
+    try {
+      console.log("getSelectedProducts");
+
+      const getSelectedProducts = await client.get("/project/getSelected");
+      console.log(getSelectedProducts);
+      const prod = getSelectedProducts.selected;
+
+      if (getSelectedProducts.status === 200) {
+        setProduct(prod);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
 
   const getSelectModel = (battery) => {
     setLoader(true);

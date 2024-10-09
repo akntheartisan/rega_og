@@ -60,7 +60,7 @@ const Product = () => {
                     cursor: "pointer",
                   }}
                   key={each._id}
-                  onClick={() => navigate(`/productview`, { state: each })}
+                  onClick={() => navigate(`/productview/${each._id}`)}
                 >
                   <Box
                     sx={{
