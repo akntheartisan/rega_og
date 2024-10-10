@@ -12,6 +12,9 @@ const ForgotPassword = () => {
   console.log(mail);
 
   const submitMail = async () => {
+    if(!mail){
+      toast.error('Please enter your mailId')
+    }
     try {
       const forgotPasswordMail = await client.post("/user/forgotpassword", {
         mail: mail,

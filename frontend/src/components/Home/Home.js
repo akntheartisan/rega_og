@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Carousel from './Carousel/Carousel';
-import Features from './Features/Features';
-import SelfAd from './SelfAd/SelfAd';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import Product from './Product/Product';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import Button from '@mui/material/Button';
-import Aboutus from '../About/Aboutus';
-import AboutSection from '../About/AboutSection';
-import MVission from '../About/MVission';
-import AboutCircle from '../About/AboutCircle';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Carousel from "./Carousel/Carousel";
+import Features from "./Features/Features";
+import SelfAd from "./SelfAd/SelfAd";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
+import Product from "./Product/Product";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import Aboutus from "../About/Aboutus";
+import AboutSection from "../About/AboutSection";
+import MVission from "../About/MVission";
+import AboutCircle from "../About/AboutCircle";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -28,37 +28,47 @@ const Home = () => {
     // Check if user data exists and show the corresponding dialog
     if (val) {
       setShowConfirmation(true);
-    } else if (!login_val) {
-      setShowAnotherDialog(true); // Show the second dialog if the user is not logged in
     } else {
       setShowConfirmation(false);
     }
-  }, [val, login_val]);
+  }, [val]);
+
+  useEffect(() => {
+    checkForLogin();
+  }, [login_val]);
+
+  const checkForLogin = async () => {
+    setInterval(() => {
+      if (!login_val) {
+        setShowAnotherDialog(true);
+      }
+    }, 20000);
+  };
 
   const handleConfirm = () => {
     setShowConfirmation(false);
     localStorage.removeItem("user");
-    navigate('/userdash');
+    navigate("/userdash");
   };
 
   const handleCloseAnotherDialog = () => {
     setShowAnotherDialog(false);
   };
 
-  const navToLogIn = ()=>{
-    navigate('/register');
-  }
+  const navToLogIn = () => {
+    navigate("/register");
+  };
 
   return (
     <>
       <Header />
-    
+
       <Carousel />
-      <Aboutus/>
-      <AboutSection/>
+      <Aboutus />
+      <AboutSection />
       <Product />
-      <MVission/>
-      <AboutCircle/>
+      <MVission />
+      <AboutCircle />
       <Footer />
 
       {/* Existing Dialog */}
@@ -77,10 +87,10 @@ const Home = () => {
           <Button
             onClick={handleConfirm}
             sx={{
-              bgcolor: '#F28123',
-              color: '#fff', 
-              '&:hover': {
-                bgcolor: '#d96b1b', 
+              bgcolor: "#F28123",
+              color: "#fff",
+              "&:hover": {
+                bgcolor: "#d96b1b",
               },
             }}
           >
@@ -96,9 +106,7 @@ const Home = () => {
         aria-labelledby="another-dialog-title"
         aria-describedby="another-dialog-description"
       >
-        <DialogTitle id="another-dialog-title">
-          {"Login Required"}
-        </DialogTitle>
+        <DialogTitle id="another-dialog-title">{"Login Required"}</DialogTitle>
         <DialogContent>
           <p>Please log in to continue.</p>
         </DialogContent>
@@ -106,10 +114,10 @@ const Home = () => {
           <Button
             onClick={handleCloseAnotherDialog}
             sx={{
-              bgcolor: '#F28123',
-              color: '#fff', 
-              '&:hover': {
-                bgcolor: '#d96b1b', 
+              bgcolor: "#F28123",
+              color: "#fff",
+              "&:hover": {
+                bgcolor: "#d96b1b",
               },
             }}
           >
@@ -119,10 +127,10 @@ const Home = () => {
           <Button
             onClick={navToLogIn}
             sx={{
-              bgcolor: '#F28123',
-              color: '#fff', 
-              '&:hover': {
-                bgcolor: '#d96b1b', 
+              bgcolor: "#F28123",
+              color: "#fff",
+              "&:hover": {
+                bgcolor: "#d96b1b",
               },
             }}
           >
