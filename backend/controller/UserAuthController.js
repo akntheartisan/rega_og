@@ -113,7 +113,7 @@ exports.userSignIn = async (req, res, next) => {
 
     res
       .status(200)
-      .cookie("token", token, { httpOnly: true,secure:true,sameSite:"none" })
+      .cookie("regaUserToken", token, { httpOnly: true,secure:true,sameSite:"none" })
       .json({ checkUser });
   } catch (error) {
     res.status(400).json({
