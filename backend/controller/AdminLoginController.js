@@ -132,6 +132,8 @@ exports.logout = async (req, res, next) => {
   const cookieOptions = {
     expires: new Date(0),
     httpOnly: true,
+    sameSite:'none',
+    secure:true,  
   };
 
   res.cookie("jwt", "", cookieOptions).status(200).json({
