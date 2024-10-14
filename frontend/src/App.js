@@ -19,6 +19,7 @@ import Orders from "./components/Orders/Orders.js"
 import About from "./components/About/About.js";
 
 import ProductPage from "./components/ProductPage/ProductPage.js";
+import NotFound from "./components/NotFound.js";
 
 export const UserContext = createContext();
 function App() {
@@ -76,8 +77,7 @@ function App() {
           <Route path="/forgetPasswordPage" element={<ForgotPassword />} />
           <Route path="/users/resetPassword/:id" element={<ResetPassword />} />
           <Route path="/product" element={<ProductPage/>} />
-          {/* <Route path="/invoice" element={<Invoice />} /> */}
-          
+          <Route path="*" element={<NotFound/>} />
         </Routes>
       </UserContext.Provider>
     </>
