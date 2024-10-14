@@ -17,12 +17,9 @@ const ResetPassword = () => {
     passwordCheck: "",
     confirmPasswordCheck: "",
   });
-  
 
-  
+ 
 
-  
-  
   const resetPassword = (e) => {
     const { name, value } = e.target;
 
@@ -110,8 +107,8 @@ const ResetPassword = () => {
         }
       } catch (error) {
         console.log(error.response.status);
-        if(error.response.status === 404){
-          toast.error('link expired. Please request a new one.')
+        if (error.response.status === 404) {
+          toast.error("link expired. Please request a new one.");
         }
       }
     }

@@ -12,12 +12,12 @@ const PurchasedItems = new mongoose.Schema(
       deliverystatus: {
         type: String,
       },
-      trackId:{
-        type:String,
+      trackId: {
+        type: String,
       },
-      invoice:{
-        type:String,
-      }
+      invoice: {
+        type: String,
+      },
     },
     order_id: {
       type: String,
@@ -62,10 +62,14 @@ const UserRegister = new mongoose.Schema(
     pincode: {
       type: String,
     },
+    otp: {
+      type: String,
+    },
     passwordResetToken: {
       type: String,
     },
     passwordResetExpiresAt: Number,
+    
 
     Purchased: [PurchasedItems],
   },
@@ -78,9 +82,16 @@ UserRegister.pre("save", async function (next) {
   next();
 });
 
+// UserRegister.pre("save", async function (next) {
+//   if (this.isNew) {
+//     this.otpExpiresAt = new Date(Date.now() + 10 * 60 * 1000).getTime();
+//   }
+//   next();
+// });
+
 UserRegister.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString("hex");
-  
+
   this.passwordResetToken = crypto
     .createHash("sha256")
     .update(resetToken)
