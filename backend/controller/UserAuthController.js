@@ -271,9 +271,17 @@ exports.resetPassword = async (req, res, next) => {
     const user = await usermodel.findOne({
       passwordResetToken: encryptedToken,
     });
-    console.log(user);
-    if (user) {
+    console.log('dfsdf',user);
+
+    if(user === null){
+
+      res.status(404).json({
+        status:'failed'
+      })
+
+    }else {
       user.password = password;
+      user.passwordResetToken = undefined;
       await user.save();
 
       res.status(200).json({

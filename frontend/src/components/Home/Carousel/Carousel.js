@@ -1,5 +1,7 @@
 import React from "react";
 import Header from "../../Header/Header";
+import { Link } from "react-router-dom";
+
 
 const Carousel = () => {
   return (
@@ -17,12 +19,12 @@ const Carousel = () => {
                     <p className="subtitle">Explore the Future of Mobility</p>
                     <h1>High-Performance e-Bikes</h1>
                     <div className="hero-btns">
-                      <a href="shop.html" className="boxed-btn">
+                      <Link to="/product" className="boxed-btn">
                         e-Bike Collection
-                      </a>
-                      <a href="contact.html" className="bordered-btn">
+                      </Link>
+                      <Link to="/contact" className="bordered-btn">
                         Get in Touch
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>

@@ -104,7 +104,10 @@ const ResetPassword = () => {
           navigate("/register");
         }
       } catch (error) {
-        console.log(error);
+        console.log(error.response.status);
+        if(error.response.status === 404){
+          toast.error('link expired. Please request a new one.')
+        }
       }
     }
   };
