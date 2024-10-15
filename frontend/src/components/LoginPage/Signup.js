@@ -13,6 +13,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import Loader from "../ProductView/Loader";
 
 const intial = { name: "", username: "", password: "", confirmpassword: "" };
 
@@ -32,6 +33,7 @@ const Signup = () => {
   const [checkConfirm, setCheckConfirm] = useState(false);
   const [terms, setTerms] = useState(false);
   const [termsShow, setTermsShow] = useState(true);
+  const [loader, setLoader] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -139,20 +141,19 @@ const Signup = () => {
       !user.confirmpassword
     ) {
       toast.error("Please fill all the fields");
-      return false
-     
+      return false;
     }
-    setTypeOTP(true);
-    toast.success("OTP send to Your mailId");
+    setLoader(true);
     try {
       const response = await client.post("/user/userOTP", user);
 
-      console.log(response);
+      
 
       if (response.status === 200) {
-        
+        setLoader(false);
+        setTypeOTP(true);
+        toast.success("OTP send to Your mailId");
         setMailOTP(response.data.otp);
-     
       }
     } catch (error) {
       console.log(error);
@@ -255,7 +256,6 @@ const Signup = () => {
             InputLabelProps={{
               style: { color: "#fff" },
             }}
-          
           />
           <TextField
             label="username"
@@ -293,7 +293,6 @@ const Signup = () => {
             }}
             helperText={errors.mailCheck}
             error={!!errors.mailCheck}
-           
           />
           <TextField
             label="Password"
@@ -342,7 +341,6 @@ const Signup = () => {
             InputLabelProps={{
               style: { color: "#fff" },
             }}
-            
           />
           <TextField
             label="confirmpassword"
@@ -391,9 +389,8 @@ const Signup = () => {
             InputLabelProps={{
               style: { color: "#fff", borderColor: "white" },
             }}
-            
           />
-          <div style={{ margin:'20px 0px -20px 0' }}>
+          <div style={{ margin: "20px 0px -20px 0" }}>
             <FormControlLabel
               control={
                 <Checkbox
@@ -490,6 +487,7 @@ const Signup = () => {
           </Stack>
         </>
       )}
+      {loader && <Loader />}
     </>
   );
 };

@@ -14,10 +14,16 @@ usermodel.createIndexes({ passwordResetToken: 1 });
 exports.userOTP = async (req, res, next) => {
   console.log("otp method");
 
-  const { username } = req.body;
+  console.log(req.body);
+
+  const { name, username, password, confirmpassword } = req.body;
+
+  console.log(username);
 
   try {
     const exist = await usermodel.findOne({ username });
+
+    console.log(exist);
 
     if (exist) {
       return res.status(400).json({
@@ -25,23 +31,29 @@ exports.userOTP = async (req, res, next) => {
         error: "Username has already been registered",
       });
     }
-
     const otp = Math.floor(1000 + Math.random() * 9000);
+    //const otpExpiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes expiration
+
+    console.log("beforeusercreate");
 
     const newuser = await usermodel.create({
       username,
-      otpExpiresAt: Date.now() + 10 * 60 * 1000,
+      //otpExpiresAt,
     });
 
-    const message = `Your 4 digit otp is ${otp}`;
+    console.log("afterusercreate");
 
-    await sendMail({
-      email: username,
-      subject: "Your SignUp OTP",
-      message: message,
-    });
+    if (newuser) {
+      const message = `Your 4 digit otp is ${otp}`;
 
-    return res.status(200).json({ otp });
+      await sendMail({
+        email: username,
+        subject: "Your SignUp OTP",
+        message: message,
+      });
+
+      return res.status(200).json({ otp });
+    }
   } catch (error) {
     res.status(400).json({
       status: "fail",
@@ -55,16 +67,9 @@ exports.userSignUp = async (req, res, next) => {
   const { name, username, password, confirmpassword } = req.body;
 
   try {
-    // const newuser = await usermodel.create({
-    //   name,
-    //   username,
-    //   password,
-    //   confirmpassword,
-    // });
-
+  
     const existingUser = await usermodel.findOne({
       username,
-      otpExpiresAt: { $gt: Date.now() },
     });
 
     if (!existingUser) {
@@ -72,24 +77,25 @@ exports.userSignUp = async (req, res, next) => {
         status: "fail",
         message: "Invalid OTP or OTP has expired",
       });
+    } else {
+      existingUser.name = name;
+      existingUser.password = await bcrypt.hash(password, 12);
+      //existingUser.otpExpiresAt = undefined;
+      await existingUser.save();
+
+      const token = jwt.sign({ id: existingUser._id }, JWT_SECRET, {
+        expiresIn: JWT_EXPIRATION,
+      });
+
+      return res
+        .status(200)
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+        })
+        .json({ existingUser });
     }
-
-    existingUser.name = name;
-    existingUser.otpExpiresAt = undefined;
-    await existingUser.save();
-
-    const token = jwt.sign({ id: newuser._id }, JWT_SECRET, {
-      expiresIn: JWT_EXPIRATION,
-    });
-
-    return res
-      .status(200)
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-      })
-      .json({ existingUser });
   } catch (error) {
     res.status(400).json({
       status: "fail",
