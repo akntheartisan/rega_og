@@ -66,6 +66,7 @@ const UserRegister = new mongoose.Schema(
       type: String,
     },
     passwordResetExpiresAt: Number,
+    otpEXpiresAt:Number,
 
     Purchased: [PurchasedItems],
   },
@@ -90,5 +91,7 @@ UserRegister.methods.createPasswordResetToken = function () {
 
   return resetToken;
 };
+
+
 
 module.exports = mongoose.model("userregister", UserRegister);
