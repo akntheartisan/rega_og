@@ -100,4 +100,6 @@ UserRegister.methods.createPasswordResetToken = function () {
   return resetToken;
 };
 
+
+
 module.exports = mongoose.model("userregister", UserRegister);
