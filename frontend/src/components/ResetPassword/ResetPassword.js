@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Paper } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import toast from "react-hot-toast";
@@ -17,6 +17,8 @@ const ResetPassword = () => {
     passwordCheck: "",
     confirmPasswordCheck: "",
   });
+
+ 
 
   const resetPassword = (e) => {
     const { name, value } = e.target;
@@ -105,8 +107,8 @@ const ResetPassword = () => {
         }
       } catch (error) {
         console.log(error.response.status);
-        if(error.response.status === 404){
-          toast.error('link expired. Please request a new one.')
+        if (error.response.status === 404) {
+          toast.error("link expired. Please request a new one.");
         }
       }
     }

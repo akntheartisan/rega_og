@@ -12,12 +12,11 @@ usermodel.createIndexes({ username: 1 });
 usermodel.createIndexes({ passwordResetToken: 1 });
 
 exports.userOTP = async (req, res, next) => {
-  console.log('otp method');
-  
+  console.log("otp method");
+
   const { username } = req.body;
 
   try {
-   
     const exist = await usermodel.findOne({ username });
 
     if (exist) {
@@ -28,6 +27,11 @@ exports.userOTP = async (req, res, next) => {
     }
 
     const otp = Math.floor(1000 + Math.random() * 9000);
+
+    const newuser = await usermodel.create({
+      username,
+      otpExpiresAt: Date.now() + 10 * 60 * 1000,
+    });
 
     const message = `Your 4 digit otp is ${otp}`;
 
@@ -47,28 +51,45 @@ exports.userOTP = async (req, res, next) => {
 };
 
 exports.userSignUp = async (req, res, next) => {
-
-  console.log('user creation method');
+  console.log("user creation method");
   const { name, username, password, confirmpassword } = req.body;
 
   try {
-    const newuser = await usermodel.create({
-      name,
+    // const newuser = await usermodel.create({
+    //   name,
+    //   username,
+    //   password,
+    //   confirmpassword,
+    // });
+
+    const existingUser = await usermodel.findOne({
       username,
-      password,
-      confirmpassword,
+      otpExpiresAt: { $gt: Date.now() },
     });
+
+    if (!existingUser) {
+      return res.status(400).json({
+        status: "fail",
+        message: "Invalid OTP or OTP has expired",
+      });
+    }
+
+    existingUser.name = name;
+    existingUser.otpExpiresAt = undefined;
+    await existingUser.save();
 
     const token = jwt.sign({ id: newuser._id }, JWT_SECRET, {
       expiresIn: JWT_EXPIRATION,
     });
 
-    if (newuser) {
-      return res
-        .status(200)
-        .cookie("token", token, { httpOnly: true,secure:true,sameSite:"none" })
-        .json({ newuser });
-    }
+    return res
+      .status(200)
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
+      .json({ existingUser });
   } catch (error) {
     res.status(400).json({
       status: "fail",
@@ -113,7 +134,11 @@ exports.userSignIn = async (req, res, next) => {
 
     res
       .status(200)
-      .cookie("token", token, { httpOnly: true,secure:true,sameSite:"none" })
+      .cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      })
       .json({ checkUser });
   } catch (error) {
     res.status(400).json({
@@ -271,15 +296,13 @@ exports.resetPassword = async (req, res, next) => {
     const user = await usermodel.findOne({
       passwordResetToken: encryptedToken,
     });
-    console.log('dfsdf',user);
+    console.log("dfsdf", user);
 
-    if(user === null){
-
+    if (user === null) {
       res.status(404).json({
-        status:'failed'
-      })
-
-    }else {
+        status: "failed",
+      });
+    } else {
       user.password = password;
       user.passwordResetToken = undefined;
       await user.save();
