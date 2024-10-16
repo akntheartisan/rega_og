@@ -271,8 +271,8 @@ exports.forgotpassword = async (req, res, next) => {
     const resetToken = user.createPasswordResetToken();
     await user.save({ validateBeforeSave: false });
 
-    //const url = `http://localhost:3000/users/resetPassword/${resetToken}`;
-    const url = `https://rega-og.vercel.app/users/resetPassword/${resetToken}`;
+    const url = `http://localhost:3000/users/resetPassword/${resetToken}`;
+    //const url = `https://rega-og.vercel.app/users/resetPassword/${resetToken}`;
     const message = `this is the password reset link ${url} /n click here.`;
 
     await sendMail({
@@ -310,7 +310,7 @@ exports.resetPassword = async (req, res, next) => {
         status: "failed",
       });
     } else {
-      user.password = password;
+      user.password = await bcrypt.hash(password, 12);
       user.passwordResetToken = undefined;
       await user.save();
 
