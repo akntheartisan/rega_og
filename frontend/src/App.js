@@ -15,15 +15,15 @@ import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import ScrollToTop from "./components/ScrollToTop";
 import Orders from "./components/Orders/Orders.js"
-// import Invoice from "./components/Checkout/Invoice";
 import About from "./components/About/About.js";
-
 import ProductPage from "./components/ProductPage/ProductPage.js";
-import NotFound from "./components/NotFound.js";
+import Error from "./components/404/Error.jsx";
 
 export const UserContext = createContext();
 function App() {
   const [userData, setUserData] = useState("");
+  console.log(userData);
+  
 
   useEffect(() => {
     const getUserData = async () => {
@@ -77,7 +77,7 @@ function App() {
           <Route path="/forgetPasswordPage" element={<ForgotPassword />} />
           <Route path="/users/resetPassword/:id" element={<ResetPassword />} />
           <Route path="/product" element={<ProductPage/>} />
-          <Route path="*" element={<NotFound/>} />
+          <Route path="*" element={<Error/>} />
         </Routes>
       </UserContext.Provider>
     </>

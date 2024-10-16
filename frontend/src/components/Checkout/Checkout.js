@@ -142,12 +142,12 @@ const Checkout = () => {
       console.log(typeof cartOffline.status);
 
       if (cartOffline.status === 200) {
-        toast.success("your order has been placed");
+        // toast.success("your order has been placed");
         setChecked(false);
         setPod(false);
         setModel(false);
         setTotalShow(false);
-        navigate("/");
+        //navigate("/");
       }
 
       if (cartOffline.data.error === "Amount exceed") {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Paper } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import toast from "react-hot-toast";
@@ -18,7 +18,37 @@ const ResetPassword = () => {
     confirmPasswordCheck: "",
   });
 
- 
+  const [isTokenValid, setIsTokenValid] = useState(null);
+  const [userData, setUserData] = useState(null);
+  useEffect(() => {
+    let isMounted = true; 
+  
+    const fetchUserData = async () => {
+      try {
+        const response = await client.get(`/user/validateResetToken/${id}`);
+        
+        if (response.status === 200 && isMounted) { 
+          setIsTokenValid(true); 
+          setUserData(response.data.user);  
+        }
+      } catch (error) {
+        if (isMounted) { 
+          console.log("Token validation error:", error);
+          setIsTokenValid(false);  
+          toast.error("Invalid link. Please request a new one.");
+          navigate("*");
+        }
+      }
+    };
+  
+    fetchUserData();
+  
+    return () => {
+      isMounted = false; 
+    };
+  }, [id,navigate]); 
+  
+
 
   const resetPassword = (e) => {
     const { name, value } = e.target;
@@ -107,8 +137,8 @@ const ResetPassword = () => {
         }
       } catch (error) {
         console.log(error.response.status);
-        if (error.response.status === 404) {
-          toast.error("link expired. Please request a new one.");
+        if(error.response.status === 404){
+          toast.error('link expired. Please request a new one.')
         }
       }
     }

@@ -70,14 +70,14 @@ exports.addCart = async (req, res, next) => {
       });
 
       const options = {
-        amount: total * 100,
+        amount: 200 * 100,
         currency: "INR",
         receipt: crypto.randomBytes(10).toString("hex"),
       };
 
       razorPayInstance.orders.create(options, (err, order) => {
         if (err) {
-          console.log(err.error.description);
+          // console.log(err.error.description);
           return res.status(500).json({ error: "Amount exceed" });
         } else {
           return res

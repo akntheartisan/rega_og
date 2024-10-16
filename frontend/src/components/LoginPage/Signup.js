@@ -150,7 +150,7 @@ const Signup = () => {
       
 
       if (response.status === 200) {
-        setLoader(false);
+        //setLoader(false);
         setTypeOTP(true);
         toast.success("OTP send to Your mailId");
         setMailOTP(response.data.otp);
@@ -487,7 +487,7 @@ const Signup = () => {
           </Stack>
         </>
       )}
-      {loader && <Loader />}
+      
     </>
   );
 };

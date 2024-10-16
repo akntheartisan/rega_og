@@ -115,7 +115,8 @@ const CartDetails = ({ id }) => {
         {bucket.length === 0 ? (
           <EmptyCart />
         ) : (
-          <div className="cart-section mt-5 mb-5">
+          <>
+                    <div className="cart-section mt-5 mb-5">
             <div className="container">
               <div className="row">
                 <div className="col-lg-8 col-md-12">
@@ -237,9 +238,12 @@ const CartDetails = ({ id }) => {
               </div>
             </div>
           </div>
+          {loader && <Loader/>}
+          </>
+
         )}
       </div>
-      {loader && <Loader/>}
+      
     </>
   );
 };
