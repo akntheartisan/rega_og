@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { client } from "../Client/Client";
 import toast from "react-hot-toast";
 
+
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [mail, setMail] = useState("");
@@ -13,7 +14,8 @@ const ForgotPassword = () => {
 
   const submitMail = async () => {
     if(!mail){
-      toast.error('Please enter your mailId')
+      toast.error('Please enter your mailId');
+      return false;
     }
     try {
       const forgotPasswordMail = await client.post("/user/forgotpassword", {
@@ -25,6 +27,7 @@ const ForgotPassword = () => {
       if(forgotPasswordMail.status === 200){
         toast.success('Password Reset Link has been sent to your mail');
         setMail('');
+        navigate('/register');
       }
     
     } catch (error) {

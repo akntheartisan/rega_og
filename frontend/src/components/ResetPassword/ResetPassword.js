@@ -116,6 +116,7 @@ const ResetPassword = () => {
   const submitResetPassword = async () => {
     if (credential.password === "" && credential.confirmPassword === "") {
       toast.error("please fill all the field");
+      return false;
     } else if (
       error.passwordCheck !== "" ||
       error.confirmPasswordCheck !== ""
