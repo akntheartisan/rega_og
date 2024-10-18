@@ -8,7 +8,7 @@ const storage = multer.memoryStorage();
 
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 1024 * 1024 * 5 } // Limit file size to 5MB
+  limits: { fileSize: 1024 * 1024 * 5 }, // Limit file size to 5MB
 });
 
 exports.uploadFile = upload.single("image");
@@ -39,7 +39,7 @@ exports.saveImage = async (req, res, next) => {
     console.log("No image buffer, skipping saveImage");
     return next();
   }
-  
+
   try {
     const fileName = `scooter_${Date.now()}.png`;
     const Stream = Cloudinary.uploader.upload_stream(
@@ -102,6 +102,8 @@ exports.productadd = async (req, res, next) => {
     price,
   } = req.body;
 
+  console.log(charging);
+
   try {
     let findModel = await projectmodel.find({ model });
     if (findModel) {
@@ -117,7 +119,7 @@ exports.productadd = async (req, res, next) => {
               brakes,
               ground,
               payload,
-              charging,
+              chargingtime: charging,
               frame,
               price,
             },
@@ -139,7 +141,7 @@ exports.getPrimary = async (req, res, next) => {
     const primary = await projectmodel.distinct("model");
     // const primary = await projectmodel.find();
     console.log(primary);
-    
+
     if (primary) {
       res.status(200).json({
         status: "success",
@@ -152,7 +154,6 @@ exports.getPrimary = async (req, res, next) => {
 };
 
 exports.getProduct = async (req, res, next) => {
-
   try {
     let data = await projectmodel.find();
 
@@ -168,11 +169,11 @@ exports.getProduct = async (req, res, next) => {
 };
 
 exports.getSelected = async (req, res, next) => {
-  console.log('selectedproduct');
-  
-  const {id} = req.query;
+  console.log("selectedproduct");
+
+  const { id } = req.query;
   console.log(id);
-  
+
   try {
     let selected = await projectmodel.findById(id);
 
@@ -187,58 +188,29 @@ exports.getSelected = async (req, res, next) => {
   }
 };
 
-
 exports.updateProject = async (req, res) => {
   //console.log("this update get triggered");
-  const id = req.body._id;
-console.log(id);
+  const { updatedProduct, id } = req.body;
+  console.log(updatedProduct, id);
 
   try {
-    let updateProduct = await projectmodel.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
-    console.log(updateProduct);
-    // if (updateProduct) {
-    //   return res.status(200).json({
-    //     status: "success",
-    //     message: "Updated successfully",
-    //     data: updateProduct,
-    //   });
-    // } else {
-    //   return res.status(404).json({
-    //     status: "fail",
-    //     message: "Product not found",
-    //   });
-    // }
+    const updatedDoc = await projectmodel.updateOne(
+      { _id: id, "SubModel._id": updatedProduct._id },
+      { $set: { "SubModel.$": updatedProduct } }
+    );
+
+    console.log(updatedDoc);
+    if(updatedDoc){
+      return res.status(200).json({
+        status: "success",
+        message: "Updated successfully",
+      });
+    }
+
   } catch (error) {
-    //console.log(error);
+    console.log(error);
   }
 };
-// exports.updateProject = async (req, res) => {
-//   //console.log("this update get triggered");
-//   const { updatedProduct, id } = req.body;
-//   console.log(updatedProduct, id);
-
-//   try {
-//     const updatedDoc = await projectmodel.updateOne(
-//       { _id: id, "SubModel._id": updatedProduct._id },
-//       { $set: { "SubModel.$": updatedProduct } }
-//     );
-
-//     console.log(updatedDoc);
-//     if(updatedDoc){
-//       return res.status(200).json({
-//         status: "success",
-//         message: "Updated successfully",
-//       });
-//     }
-    
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-
 
 exports.deleteProduct = async (req, res) => {
   //console.log(req.body.id);
@@ -254,7 +226,6 @@ exports.deleteProduct = async (req, res) => {
     //console.log(error);
   }
 };
-
 
 exports.deletePrimaryProduct = async (req, res) => {
   const { id } = req.params; // Get the ID from the request parameters
@@ -291,9 +262,9 @@ exports.updatePrimaryProduct = async (req, res, next) => {
 
     // If the product is not found, return an error
     if (!currentProduct) {
-      return res.status(404).json({ 
-        success: false, 
-        message: "Product not found" 
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
       });
     }
 
@@ -320,7 +291,9 @@ exports.updatePrimaryProduct = async (req, res, next) => {
     }
 
     // Update the product in the database
-    const productUpdate = await projectmodel.findByIdAndUpdate(id, updateData, { new: true });
+    const productUpdate = await projectmodel.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
 
     // Return the updated product in the response
     return res.status(200).json({
@@ -328,7 +301,6 @@ exports.updatePrimaryProduct = async (req, res, next) => {
       message: "Product updated successfully",
       productUpdate,
     });
-
   } catch (error) {
     console.error("Error updating product:", error);
     return res.status(500).json({

@@ -13,6 +13,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import CircularProgress from "@mui/material/CircularProgress";
 import Loader from "../ProductView/Loader";
 
 const intial = { name: "", username: "", password: "", confirmpassword: "" };
@@ -143,14 +144,14 @@ const Signup = () => {
       toast.error("Please fill all the fields");
       return false;
     }
+
     setLoader(true);
+
     try {
       const response = await client.post("/user/userOTP", user);
 
-      
-
       if (response.status === 200) {
-        //setLoader(false);
+        setLoader(false);
         setTypeOTP(true);
         toast.success("OTP send to Your mailId");
         setMailOTP(response.data.otp);
@@ -166,9 +167,11 @@ const Signup = () => {
   console.log(mailOTP, userOTP);
 
   const verifyOtp = async () => {
+    setLoader(true);
     if (mailOTP == userOTP) {
       toast.success("OTP verified successfully!");
       await userCreate();
+      setLoader(false);
       // await getUserData();
     } else {
       toast.error("Invalid OTP. Please try again.");
@@ -419,12 +422,12 @@ const Signup = () => {
           </button>{" "} */}
           <Stack>
             <button
-              type="button"
+              type={!loader ? "button" : ""}
               class="btn"
-              onClick={submit}
+              onClick={!loader ? submit : undefined}
               style={{ color: "white", backgroundColor: "#f28123" }}
             >
-              Register
+              {!loader ? "Register" : "Loading ... "}
             </button>
             {termsShow ? (
               ""
@@ -480,14 +483,13 @@ const Signup = () => {
               type="button"
               class="btn"
               style={{ color: "white", backgroundColor: "#f28123" }}
-              onClick={verifyOtp}
+              onClick={!loader ? verifyOtp : undefined}
             >
-              Ok
+              {!loader ? "ok" : "Loading ... "}
             </Button>
           </Stack>
         </>
       )}
-      
     </>
   );
 };

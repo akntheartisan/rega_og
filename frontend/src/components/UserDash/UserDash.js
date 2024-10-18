@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import UserHeader from "./UserHeader";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import ProfileForm from "../Profile/ProfileForm";
@@ -7,18 +7,31 @@ import { Paper } from "@mui/material";
 import bike from "./man.png";
 import { IconButton } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove';
+import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
+import DriveFileMoveIcon from "@mui/icons-material/DriveFileMove";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { client } from "../Client/Client";
 import { useLocation } from "react-router-dom";
-import './userdash.css';
+import "./userdash.css";
 
 const UserDash = () => {
   const navigate = useNavigate();
   const { userData, setUserData } = useContext(UserContext);
   console.log(userData);
+  const [dataFromChild, setDataFromChild] = useState("");
+  const [btnDisable, setBtnDisable] = useState(false);
 
+  // const handleChildData = (childData) => {
+  //   setDataFromChild(childData);
+  // };
+
+  
+
+  useEffect(()=>{
+    if(userData && userData.hasOwnProperty('pincode')){
+      setBtnDisable(true);
+    }
+  },[userData])
 
   const cart = () => {
     const id = userData._id;
@@ -69,37 +82,13 @@ const UserDash = () => {
               </p>
             </Paper>
             <Paper elevation={5} sx={{ marginTop: "20px" }}>
-              <div style={{ marginLeft: "10px" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    marginLeft:'15px',
-                    height: "60px",
-                    alignItems: "center",
-                  }}
-                >
-                  <AccountCircleIcon sx={{ color: "#878787" }} />
-                  &nbsp;&nbsp;
-                  <h5 style={{ color: "#878787" }}>Account Settings</h5>
-                </div>
-
-                <button
-                  style={{
-                    border: "none",
-                    backgroundColor: "transparent",
-                    marginLeft: "50px",
-                  }}
-                  onClick={cart}
-                >
-                  Profile Information
-                </button>
-              </div>
+           
               <hr />
               <div style={{ marginLeft: "10px" }}>
                 <div
                   style={{
                     display: "flex",
-                    marginLeft:'15px',
+                    marginLeft: "15px",
                     height: "60px",
                     alignItems: "center",
                   }}
@@ -116,6 +105,7 @@ const UserDash = () => {
                     marginLeft: "50px",
                   }}
                   onClick={cart}
+                  disabled={!btnDisable}
                 >
                   Go to Cart
                 </button>
@@ -125,7 +115,7 @@ const UserDash = () => {
                 <div
                   style={{
                     display: "flex",
-                    marginLeft:'15px',
+                    marginLeft: "15px",
                     height: "60px",
                     alignItems: "center",
                   }}
@@ -142,13 +132,14 @@ const UserDash = () => {
                     marginLeft: "50px",
                   }}
                   onClick={orders}
+                  disabled={!btnDisable}
                 >
                   Orders
                 </button>
               </div>
               <hr />
 
-              <div style={{display:'flex', marginLeft:'15px'}}>
+              <div style={{ display: "flex", marginLeft: "15px" }}>
                 <button
                   style={{ border: "none", backgroundColor: "transparent" }}
                   onClick={logout}
@@ -158,7 +149,7 @@ const UserDash = () => {
                       fontSize: "18px",
                       color: "#878787",
                       fontWeight: "550",
-                      marginBottom:'15px'
+                      marginBottom: "15px",
                     }}
                   >
                     <LogoutIcon />
@@ -169,6 +160,7 @@ const UserDash = () => {
             </Paper>
           </div>
           <div className="col-lg-9 col-12">
+            {/* <ProfileForm handleChildData={handleChildData} setBtnDisable={setBtnDisable}/> */}
             <ProfileForm/>
           </div>
         </div>

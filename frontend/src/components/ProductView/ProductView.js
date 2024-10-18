@@ -402,8 +402,8 @@ const ProductView = () => {
                       </p>
                       <p style={{ fontSize: "16px", fontWeight: "500" }}>
                         {!selected
-                          ? product.SubModel[0].charging
-                          : selected.charging}
+                          ? product.SubModel[0].chargingtime
+                          : selected.chargingtime}
                       </p>
                     </div>
                   </div>

@@ -7,13 +7,15 @@ import AboutHeader from '../About/AboutHeader'
 import scooty1 from "../../assets/images/scooty1.png"   
 
 import ProductSection from './ProductSection'
+import Product from '../Home/Product/Product'
 
 const ProductPage = () => {
   return (
 <>
 <Header />
 <AboutHeader title="Products" imageURl={scooty1}/>
-<ProductSection/>
+<Product/>
+
 <Footer />
 
     </>

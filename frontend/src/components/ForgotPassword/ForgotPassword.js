@@ -7,16 +7,20 @@ import { client } from "../Client/Client";
 import toast from "react-hot-toast";
 
 
+
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [mail, setMail] = useState("");
+  const [loader,setLoader] = useState(false);
+  const [error,setError] = useState(false);
   console.log(mail);
 
   const submitMail = async () => {
     if(!mail){
-      toast.error('Please enter your mailId');
+      setError(true);
       return false;
     }
+    setLoader(true);
     try {
       const forgotPasswordMail = await client.post("/user/forgotpassword", {
         mail: mail,
@@ -26,6 +30,7 @@ const ForgotPassword = () => {
 
       if(forgotPasswordMail.status === 200){
         toast.success('Password Reset Link has been sent to your mail');
+        setLoader(false);
         setMail('');
         navigate('/register');
       }
@@ -34,6 +39,7 @@ const ForgotPassword = () => {
       console.log(error.response);
       if(error.response.status === 402){
         toast.error('This Mail is not registered');
+        setLoader(false);
         setMail('');
       }
     }
@@ -66,6 +72,7 @@ const ForgotPassword = () => {
                 
                 required
               />
+              {error ? <p style={{color:'red',fontWeight:'550'}}>Please Enter Your registered mail</p> : ''}
               <div
                 style={{
                   marginTop: "15px",
@@ -74,7 +81,7 @@ const ForgotPassword = () => {
                 }}
               >
                 <button
-                  onClick={submitMail}
+                  onClick={!loader ? submitMail : undefined}
                   style={{
                     backgroundColor: "#ff9f00",
                     borderColor: "#ff9f00",
@@ -86,7 +93,7 @@ const ForgotPassword = () => {
                     fontWeight: "650",
                   }}
                 >
-                  submit
+                  {!loader ? 'submit' : 'Loading ...'}
                 </button>
               </div>
 

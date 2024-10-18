@@ -1,6 +1,6 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import './footer.css';
+import { Link, NavLink } from "react-router-dom";
+import "./footer.css";
 
 const Footer = () => {
   return (
@@ -9,7 +9,6 @@ const Footer = () => {
         <div className="footer-area">
           <div className="container">
             <div className="row">
-
               <div className="col-md-4 futer_detail">
                 <div className="footer-box about-widget">
                   <h2 className="widget-title">Rega</h2>
@@ -89,7 +88,6 @@ const Footer = () => {
                   </ul>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -98,12 +96,15 @@ const Footer = () => {
             <div className="row">
               <div className="col-lg-6 col-md-12">
                 <p>
-                  Copyrights © 2019 -{" "}
-                  <a href="https://imransdesign.com/">Imran Hossain</a>, All
-                  Rights Reserved.
+                  Designed By -{" "}
+                  <a
+                    href="https://hellowtec.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Hello Technologies
+                  </a>
                   <br />
-                  Distributed By -{" "}
-                  <a href="https://themewagon.com/">Themewagon</a>
                 </p>
               </div>
               <div className="col-lg-6 text-right col-md-12">

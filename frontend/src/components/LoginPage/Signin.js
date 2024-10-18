@@ -22,13 +22,14 @@ const Signin = () => {
   const [errors, setErrors] = useState({ username: "", password: "" });
   const [terms, setTerms] = useState(false);
   const [termsShow, setTermsShow] = useState(true);
+  const [loader, setLoader] = useState(false);
 
   async function verify() {
     if (!terms) {
       setTermsShow(false);
       return false;
     }
-
+    setLoader(true);
     const credential = { username, password };
     try {
       const response = await client.post("/user/signin", credential, {
@@ -37,6 +38,7 @@ const Signin = () => {
       console.log(response.status);
 
       if (response.status === 200) {
+        setLoader(false);
         toast.success("Logged In");
         setUserName("");
         setPassword("");
@@ -199,15 +201,17 @@ const Signin = () => {
           <button
             type="button"
             class="btn"
-            onClick={verify}
+            onClick={!loader ? verify : undefined}
             style={{ color: "white", backgroundColor: "#f28123" }}
           >
-            LogIn
+            {!loader ? 'LogIn' : 'Loading ...'}
           </button>
           {termsShow ? (
             ""
           ) : (
-            <p style={{ color: "#f28123",marginTop:'5px',fontWeight:'600' }}>
+            <p
+              style={{ color: "#f28123", marginTop: "5px", fontWeight: "600" }}
+            >
               Please Check the terms & conditions
             </p>
           )}

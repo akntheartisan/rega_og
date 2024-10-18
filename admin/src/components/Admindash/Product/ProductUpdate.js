@@ -32,6 +32,8 @@ export default function ProductUpdate({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(name);
+    
     setUpdatedProduct((prev) => ({
       ...prev,
       [name]: value,
@@ -246,6 +248,21 @@ export default function ProductUpdate({
                       id="payload"
                       name="payload"
                       value={updatedProduct.payload}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="mb-3">
+                    <label htmlFor="tyresize" className="form-label">
+                      Charging Time
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="charging"
+                      name="chargingtime"
+                      value={updatedProduct.chargingtime}
                       onChange={handleChange}
                     />
                   </div>

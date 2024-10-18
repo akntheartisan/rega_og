@@ -4,12 +4,14 @@ import { client } from "../Client/Client";
 import "./profiledesign.css";
 import { Paper } from "@mui/material";
 import { UserContext } from "../../App";
+import { useNavigate } from "react-router-dom";
 
 
 
-const ProfileForm = () => {
+const ProfileForm = ({}) => {
+  const navigate = useNavigate();
   const { userData, setUserData } = useContext(UserContext);
-
+  const [dataToParent,setDataToParent] = useState(false);
   
   const [profileData, setProfileData] = useState({
     name: '',
@@ -42,6 +44,12 @@ const ProfileForm = () => {
   }, [userData]); 
 
   console.log(profileData.name); 
+
+  // useEffect(()=>{
+  //   if(setBtnDisable){
+  //     handleChildData(setBtnDisable)
+  //   }
+  // },[setBtnDisable])
   
 
   const [error, setError] = useState({
@@ -52,7 +60,6 @@ const ProfileForm = () => {
     state: "",
     pincode: "",
   });
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,12 +76,17 @@ const ProfileForm = () => {
       }
     }
 
+    if (name === 'address') {
+      if (value.charCodeAt(0) === 32) {
+        return false;
+      }
+    }
+
     setProfileData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
-
 
 
   const validateFunction = () => {
@@ -129,6 +141,9 @@ const ProfileForm = () => {
 
         if (response.status === 200) {
           toast.success("Submitted Successfully");
+          navigate('/');
+          //setDataToParent(true);
+          // setBtnDisable(true);
         }
 
         if(response.status === 400){
