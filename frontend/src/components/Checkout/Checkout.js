@@ -139,15 +139,16 @@ const Checkout = () => {
         cartData: multiCartData ? multiCartData : [...singleCartArray],
       });
 
-      console.log(typeof cartOffline.status);
+      console.log(cartOffline);
 
-      if (cartOffline.status === 200) {
-        // toast.success("your order has been placed");
+      if (cartOffline.data.message === 'offline') {
+        navigate("/");
+        toast.success("your order has been placed");
         setChecked(false);
         setPod(false);
         setModel(false);
         setTotalShow(false);
-        //navigate("/");
+        
       }
 
       if (cartOffline.data.error === "Amount exceed") {

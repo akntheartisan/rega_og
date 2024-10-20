@@ -57,9 +57,9 @@ exports.addCart = async (req, res, next) => {
         );
       }
 
-      res.status(200).json({
+      res.json({
         success: "offline order success",
-        message: "Order has been placed successfully",
+        message: "offline",
       });
     } else if (paymentMode === "online") {
       console.log("payment mode: online");
