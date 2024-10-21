@@ -62,6 +62,9 @@ const UserRegister = new mongoose.Schema(
     passwordResetToken: {
       type: String,
     },
+    otp:{
+      type:Number
+    },
     otpExpiresAt:{
       type:Number
     },

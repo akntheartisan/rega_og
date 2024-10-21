@@ -8,6 +8,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import UserProfile from "../Header/UserProfile";
 import './checkout.css'
 import { NavLink } from "react-router-dom";
+import logo from "./logo.png"
 
 const AccountButton = styled(Button)({
   textTransform: "none",
@@ -38,7 +39,7 @@ const CheckoutHeader = () => {
       <div className="checkhead">
         <div className="checklogo">
         
-            <img src="assets/img/logo.png" alt />
+            <img src={logo} alt />
          
         </div>
         <nav className="main-menu">

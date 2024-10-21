@@ -3,10 +3,12 @@ const usermodel = require("../model/UserRegisterModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const JWT_SECRET = "fhsdkfhksdhfjksdhfkjsdhiy";
-const JWT_EXPIRATION = "1hr";
+const JWT_EXPIRATION = "1m";
 const sendMail = require("../Utility/Mail");
 const crypto = require("crypto");
 const { isErrored } = require("stream");
+
+let otpCheck;
 
 usermodel.createIndexes({ username: 1 });
 usermodel.createIndexes({ passwordResetToken: 1 });
@@ -32,12 +34,14 @@ exports.userOTP = async (req, res, next) => {
       });
     }
     const otp = Math.floor(1000 + Math.random() * 9000);
+
     //const otpExpiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes expiration
 
     console.log("beforeusercreate");
 
     const newuser = await usermodel.create({
       username,
+      otp: otp,
       //otpExpiresAt,
     });
 
@@ -52,7 +56,7 @@ exports.userOTP = async (req, res, next) => {
         message: message,
       });
 
-      return res.status(200).json({ otp });
+      return res.status(200).json({ status: "success" });
     }
   } catch (error) {
     res.status(400).json({
@@ -64,22 +68,27 @@ exports.userOTP = async (req, res, next) => {
 
 exports.userSignUp = async (req, res, next) => {
   console.log("user creation method");
-  const { name, username, password, confirmpassword } = req.body;
 
+  const { name, username, password, confirmpassword, userOTP } = req.body;
+  console.log(userOTP);
   try {
-  
     const existingUser = await usermodel.findOne({
       username,
     });
 
+    console.log(existingUser.otp);
+
     if (!existingUser) {
       return res.status(400).json({
         status: "fail",
-        message: "Invalid OTP or OTP has expired",
+        message: "Invalid User",
       });
-    } else {
+    }
+
+    if (existingUser.otp == userOTP) {
       existingUser.name = name;
       existingUser.password = await bcrypt.hash(password, 12);
+      existingUser.otp = '';
       //existingUser.otpExpiresAt = undefined;
       await existingUser.save();
 
@@ -95,6 +104,11 @@ exports.userSignUp = async (req, res, next) => {
           sameSite: "none",
         })
         .json({ existingUser });
+    } else {
+      return res.status(400).json({
+        status: "fail",
+        message: "Invalid OTP, Try Again",
+      });
     }
   } catch (error) {
     res.status(400).json({
@@ -267,7 +281,7 @@ exports.forgotpassword = async (req, res, next) => {
         message: "there is no user for this mail",
       });
     }
-    
+
     const resetToken = user.createPasswordResetToken();
     await user.save({ validateBeforeSave: false });
 
@@ -326,25 +340,22 @@ exports.resetPassword = async (req, res, next) => {
 exports.validateResetToken = async (req, res) => {
   try {
     const { id } = req.params;
-    const encryptedToken = crypto
-    .createHash("sha256")
-    .update(id)
-    .digest("hex");
+    const encryptedToken = crypto.createHash("sha256").update(id).digest("hex");
     const user = await usermodel.findOne({
       passwordResetToken: encryptedToken,
-    
     });
     if (!user) {
-      return res.status(400).json({ message: 'Invalid or expired reset token.' });
+      return res
+        .status(400)
+        .json({ message: "Invalid or expired reset token." });
     }
-    res.status(200).json({ 
-      message: 'Token is valid.',
-      email: user.email 
+    res.status(200).json({
+      message: "Token is valid.",
+      email: user.email,
     });
-
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error.' });
+    res.status(500).json({ message: "Server error." });
   }
 };
 

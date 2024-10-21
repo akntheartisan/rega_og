@@ -48,6 +48,9 @@ const Signin = () => {
       console.log(error);
       if (error.response.data.error) {
         toast.error(error.response.data.error);
+        setUserName("");
+        setPassword("");
+        setLoader(false);
       }
     }
   }

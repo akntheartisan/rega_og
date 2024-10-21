@@ -61,9 +61,9 @@ const Checkout = () => {
   // const total = actualTotal ? actualTotal : cartData.price;
   // const quantity = location.state.quantity;
 
-  const navToHome = ()=>{
-    navigate('/');
-  }
+  const navToHome = () => {
+    navigate("/");
+  };
 
   const handleBillChange = (e) => {
     const { name, value } = e.target;
@@ -141,14 +141,13 @@ const Checkout = () => {
 
       console.log(cartOffline);
 
-      if (cartOffline.data.message === 'offline') {
+      if (cartOffline.data.message === "offline") {
         navigate("/");
         toast.success("your order has been placed");
         setChecked(false);
         setPod(false);
         setModel(false);
         setTotalShow(false);
-        
       }
 
       if (cartOffline.data.error === "Amount exceed") {
@@ -263,17 +262,6 @@ const Checkout = () => {
         <>
           <CheckoutHeader />
           <div>
-            {/* <div className="breadcrumb-section breadcrumb-bg">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-8 offset-lg-2 text-center">
-                <div className="breadcrumb-text">
-                  <h1>Check Out Product</h1>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
             <div className="checkout-section mt-5 mb-5">
               <div className="container">
                 <div className="row">

@@ -154,40 +154,46 @@ const Signup = () => {
         setLoader(false);
         setTypeOTP(true);
         toast.success("OTP send to Your mailId");
-        setMailOTP(response.data.otp);
+        //setMailOTP(response.data.otp);
       }
     } catch (error) {
       console.log(error);
       if (error.response.data.error) {
         toast.error(error.response.data.error);
+        setUser(intial);
+        setLoader(false);
       }
     }
   };
 
   console.log(mailOTP, userOTP);
 
-  const verifyOtp = async () => {
-    setLoader(true);
-    if (mailOTP == userOTP) {
-      toast.success("OTP verified successfully!");
-      await userCreate();
-      setLoader(false);
-      // await getUserData();
-    } else {
-      toast.error("Invalid OTP. Please try again.");
-    }
-  };
+  // const verifyOtp = async () => {
+  //   setLoader(true);
+  //   if (mailOTP == userOTP) {
+  //     toast.success("OTP verified successfully!");
+  //     await userCreate();
+  //     setLoader(false);
+  //     // await getUserData();
+  //   } else {
+  //     toast.error("Invalid OTP. Please try again.");
+  //   }
+  // };
 
   const userCreate = async () => {
+    setLoader(true);
     try {
-      const newUser = await client.post("/user/usersignup", user, {
+      const newUser = await client.post("/user/usersignup", {...user,userOTP}, {
         withCredentials: true,
       });
       if (newUser.status === 200) {
+        toast.success("OTP verified successfully!");
         setUser(intial);
         getUserData();
+        setLoader(false);
       }
     } catch (error) {
+      toast.error("Invalid OTP. Please try again.");
       console.log(error);
     }
   };
@@ -483,7 +489,7 @@ const Signup = () => {
               type="button"
               class="btn"
               style={{ color: "white", backgroundColor: "#f28123" }}
-              onClick={!loader ? verifyOtp : undefined}
+              onClick={!loader ? userCreate : undefined}
             >
               {!loader ? "ok" : "Loading ... "}
             </Button>

@@ -69,14 +69,17 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About/>} />
           <Route path="/productview/:id" element={<ProductView/>}/>
-          <Route path="/cart" element={<Cart/>} />
-          <Route path="/orders" element={<Orders/>} />
-          <Route path="/checkout" element={<Checkout/>}/>
+          <Route path="/product" element={<ProductPage/>} />
           <Route path="/register" element={<LoginPage />} />
-          <Route path="/userdash" element={<UserDash />} />
+
+          <Route path="/cart" element={userData ? <Cart/> : <Home/>} />
+          <Route path="/orders" element={userData ? <Orders/> : <Home/>} />
+          <Route path="/checkout" element={userData ? <Checkout/> : <Home/>}/>
+          <Route path="/userdash" element={userData ? <UserDash /> : <Home/>} />
+
           <Route path="/forgetPasswordPage" element={<ForgotPassword />} />
           <Route path="/users/resetPassword/:id" element={<ResetPassword />} />
-          <Route path="/product" element={<ProductPage/>} />
+          
           <Route path="*" element={<Error/>} />
         </Routes>
       </UserContext.Provider>
