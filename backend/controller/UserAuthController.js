@@ -3,7 +3,7 @@ const usermodel = require("../model/UserRegisterModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const JWT_SECRET = "fhsdkfhksdhfjksdhfkjsdhiy";
-const JWT_EXPIRATION = "1m";
+const JWT_EXPIRATION = "1hr";
 const sendMail = require("../Utility/Mail");
 const crypto = require("crypto");
 const { isErrored } = require("stream");
@@ -285,8 +285,8 @@ exports.forgotpassword = async (req, res, next) => {
     const resetToken = user.createPasswordResetToken();
     await user.save({ validateBeforeSave: false });
 
-    //const url = `http://localhost:3000/users/resetPassword/${resetToken}`;
-    const url = `https://rega-og.vercel.app/users/resetPassword/${resetToken}`;
+    const url = `http://localhost:3000/users/resetPassword/${resetToken}`;
+    //const url = `https://rega-og.vercel.app/users/resetPassword/${resetToken}`;
     const message = `this is the password reset link ${url} /n click here.`;
 
     await sendMail({
