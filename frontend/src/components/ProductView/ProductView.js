@@ -10,6 +10,9 @@ import hand from "./hand.png";
 import mobilesurf from "./mobilesurf.png";
 import bikereceive from "./bikereceive.png";
 import smallbattery from "./car-battery (2).png";
+import motorcycle from "./motorcycle.png";
+import loading from "./loading.png";
+import speedometer from "./speedometer.png";
 import CallIcon from "@mui/icons-material/Call";
 import Footer from "../Footer/Footer";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -148,23 +151,21 @@ const ProductView = () => {
       {product && (
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-4">
+          <div className="col-md-4">
+              <div  className="product_view_image">
               <img
                 src={product.image.url}
                 alt="img"
-                style={{
-                  objectFit: "cover",
-                  width: "100%",
-                  height: "350px",
-                  objectFit: "cover",
-                  marginTop: "-20px",
-                }}
+           
               />
+              </div>
 
               <div
+              className="button-container-product"
                 style={{
                   display: "flex",
                   justifyContent: "center",
+                  flexWrap:"wrap",
                 }}
               >
                 <button
@@ -325,7 +326,7 @@ const ProductView = () => {
                     className="col-md-12 col-lg-4 mb-3"
                     style={{ display: "flex" }}
                   >
-                    <img src={motor} alt="Car" />
+                    <img src={speedometer} alt="Car" />
                     <div>
                       <p style={{ margin: "0", color: "#767f88" }}>Range</p>
                       <p style={{ fontSize: "16px", fontWeight: "500" }}>
@@ -365,7 +366,7 @@ const ProductView = () => {
                     className="col-md-12 col-lg-4 mb-3"
                     style={{ display: "flex" }}
                   >
-                    <img src={motor} alt="Car" />
+                    <img src={motorcycle} alt="Car" />
                     <div>
                       <p style={{ margin: "0", color: "#767f88" }}>
                         Ground Clearance
@@ -381,7 +382,7 @@ const ProductView = () => {
                     className="col-md-12 col-lg-4 mb-3"
                     style={{ display: "flex" }}
                   >
-                    <img src={motor} alt="Car" />
+                    <img src={loading} alt="Car" />
                     <div>
                       <p style={{ margin: "0", color: "#767f88" }}>Payload</p>
                       <p style={{ fontSize: "16px", fontWeight: "500" }}>

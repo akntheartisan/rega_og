@@ -128,7 +128,7 @@ const EnquiryForm = () => {
           Form submitted successfully!
         </Alert>
       )}
-      <div className="contact-form-section">
+     <div className="contact-form-section">
         <div className="contact-form-container">
           <video className="video-background" autoPlay loop muted>
             <source src={videoSrc} type="video/mp4" />
@@ -137,7 +137,8 @@ const EnquiryForm = () => {
           <div className="contact-form">
             <h2>Contact Us</h2>
             <form onSubmit={handleSubmit}>
-              <p>
+              <div className='row'>
+                <div className="col-md-6">
                 <input
                   type="text"
                   placeholder="Name"
@@ -148,6 +149,8 @@ const EnquiryForm = () => {
                   required
                 />
                 {errors.name && <div className="error">{errors.name}</div>}
+                </div>
+                <div className="col-md-6">
                 <input
                   type="email"
                   placeholder="Email"
@@ -158,8 +161,8 @@ const EnquiryForm = () => {
                   required
                 />
                 {errors.email && <div className="error">{errors.email}</div>}
-              </p>
-              <p>
+                </div>
+                <div className='col-md-6'>
                 <input
                   type="tel"
                   placeholder="Phone"
@@ -170,6 +173,8 @@ const EnquiryForm = () => {
                   required
                 />
                 {errors.phone && <div className="error">{errors.phone}</div>}
+                </div>
+                <div className='col-md-6'>
                 <input
                   type="text"
                   placeholder="Subject"
@@ -180,20 +185,22 @@ const EnquiryForm = () => {
                   required
                 />
                 {errors.subject && <div className="error">{errors.subject}</div>}
-              </p>
-              <p>
+
+                </div>
+                <div className='col-md-12'>
                 <textarea
                   name="message"
                   id="message"
-                  cols={30}
-                  rows={10}
+                  cols={10}
+                  rows={5}
                   placeholder="Message"
                   value={message}
                   onChange={handleMessageChange}
                   required
                 />
                 {errors.message && <div className="error">{errors.message}</div>}
-              </p>
+                </div>
+              </div>
               <p>
                 <input type="submit" value="Submit" />
               </p>

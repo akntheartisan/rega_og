@@ -38,7 +38,7 @@ const Header = () => {
   return (
     <>
       <div className="top-header-area" id="sticker">
-        <div className="container-fluid px-5">
+        <div className="container-fluid px-5 Header-padding">
           <div className="row">
             <div className="col-lg-12 col-sm-12 text-center">
               {!smallScreen ? (
@@ -122,19 +122,30 @@ const Header = () => {
                 </div>
               ) : (
                 <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <div style={{maxWidth:'150px'}}>
-                    <NavLink to="/">
-                      <img src="assets/img/logo.png" alt="Site Logo" />
-                    </NavLink>
-                  </div>
-                  <div>
-                    <NavLink to="#">
-                      <MobileViewMenu />
-                    </NavLink>
-                  </div>
+                style={{ display: "flex", justifyContent: "space-between" }}
+              >
+                <div style={{maxWidth:'150px'}}>
+                  <NavLink to="/">
+                    <img src="assets/img/logo.png" alt="Site Logo" />
+                  </NavLink>
                 </div>
+                <div className="header-icons">
+                        {userData ? (
+                          <UserProfile />
+                        ) : (
+                          <NavLink className="mobile-hide" to="/register">
+                            <AccountButton
+                              variant="contained"
+                              startIcon={
+                                <AccountCircleIcon sx={{ color: "white" }} />
+                              }
+                            >
+                              Sign In
+                            </AccountButton>
+                          </NavLink>
+                        )}
+                </div>
+              </div>
               )}
             </div>
           </div>

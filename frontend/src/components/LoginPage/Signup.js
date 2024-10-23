@@ -131,6 +131,7 @@ const Signup = () => {
   console.log(user);
 
   const submit = async () => {
+    toast.dismiss()
     if (!terms) {
       setTermsShow(false);
       return false;
@@ -141,6 +142,7 @@ const Signup = () => {
       !user.password ||
       !user.confirmpassword
     ) {
+
       toast.error("Please fill all the fields");
       return false;
     }

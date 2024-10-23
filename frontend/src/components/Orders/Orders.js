@@ -215,104 +215,106 @@ const Orders = () => {
                       key={order.cartId}
                       elevation={4}
                       sx={{
-                        display: "flex",
-                        justifyContent: "space-around",
                         marginTop: "10px",
                         padding: "20px",
                       }}
                     >
-                      <div>
-                        <img
-                          src={order.image}
-                          alt="Order"
-                          className="order_image"
-                        />
-                      </div>
-                      <div>
-                        <p>
-                          {order.model} {order.subModelDetails.battery}
-                        </p>
-                        <p>{order.subModelDetails.range}</p>
-                      </div>
-                      <div>
-                        <p>&#8377;{order.subModelDetails.price}</p>
-                      </div>
-                      <div>
-                        {order.deliverystatus === "Delivered" ? (
-                          <>
-                            <div
-                              style={{
-                                height: "10px",
-                                width: "10px",
-                                backgroundColor: "green",
-                                borderRadius: "50%",
-                                display: "inline-block",
-                              }}
-                            ></div>{" "}
-                            Delivered<br/>
-                            <Button
-                              onClick={() =>
-                                pdfDownload(eachOrder._id, order.cartId)
-                              }
-                              variant="contained"
-                              startIcon={<PictureAsPdfIcon />}
-                              className="order_cancel"
-                            >
-                              Invoice
-                            </Button>
-                            <div>
+                      <div className="row">
+                        <div className="col-md-3 col-6 d-flex justify-content-center">
+                          <img
+                            src={order.image}
+                            alt="Order"
+                            className="order_image"
+                          />
+                        </div>
+                        <div className="col-md-3 col-6">
+                          <p>
+                            {order.model} {order.subModelDetails.battery}
+                          </p>
+                          <p>{order.subModelDetails.range}</p>
+                        </div>
+                        <div className="col-md-3 col-6 d-flex justify-content-center">
+                          <p>&#8377;{order.subModelDetails.price}</p>
+                        </div>
+                        <div className="col-md-3 col-6">
+                          {order.deliverystatus === "Delivered" ? (
+                            <>
+                              <div
+                                style={{
+                                  height: "10px",
+                                  width: "10px",
+                                  backgroundColor: "green",
+                                  borderRadius: "50%",
+                                  display: "inline-block",
+                                }}
+                              ></div>{" "}
+                              Delivered
+                              <br />
                               <Button
-                                variant="text"
-                                color="primary"
                                 onClick={() =>
-                                  handleOpen(
-                                    order.model,
-                                    order.subModelDetails.battery
-                                  )
+                                  pdfDownload(eachOrder._id, order.cartId)
                                 }
+                                variant="contained"
+                                startIcon={<PictureAsPdfIcon />}
+                                className="order_cancel"
                               >
-                                Rate this Product
+                                Invoice
                               </Button>
-                            </div>
-                          </>
-                        ) : order.deliverystatus === "Not Delivered" ? (
-                          <>
-                            <div
-                              style={{
-                                height: "10px",
-                                width: "10px",
-                                backgroundColor: "#f28123",
-                                borderRadius: "50%",
-                                display: "inline-block",
-                              }}
-                            ></div>{" "}
-                            Not Delivered<br/>
-                            <Button
-                              onClick={() =>
-                                cancelProduct(eachOrder._id, order.cartId)
-                              }
-                              color="error"
-                              variant="contained"
-                              startIcon={<CancelIcon />}
-                              className="order_cancel"
-                            >
-                              Cancel
-                            </Button>
-                          </>
-                        ) : order.deliverystatus === "cancelled" ? (
-                          <>
-                            <div
-                              style={{
-                                height: "10px",
-                                width: "10px",
-                                backgroundColor: "red",
-                                borderRadius: "50%",
-                                display: "inline-block",
-                              }}
-                            ></div>{" "}
-                            Cancelled
-                          </>
-                        ) : null}
+                              <div>
+                                <Button
+                                  variant="text"
+                                  color="primary"
+                                  onClick={() =>
+                                    handleOpen(
+                                      order.model,
+                                      order.subModelDetails.battery
+                                    )
+                                  }
+                                >
+                                  Rate this Product
+                                </Button>
+                              </div>
+                            </>
+                          ) : order.deliverystatus === "Not Delivered" ? (
+                            <>
+                              <div
+                                style={{
+                                  height: "10px",
+                                  width: "10px",
+                                  backgroundColor: "#f28123",
+                                  borderRadius: "50%",
+                                  display: "inline-block",
+                                }}
+                              ></div>{" "}
+                              Not Delivered
+                              <br />
+                              <Button
+                                onClick={() =>
+                                  cancelProduct(eachOrder._id, order.cartId)
+                                }
+                                color="error"
+                                variant="contained"
+                                startIcon={<CancelIcon />}
+                                className="order_cancel"
+                              >
+                                Cancel
+                              </Button>
+                            </>
+                          ) : order.deliverystatus === "cancelled" ? (
+                            <>
+                              <div
+                                style={{
+                                  height: "10px",
+                                  width: "10px",
+                                  backgroundColor: "red",
+                                  borderRadius: "50%",
+                                  display: "inline-block",
+                                }}
+                              ></div>{" "}
+                              Cancelled
+                            </>
+                          ) : null}
+                        </div>
                       </div>
                     </Paper>
                   ))}
@@ -349,7 +351,8 @@ const Orders = () => {
             name="rating"
             value={rating}
             onChange={(event, newValue) => setRating(newValue)}
-          /><br/>
+          />
+          <br />
           <Button
             onClick={Ratesubmission}
             variant="contained"

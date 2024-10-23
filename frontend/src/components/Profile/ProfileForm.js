@@ -358,7 +358,7 @@ const ProfileForm = ({}) => {
                 style={{
                   backgroundColor: "#878787",
                   borderColor: "#878787",
-                  width: "20%",
+                  width: "70px",
                   borderRadius: "12px",
                   color: "white",
                   padding: "5px",
@@ -374,7 +374,7 @@ const ProfileForm = ({}) => {
                 style={{
                   backgroundColor: "#ff9f00",
                   borderColor: "#ff9f00",
-                  width: "20%",
+                  width: "70px",
                   borderRadius: "12px",
                   color: "white",
                   padding: "5px",

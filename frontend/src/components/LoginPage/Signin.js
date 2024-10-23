@@ -25,6 +25,7 @@ const Signin = () => {
   const [loader, setLoader] = useState(false);
 
   async function verify() {
+    toast.dismiss()
     if (!terms) {
       setTermsShow(false);
       return false;
