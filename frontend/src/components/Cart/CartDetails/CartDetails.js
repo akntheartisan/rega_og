@@ -58,6 +58,7 @@ const CartDetails = ({ id }) => {
   };
 
   const checkout = () => {
+    toast.dismiss();
     const total = calculateTotal();
 
     console.log(total);
@@ -150,6 +151,7 @@ const CartDetails = ({ id }) => {
                                 <td className="product-quantity">
                                   <input
                                     type="number"
+                                    min = {0}
                                     value={each.quantity}
                                     onChange={(e) =>
                                       handleQuantity(

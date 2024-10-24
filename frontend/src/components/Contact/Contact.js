@@ -11,7 +11,7 @@ import { useMediaQuery } from "@mui/material";
 import BottomNav from "../BottomNav/BottomNav";
 
 const Contact = () => {
-  const smallScreen = useMediaQuery("(max-width:768px)");
+  const smallScreen = useMediaQuery("(max-width:902px)");
   return (
     <>
     <Header/>

@@ -26,7 +26,7 @@ const Home = () => {
   const val = localStorage.getItem("user");
   const login_val = localStorage.getItem("authToken");
 
-  const smallScreen = useMediaQuery("(max-width:768px)");
+  const smallScreen = useMediaQuery("(max-width:900px)");
 
   useEffect(() => {
     // Check if user data exists and show the corresponding dialog

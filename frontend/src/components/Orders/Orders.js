@@ -10,7 +10,7 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import React, { useEffect, useState, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { client } from "../Client/Client";
 import CheckoutHeader from "../Checkout/CheckoutHeader";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
@@ -36,8 +36,9 @@ const Orders = () => {
   const [search, setSearch] = useState("");
 
   const location = useLocation();
-  const { id } = location.state;
+  const { id } = location.state || "";
   const { userData } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getOrderedProducts();
@@ -46,6 +47,12 @@ const Orders = () => {
   useEffect(() => {
     filterOrder();
   }, [orderCheckBox]);
+
+  useEffect(()=>{
+    if(id === undefined){
+       navigate("/")
+    }
+   },[id]);
 
   const getOrderedProducts = async () => {
     try {
@@ -151,6 +158,8 @@ const Orders = () => {
     }
   };
 
+  console.log('order:',filtered)
+
   return (
     <>
       <CheckoutHeader />
@@ -233,8 +242,9 @@ const Orders = () => {
                           </p>
                           <p>{order.subModelDetails.range}</p>
                         </div>
-                        <div className="col-md-3 col-6 d-flex justify-content-center">
+                        <div className="col-md-3 col-6">
                           <p>&#8377;{order.subModelDetails.price}</p>
+                          <p>Items : {order.quantity}</p>
                         </div>
                         <div className="col-md-3 col-6">
                           {order.deliverystatus === "Delivered" ? (

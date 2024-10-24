@@ -12,7 +12,7 @@ import BottomNav from "../BottomNav/BottomNav";
 
 const About = () => {
 
-  const smallScreen = useMediaQuery("(max-width:768px)");
+  const smallScreen = useMediaQuery("(max-width:900px)");
   return (
     <>
     <Header/>

@@ -8,7 +8,7 @@ const EmptyCart = () => {
   const navigate = useNavigate();
     const divertProduct = ()=>{
 
-      navigate('/');
+      navigate('/product');
 
     }
   return (

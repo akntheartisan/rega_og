@@ -28,7 +28,7 @@ import BottomNav from "../BottomNav/BottomNav";
 const ProductView = () => {
   const { userData, setUserData } = useContext(UserContext);
 
-  const smallScreen = useMediaQuery("(max-width:990px)");
+  const smallScreen = useMediaQuery("(max-width:768px)");
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -151,21 +151,17 @@ const ProductView = () => {
       {product && (
         <div className="container-fluid">
           <div className="row">
-          <div className="col-md-4">
-              <div  className="product_view_image">
-              <img
-                src={product.image.url}
-                alt="img"
-           
-              />
+            <div className="col-md-4">
+              <div className="product_view_image">
+                <img src={product.image.url} alt="img" />
               </div>
 
               <div
-              className="button-container-product"
+                className="button-container-product"
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  flexWrap:"wrap",
+                  flexWrap: "wrap",
                 }}
               >
                 <button
@@ -478,7 +474,17 @@ const ProductView = () => {
         </div>
       )}
 
-      <div className="mt-3">{smallScreen ? <BottomNav /> : <Footer />}</div>
+      {smallScreen && (
+        <div
+          className=""
+          style={{
+            position: "sticky",
+            bottom: "0px",
+          }}
+        >
+          <BottomNav />
+        </div>
+      )}
       {loader && <Loader />}
     </>
   );
