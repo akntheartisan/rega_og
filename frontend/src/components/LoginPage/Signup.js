@@ -154,7 +154,8 @@ const Signup = () => {
 
       if (response.status === 200) {
         setLoader(false);
-        setTypeOTP(true);
+        //setTypeOTP(true);
+        localStorage.setItem("brwOTP",true);
         toast.success("OTP send to Your mailId");
         //setMailOTP(response.data.otp);
       }
@@ -170,32 +171,24 @@ const Signup = () => {
 
   console.log(mailOTP, userOTP);
 
-  // const verifyOtp = async () => {
-  //   setLoader(true);
-  //   if (mailOTP == userOTP) {
-  //     toast.success("OTP verified successfully!");
-  //     await userCreate();
-  //     setLoader(false);
-  //     // await getUserData();
-  //   } else {
-  //     toast.error("Invalid OTP. Please try again.");
-  //   }
-  // };
+  
 
   const userCreate = async () => {
     setLoader(true);
     try {
-      const newUser = await client.post("/user/usersignup", {...user,userOTP}, {
+      const newUser = await client.post("/user/usersignup", {userOTP}, {
         withCredentials: true,
       });
       if (newUser.status === 200) {
         toast.success("OTP verified successfully!");
+        localStorage.removeItem("brwOTP");
         setUser(intial);
         getUserData();
         setLoader(false);
       }
     } catch (error) {
       toast.error("Invalid OTP. Please try again.");
+      setLoader(false);
       console.log(error);
     }
   };
@@ -209,6 +202,7 @@ const Signup = () => {
       if (response.status === 200) {
         setUserData(user);
         navigate("/");
+        localStorage.removeItem("brwOTP");
         localStorage.setItem("user", "kansha");
         localStorage.setItem("authToken", "rega");
         // navigate('/', { state: { fromSignup: true } });
@@ -217,6 +211,8 @@ const Signup = () => {
       console.log(error);
     }
   };
+
+  const locOtp = localStorage.getItem("brwOTP");
 
   const eyeOpener = (boo) => {
     console.log("eyeopener");
@@ -228,11 +224,17 @@ const Signup = () => {
     setCheckConfirm(boo);
   };
 
+  useEffect(()=>{
+   window.addEventListener("beforeunload",()=>{
+    localStorage.removeItem("brwOTP")
+   })
+  },[window])
+
   return (
     <>
       {/* {typeOTP ? } */}
 
-      {!typeOTP ? (
+      {!locOtp ? (
         <Stack direction="column" spacing={4}>
           {" "}
           <TextField

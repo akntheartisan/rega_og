@@ -26,17 +26,12 @@ const Cart = () => {
       <CheckoutHeader/>
       <CartDetails id={id}/>
    
-      {smallScreen && (
-        <div
-          className=""
-          style={{
-            position: "sticky",
-            bottom: "0px",
-          }}
-        >
-          <BottomNav />
-        </div>
-      )}
+       {smallScreen && <div className="" style={{
+        position:"sticky",
+        bottom:"0px",
+        borderTop:"0.05em solid white"
+      }} ><BottomNav />
+      </div>}
         
     
     </>

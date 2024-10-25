@@ -25,7 +25,7 @@ const About = () => {
     {smallScreen && <div className="" style={{
         position:"sticky",
         bottom:"0px",
-        zIndex:'2'
+        borderTop:"0.05em solid white"
       }} ><BottomNav />
       </div>}
     </>

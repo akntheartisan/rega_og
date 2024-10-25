@@ -1082,7 +1082,8 @@ const Checkout = () => {
       </div>
       {smallScreen ? <div className="mt-3" style={{
         position:"sticky",
-        bottom:"0px"
+        bottom:"0px",
+        borderTop:"0.05em solid white"
       }} ><BottomNav />
       </div> :  <div className="mt-3" ><Footer /></div>}
     </>

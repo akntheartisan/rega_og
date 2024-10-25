@@ -399,7 +399,7 @@ const ProfileForm = ({}) => {
 
               <div style={{ marginBottom: "15px" }}>
                 <p style={{ fontSize: "16px", fontWeight: "550" }}>
-                  When will my Flipkart account be updated with the new contact
+                  When will my RegaScooter account be updated with the new contact
                   address?
                 </p>
                 <p>

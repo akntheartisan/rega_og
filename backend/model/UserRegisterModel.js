@@ -41,6 +41,9 @@ const UserRegister = new mongoose.Schema(
       type: String,
       select: false,
     },
+    active:{
+      type:Boolean
+    },
     mobile: {
       type: String,
     },
@@ -63,7 +66,7 @@ const UserRegister = new mongoose.Schema(
       type: String,
     },
     otp:{
-      type:Number
+      type:String
     },
     otpExpiresAt:{
       type:Number
@@ -77,11 +80,11 @@ const UserRegister = new mongoose.Schema(
   { timestamps: true }
 );
 
-// UserRegister.pre("save", async function (next) {
-//   if (!this.isModified("password")) return next();
-//   this.password = await bcrypt.hash(this.password, 12);
-//   next();
-// });
+UserRegister.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 12);
+  next();
+});
 
 // UserRegister.pre("save", async function (next) {
 //   if (this.isNew) {

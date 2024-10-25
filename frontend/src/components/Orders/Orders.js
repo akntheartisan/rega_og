@@ -18,6 +18,9 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { UserContext } from "../../App";
 import "./order.css";
 import EmptyCart from "../Cart/CartDetails/EmptyCart";
+import { useMediaQuery } from "@mui/material";
+import BottomNav from "../BottomNav/BottomNav";
+import Footer from "../Footer/Footer";
 
 const initialCheckBox = {
   delivered: false,
@@ -34,11 +37,12 @@ const Orders = () => {
   const [filtered, setFiltered] = useState([]);
   const [orderCheckBox, setOrderCheckBox] = useState(initialCheckBox);
   const [search, setSearch] = useState("");
-
   const location = useLocation();
   const { id } = location.state || "";
   const { userData } = useContext(UserContext);
   const navigate = useNavigate();
+
+  const smallScreen = useMediaQuery("(max-width:902px)");
 
   useEffect(() => {
     getOrderedProducts();
@@ -48,11 +52,11 @@ const Orders = () => {
     filterOrder();
   }, [orderCheckBox]);
 
-  useEffect(()=>{
-    if(id === undefined){
-       navigate("/")
+  useEffect(() => {
+    if (id === undefined) {
+      navigate("/");
     }
-   },[id]);
+  }, [id]);
 
   const getOrderedProducts = async () => {
     try {
@@ -158,7 +162,7 @@ const Orders = () => {
     }
   };
 
-  console.log('order:',filtered)
+  console.log("order:", filtered);
 
   return (
     <>
@@ -242,7 +246,14 @@ const Orders = () => {
                           </p>
                           <p>{order.subModelDetails.range}</p>
                         </div>
-                        <div className="col-md-3 col-6">
+                        <div
+                          className="col-md-3 col-6"
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                          }}
+                        >
                           <p>&#8377;{order.subModelDetails.price}</p>
                           <p>Items : {order.quantity}</p>
                         </div>
@@ -373,6 +384,23 @@ const Orders = () => {
           </Button>
         </Box>
       </Modal>
+
+      {smallScreen ? (
+        <div
+          className="mt-3"
+          style={{
+            position: "sticky",
+            bottom: "0px",
+            borderTop: "0.05em solid white",
+          }}
+        >
+          <BottomNav />
+        </div>
+      ) : (
+        <div className="mt-3">
+          <Footer />
+        </div>
+      )}
     </>
   );
 };

@@ -18,7 +18,7 @@ exports.userOTP = async (req, res, next) => {
 
   console.log(req.body);
 
-  const { name, username, password, confirmpassword } = req.body;
+  const { name, username, password } = req.body;
 
   console.log(username);
 
@@ -27,20 +27,21 @@ exports.userOTP = async (req, res, next) => {
 
     console.log(exist);
 
-    if (exist) {
+    if (exist && exist.active === true) {
       return res.status(400).json({
         status: "fail",
         error: "Username has already been registered",
       });
     }
-    const otp = Math.floor(1000 + Math.random() * 9000);
+    
+    const otp = Math.floor(100000 + Math.random() * 900000);
 
-    //const otpExpiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes expiration
-
-    console.log("beforeusercreate");
-
+    const status = false;
     const newuser = await usermodel.create({
+      name,
       username,
+      password,
+      active:status,
       otp: otp,
       //otpExpiresAt,
     });
@@ -48,7 +49,7 @@ exports.userOTP = async (req, res, next) => {
     console.log("afterusercreate");
 
     if (newuser) {
-      const message = `Your 4 digit otp is ${otp}`;
+      const message = `Your 6 digit otp is ${otp}`;
 
       await sendMail({
         email: username,
@@ -69,14 +70,19 @@ exports.userOTP = async (req, res, next) => {
 exports.userSignUp = async (req, res, next) => {
   console.log("user creation method");
 
-  const { name, username, password, confirmpassword, userOTP } = req.body;
-  console.log(userOTP);
+  const { userOTP } = req.body;
+  
+ 
+  console.log("Received Oreq:", req.body);
+  console.log("Received OTP:", userOTP);
+  
+
   try {
     const existingUser = await usermodel.findOne({
-      username,
+      otp:userOTP
     });
 
-    console.log(existingUser.otp);
+    console.log(existingUser);
 
     if (!existingUser) {
       return res.status(400).json({
@@ -85,10 +91,9 @@ exports.userSignUp = async (req, res, next) => {
       });
     }
 
-    if (existingUser.otp == userOTP) {
-      existingUser.name = name;
-      existingUser.password = await bcrypt.hash(password, 12);
-      existingUser.otp = '';
+    if (existingUser) {
+      existingUser.otp = undefined;
+      existingUser.active = true;
       //existingUser.otpExpiresAt = undefined;
       await existingUser.save();
 
@@ -111,6 +116,8 @@ exports.userSignUp = async (req, res, next) => {
       });
     }
   } catch (error) {
+    console.log(error);
+    
     res.status(400).json({
       status: "fail",
       message: error.message,
@@ -132,7 +139,7 @@ exports.userSignIn = async (req, res, next) => {
       });
     }
 
-    if (!checkUser) {
+    if (checkUser.active === false) {
       return res.status(400).json({
         status: "fail",
         error: "Username is not registered",

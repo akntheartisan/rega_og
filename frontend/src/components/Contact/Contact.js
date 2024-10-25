@@ -24,7 +24,8 @@ const Contact = () => {
     <Footer/>
     {smallScreen && <div className="" style={{
         position:"sticky",
-        bottom:"0px"
+        bottom:"0px",
+        borderTop:"0.05em solid white"
       }} ><BottomNav />
       </div>}
     </>
