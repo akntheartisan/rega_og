@@ -33,22 +33,40 @@ exports.userOTP = async (req, res, next) => {
         error: "Username has already been registered",
       });
     }
-    
-    const otp = Math.floor(100000 + Math.random() * 900000);
 
-    const status = false;
-    const newuser = await usermodel.create({
-      name,
-      username,
-      password,
-      active:status,
-      otp: otp,
-      //otpExpiresAt,
-    });
+    if (!exist) {
+      const otp = Math.floor(100000 + Math.random() * 900000);
 
-    console.log("afterusercreate");
+      const status = false;
+      const newuser = await usermodel.create({
+        name,
+        username,
+        password:await bcrypt.hash(password, 12),
+        active: status,
+        otp: otp,
+        //otpExpiresAt,
+      });
 
-    if (newuser) {
+        const message = `Your 6 digit otp is ${otp}`;
+
+        await sendMail({
+          email: username,
+          subject: "Your SignUp OTP",
+          message: message,
+        });
+
+        return res.status(200).json({ status: "success" });
+      
+    }
+
+    if(exist && exist.active === false){
+
+      const otp = Math.floor(100000 + Math.random() * 900000);
+
+      exist.otp = otp;
+      exist.password = await bcrypt.hash(password, 12);
+      await exist.save();
+
       const message = `Your 6 digit otp is ${otp}`;
 
       await sendMail({
@@ -58,6 +76,7 @@ exports.userOTP = async (req, res, next) => {
       });
 
       return res.status(200).json({ status: "success" });
+
     }
   } catch (error) {
     res.status(400).json({
@@ -71,15 +90,13 @@ exports.userSignUp = async (req, res, next) => {
   console.log("user creation method");
 
   const { userOTP } = req.body;
-  
- 
+
   console.log("Received Oreq:", req.body);
   console.log("Received OTP:", userOTP);
-  
 
   try {
     const existingUser = await usermodel.findOne({
-      otp:userOTP
+      otp: userOTP,
     });
 
     console.log(existingUser);
@@ -117,7 +134,7 @@ exports.userSignUp = async (req, res, next) => {
     }
   } catch (error) {
     console.log(error);
-    
+
     res.status(400).json({
       status: "fail",
       message: error.message,

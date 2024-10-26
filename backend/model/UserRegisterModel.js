@@ -80,11 +80,11 @@ const UserRegister = new mongoose.Schema(
   { timestamps: true }
 );
 
-UserRegister.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
-  this.password = await bcrypt.hash(this.password, 12);
-  next();
-});
+// UserRegister.pre("save", async function (next) {
+//   if (!this.isModified("password")) return next();
+//   this.password = await bcrypt.hash(this.password, 12);
+//   next();
+// });
 
 // UserRegister.pre("save", async function (next) {
 //   if (this.isNew) {
