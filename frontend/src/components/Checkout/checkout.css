@@ -4,12 +4,18 @@
     display: flex;
     justify-content: space-between;
     padding: 20px;
+    align-items: center;
 
 }
 
 .checkhead .checklogo{
-    width: 150px;
+    width: 200px;
 }
+
+.checkhead .checklogo img{
+    width: 100%;
+}
+
 
 .checkfooter{
     background-color: white;

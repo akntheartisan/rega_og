@@ -6,9 +6,9 @@ import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import UserProfile from "../Header/UserProfile";
-import './checkout.css'
+import "./checkout.css";
 import { NavLink } from "react-router-dom";
-import logo from "./logo.png"
+import logo from "./logo.png";
 
 const AccountButton = styled(Button)({
   textTransform: "none",
@@ -31,58 +31,58 @@ const AccountButton = styled(Button)({
   },
 });
 
-
 const CheckoutHeader = () => {
-    const { userData, setUserData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserContext);
   return (
     <>
       <div className="checkhead">
         <div className="checklogo">
-        
-            <img src={logo} alt />
-         
+          <img src={logo} alt />
         </div>
         <nav className="main-menu">
-                  <ul>
-                    <li className="current-list-item">
-                      <NavLink style={{fontSize:"16px"}}
-                        exact
-                        to="/"
-                        className={({ isActive }) => (isActive ? "active" : undefined)}
-                      >
-                        Home
-                      </NavLink>
-                    </li>
+          <ul>
+            <li className="current-list-item">
+              <NavLink
+                style={{ fontSize: "16px" }}
+                exact
+                to="/"
+                className={({ isActive }) => (isActive ? "active" : undefined)}
+              >
+                Home
+              </NavLink>
+            </li>
 
-                    <li>
-                      <NavLink style={{fontSize:"16px"}}
-                      
-                        to="/about"
-                        className={({ isActive }) => (isActive ? "active" : undefined)}
-                      >
-                        About
-                      </NavLink>
-                    </li>
+            <li>
+              <NavLink
+                style={{ fontSize: "16px" }}
+                to="/about"
+                className={({ isActive }) => (isActive ? "active" : undefined)}
+              >
+                About
+              </NavLink>
+            </li>
 
-                    <li>
-                      <NavLink style={{fontSize:"16px"}}
-                        to="/product"
-                        className={({ isActive }) => (isActive ? "active" : undefined)}
-                      >
-                        Product
-                      </NavLink>
-                    </li>
+            <li>
+              <NavLink
+                style={{ fontSize: "16px" }}
+                to="/product"
+                className={({ isActive }) => (isActive ? "active" : undefined)}
+              >
+                Product
+              </NavLink>
+            </li>
 
-                    <li>
-                      <NavLink style={{fontSize:"16px"}}
-                        to="/contact"
-                        className={({ isActive }) => (isActive ? "active" : undefined)}
-                      >
-                        Contact
-                      </NavLink>
-                    </li>
-                  </ul>
-                </nav>
+            <li>
+              <NavLink
+                style={{ fontSize: "16px" }}
+                to="/contact"
+                className={({ isActive }) => (isActive ? "active" : undefined)}
+              >
+                Contact
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
         <div className="sign">
           {userData ? (
             <UserProfile />

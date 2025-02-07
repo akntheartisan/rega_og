@@ -46,7 +46,7 @@ const Home = () => {
       if (!login_val) {
         setShowAnotherDialog(true);
       }
-    }, 20000);
+    }, 100000);
   };
 
   const handleConfirm = () => {

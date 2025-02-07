@@ -3,6 +3,18 @@
     font-weight: bold; 
   }
 
+.rega-logo{
+  max-width: 200px !important;
+  /* height: 150px !important; */
+  /* object-fit: contain; */
+}
+
+.main-menu-wrap{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
   @media (max-width:768px) {
     .Header-padding{
       padding: 0px 15px !important;

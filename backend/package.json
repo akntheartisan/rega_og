@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "prod": "cross-env NODE_ENV=production nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "cloudinary": "^2.2.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.1",
@@ -27,5 +29,8 @@
     "sharp": "^0.33.4",
     "streamifier": "^0.1.1",
     "validator": "^13.12.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

@@ -45,7 +45,11 @@ const Header = () => {
                 <div className="main-menu-wrap">
                   <div className="site-logo">
                     <NavLink to="/">
-                      <img src="assets/img/logo.png" alt="Site Logo" />
+                      <img
+                        src="assets/img/logo.png"
+                        alt="Site Logo"
+                        className="rega-logo"
+                      />
                     </NavLink>
                   </div>
                   <nav className="main-menu">
@@ -99,53 +103,57 @@ const Header = () => {
                         </NavLink>
                       </li>
 
-                      <li>
-                        <div className="header-icons">
-                          {userData ? (
-                            <UserProfile />
-                          ) : (
-                            <NavLink className="mobile-hide" to="/register">
-                              <AccountButton
-                                variant="contained"
-                                startIcon={
-                                  <AccountCircleIcon sx={{ color: "white" }} />
-                                }
-                              >
-                                Sign In
-                              </AccountButton>
-                            </NavLink>
-                          )}
-                        </div>
-                      </li>
+                      <li></li>
                     </ul>
                   </nav>
+
+                  <div className="header-icons">
+                    {userData ? (
+                      <UserProfile />
+                    ) : (
+                      <NavLink className="mobile-hide" to="/register">
+                        <AccountButton
+                          variant="contained"
+                          startIcon={
+                            <AccountCircleIcon sx={{ color: "white" }} />
+                          }
+                        >
+                          Sign In
+                        </AccountButton>
+                      </NavLink>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div
-                style={{ display: "flex", justifyContent: "space-between" }}
-              >
-                <div style={{maxWidth:'150px'}}>
-                  <NavLink to="/">
-                    <img src="assets/img/logo.png" alt="Site Logo" />
-                  </NavLink>
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <div style={{ maxWidth: "150px" }}>
+                    <NavLink to="/">
+                      <img
+                        src="assets/img/logo.png"
+                        alt="Site Logo"
+                        className="rega-logo"
+                      />
+                    </NavLink>
+                  </div>
+                  <div className="header-icons">
+                    {userData ? (
+                      <UserProfile />
+                    ) : (
+                      <NavLink className="mobile-hide" to="/register">
+                        <AccountButton
+                          variant="contained"
+                          startIcon={
+                            <AccountCircleIcon sx={{ color: "white" }} />
+                          }
+                        >
+                          Sign In
+                        </AccountButton>
+                      </NavLink>
+                    )}
+                  </div>
                 </div>
-                <div className="header-icons">
-                        {userData ? (
-                          <UserProfile />
-                        ) : (
-                          <NavLink className="mobile-hide" to="/register">
-                            <AccountButton
-                              variant="contained"
-                              startIcon={
-                                <AccountCircleIcon sx={{ color: "white" }} />
-                              }
-                            >
-                              Sign In
-                            </AccountButton>
-                          </NavLink>
-                        )}
-                </div>
-              </div>
               )}
             </div>
           </div>
