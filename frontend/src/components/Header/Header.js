@@ -126,7 +126,7 @@ const Header = () => {
                 </div>
               ) : (
                 <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{ display: "flex", justifyContent: "space-between", alignItems:'center' }}
                 >
                   <div style={{ maxWidth: "150px" }}>
                     <NavLink to="/">

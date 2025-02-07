@@ -25,3 +25,9 @@
         display: none;
     }
 }
+
+@media only screen and (max-width:600px){
+  .checkhead .checklogo {
+    width: 150px;
+  }
+}

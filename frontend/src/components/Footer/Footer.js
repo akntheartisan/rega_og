@@ -2,6 +2,7 @@ import React,{useState,useEffect} from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./footer.css";
 import { client } from "../Client/Client";
+import logo from "./logo.png"
 
 const Footer = () => {
 
@@ -33,7 +34,7 @@ const Footer = () => {
             <div className="row">
               <div className="col-md-4 futer_detail">
                 <div className="footer-box about-widget">
-                  <h2 className="widget-title">Rega</h2>
+                  <img src={logo} alt="logo" style={{width:"clamp(150px,4.5vw,200px)",marginBottom:'3px'}}/>
                   <p>
                     Rega Scooter is redefining urban mobility with our
                     innovative range of eco-friendly electric scooters. Our
