@@ -24,9 +24,7 @@ app.use(cookieParser());
 // console.log(app.get('env'));
 
 if(process.env.NODE_ENV === 'development'){
-  console.log(process.env);
   console.log('i am in development mode');
-  
 }
 
 
