@@ -170,8 +170,9 @@ const PrimaryProduct = () => {
     console.log(image);
 
     const formData = new FormData();
-
-    formData.append("image", image);
+    image.forEach((eachImg, index) => {
+      formData.append("image", eachImg);
+    });
     formData.append("model", model);
 
     try {

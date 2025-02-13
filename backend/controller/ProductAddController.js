@@ -14,17 +14,16 @@ const upload = multer({
 exports.uploadFile = upload.array("image");
 
 exports.resizeImage = async (req, res, next) => {
-     
-  console.log(req.files);
-  
-  
+  console.log("resize image controller");
+
+  // console.log(req.files);
+
   if (!req.files) {
     console.log("No image provided, skipping resize");
     return next();
   }
 
   try {
-    
     req.filesBuffer = await Promise.all(
       req.files.map(async (file) => {
         return {
@@ -34,7 +33,7 @@ exports.resizeImage = async (req, res, next) => {
       })
     );
 
-    console.log('resize image');
+    console.log("resize image");
 
     next();
   } catch (err) {
@@ -48,7 +47,7 @@ exports.saveImage = async (req, res, next) => {
     return next();
   }
 
-  console.log('upload all images to cloudinary');
+  console.log("upload all images to cloudinary");
 
   try {
     const uploadPromises = req.filesBuffer.map(({ buffer, originalname }) => {
@@ -71,7 +70,7 @@ exports.saveImage = async (req, res, next) => {
         );
 
         streamifier.createReadStream(buffer).pipe(stream);
-        console.log('stream completed');
+        // console.log('stream completed');
       });
     });
 
@@ -87,12 +86,12 @@ exports.saveImage = async (req, res, next) => {
 exports.savePrimary = async (req, res, next) => {
   const { model } = req.body;
   const modelLowerCase = model.toLowerCase();
-  const images = req.uploadResults.map((secureUrl, public_id) => ({
-    url: secureUrl,
-    pid: public_id,
-  }));
+  console.log(req.uploadResults);
 
-  
+  const images = req.uploadResults.map((eachUploadResult) => ({
+    url: eachUploadResult.url,
+    pid: eachUploadResult.public_id,
+  }));
 
   try {
     const newModel = await projectmodel.create({

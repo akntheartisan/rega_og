@@ -82,7 +82,7 @@ const Product = () => {
                     >
                       <div style={{ backgroundColor: "#f0f0f0" }}>
                         <img
-                          src={each.image.url}
+                          src={each.image[0].url}
                           style={{
                             width: "100%",
                             height: "250px",

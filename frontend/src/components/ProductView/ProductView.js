@@ -42,6 +42,7 @@ const ProductView = () => {
   const [loader, setLoader] = useState(false);
   const [goToCart, setGoToCart] = useState(false);
   const [product, setProduct] = useState();
+  const [slideShow, setSlideShow] = useState();
 
   useEffect(() => {
     fetchSelected();
@@ -60,6 +61,7 @@ const ProductView = () => {
 
       if (getSelectedProducts.status === 200) {
         setProduct(prod);
+        setSlideShow(prod.image[1]?.url);
       }
     } catch (error) {
       console.log(error);
@@ -142,6 +144,10 @@ const ProductView = () => {
     navigate("/cart", { state: { id } });
   };
 
+  const slideImgSelect = (imgUrl) => {
+    setSlideShow(imgUrl);
+  };
+
   return (
     <>
       {/* <ProductViewHeader /> */}
@@ -153,7 +159,18 @@ const ProductView = () => {
           <div className="row">
             <div className="col-md-4">
               <div className="product_view_image">
-                <img src={product.image.url} alt="img" />
+                <img src={slideShow} alt="img" />
+              </div>
+              <div className="product_slideshow">
+                {product.image &&
+                  product.image.map((eachImage, index) => {
+                    return index !== 0 ? (
+                      <img
+                        src={eachImage.url}
+                        onClick={() => slideImgSelect(eachImage.url)}
+                      />
+                    ) : null;
+                  })}
               </div>
 
               <div
