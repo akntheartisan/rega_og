@@ -8,16 +8,16 @@ const storage = multer.memoryStorage();
 
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 1024 * 1024 * 5 }, // Limit file size to 5MB
+  limits: { fileSize: 1024 * 1024 * 5 }, 
 });
 
 exports.uploadFile = upload.single("image");
 
 exports.resizeImage = async (req, res, next) => {
-  //console.log("resizeimage controller");
+  
 
   if (!req.file) {
-    // If no image is uploaded, skip to the next middleware
+    
     console.log("No image provided, skipping resize");
     return next();
   }
