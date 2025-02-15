@@ -2,4 +2,27 @@
     color: #f28123 !important; 
     font-weight: bold; 
   }
+
+.rega-logo{
+  max-width: 200px !important;
+}
+
+.main-menu-wrap{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+  @media (max-width:768px) {
+    .Header-padding{
+      padding: 0px 15px !important;
+    }
+    
+  }
+
+  @media only screen and (max-width:768px){
+    .rega-logo{
+        width: 150px;
+    }
+}
   

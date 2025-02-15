@@ -38,14 +38,18 @@ const Header = () => {
   return (
     <>
       <div className="top-header-area" id="sticker">
-        <div className="container-fluid px-5">
+        <div className="container-fluid px-5 Header-padding">
           <div className="row">
             <div className="col-lg-12 col-sm-12 text-center">
               {!smallScreen ? (
                 <div className="main-menu-wrap">
                   <div className="site-logo">
                     <NavLink to="/">
-                      <img src="assets/img/logo.png" alt="Site Logo" />
+                      <img
+                        src="assets/img/logo.png"
+                        alt="Site Logo"
+                        className="rega-logo"
+                      />
                     </NavLink>
                   </div>
                   <nav className="main-menu">
@@ -99,40 +103,55 @@ const Header = () => {
                         </NavLink>
                       </li>
 
-                      <li>
-                        <div className="header-icons">
-                          {userData ? (
-                            <UserProfile />
-                          ) : (
-                            <NavLink className="mobile-hide" to="/register">
-                              <AccountButton
-                                variant="contained"
-                                startIcon={
-                                  <AccountCircleIcon sx={{ color: "white" }} />
-                                }
-                              >
-                                Sign In
-                              </AccountButton>
-                            </NavLink>
-                          )}
-                        </div>
-                      </li>
+                      <li></li>
                     </ul>
                   </nav>
+
+                  <div className="header-icons">
+                    {userData ? (
+                      <UserProfile />
+                    ) : (
+                      <NavLink className="mobile-hide" to="/register">
+                        <AccountButton
+                          variant="contained"
+                          startIcon={
+                            <AccountCircleIcon sx={{ color: "white" }} />
+                          }
+                        >
+                          Sign In
+                        </AccountButton>
+                      </NavLink>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{ display: "flex", justifyContent: "space-between", alignItems:'center' }}
                 >
-                  <div style={{maxWidth:'150px'}}>
+                  <div style={{ maxWidth: "150px" }}>
                     <NavLink to="/">
-                      <img src="assets/img/logo.png" alt="Site Logo" />
+                      <img
+                        src="assets/img/logo.png"
+                        alt="Site Logo"
+                        className="rega-logo"
+                      />
                     </NavLink>
                   </div>
-                  <div>
-                    <NavLink to="#">
-                      <MobileViewMenu />
-                    </NavLink>
+                  <div className="header-icons">
+                    {userData ? (
+                      <UserProfile />
+                    ) : (
+                      <NavLink className="mobile-hide" to="/register">
+                        <AccountButton
+                          variant="contained"
+                          startIcon={
+                            <AccountCircleIcon sx={{ color: "white" }} />
+                          }
+                        >
+                          Sign In
+                        </AccountButton>
+                      </NavLink>
+                    )}
                   </div>
                 </div>
               )}

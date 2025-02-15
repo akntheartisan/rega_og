@@ -358,7 +358,7 @@ const ProfileForm = ({}) => {
                 style={{
                   backgroundColor: "#878787",
                   borderColor: "#878787",
-                  width: "20%",
+                  width: "70px",
                   borderRadius: "12px",
                   color: "white",
                   padding: "5px",
@@ -374,7 +374,7 @@ const ProfileForm = ({}) => {
                 style={{
                   backgroundColor: "#ff9f00",
                   borderColor: "#ff9f00",
-                  width: "20%",
+                  width: "70px",
                   borderRadius: "12px",
                   color: "white",
                   padding: "5px",
@@ -399,7 +399,7 @@ const ProfileForm = ({}) => {
 
               <div style={{ marginBottom: "15px" }}>
                 <p style={{ fontSize: "16px", fontWeight: "550" }}>
-                  When will my Flipkart account be updated with the new contact
+                  When will my RegaScooter account be updated with the new contact
                   address?
                 </p>
                 <p>

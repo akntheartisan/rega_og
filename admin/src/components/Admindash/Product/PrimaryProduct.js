@@ -143,27 +143,22 @@ const PrimaryProduct = () => {
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
+    const file = Array.from(e.target.files);
+    // console.log(file);
+
     setImageError("");
 
-    if (file) {
-      const fileType = file.type;
-      const fileSize = file.size;
+    const validImage = file.filter((eachImage) => {
+      return (
+        (eachImage.type === "image/png" || eachImage.type === "image/jpeg") &&
+        eachImage.size <= maxFileSize
+      );
+    });
 
-      if (fileType === "image/png" || fileType === "image/jpeg") {
-        if (fileSize <= maxFileSize) {
-          setImage(file);
-        } else {
-          setImage(null);
-          setImageError("File size should not exceed 1MB.");
-        }
-      } else {
-        setImage(null);
-        setImageError("Only PNG and JPEG formats are allowed.");
-      }
+    if (validImage.length > 0) {
+      setImage(validImage);
     } else {
-      setImage(null);
-      setImageError("No file selected.");
+      setImageError("Please select valid images (PNG/JPEG, max 1MB).");
     }
   };
 
@@ -172,8 +167,12 @@ const PrimaryProduct = () => {
 
     setLoading(true);
 
+    console.log(image);
+
     const formData = new FormData();
-    formData.append("image", image);
+    image.forEach((eachImg, index) => {
+      formData.append("image", eachImg);
+    });
     formData.append("model", model);
 
     try {
@@ -210,64 +209,69 @@ const PrimaryProduct = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-6 offset-md-3">
-          <Paper elevation={3} className="p-4">
-          {" "}
-          {/* Wrap content in Paper */}
-          <div className="row">
-            <div className="col-md-8 offset-md-2 mt-4">
-              <div>
-                <label className="form-label">Product Name</label>
-                <input
-                  type="text"
-                  value={model}
-                  name="model"
-                  onChange={handleModelChange}
-                  className="form-control"
-                />
-                {modelError && <div className="text-danger">{modelError}</div>}
-              </div>
-            </div>
+            <Paper elevation={3} className="p-4">
+              <div className="row">
+                <div className="col-md-8 offset-md-2 mt-4">
+                  <div>
+                    <label className="form-label">Product Name</label>
+                    <input
+                      type="text"
+                      value={model}
+                      name="model"
+                      onChange={handleModelChange}
+                      className="form-control"
+                    />
+                    {modelError && (
+                      <div className="text-danger">{modelError}</div>
+                    )}
+                  </div>
+                </div>
 
-            <div className="col-md-8 offset-md-2 mt-4">
-              <div>
-                <label className="form-label">Image</label>
-                <input
-                  type="file"
-                  name="image"
-                  onChange={handleImageChange}
-                  className="form-control"
-                  accept="image/*"
-                />
-                {imageError && <div className="text-danger">{imageError}</div>}
-              </div>
-            </div>
+                <div className="col-md-8 offset-md-2 mt-4">
+                  <div>
+                    <label className="form-label">Image</label>
+                    <input
+                      type="file"
+                      name="image"
+                      onChange={handleImageChange}
+                      className="form-control"
+                      accept="image/*"
+                      multiple
+                    />
+                    {imageError && (
+                      <div className="text-danger">{imageError}</div>
+                    )}
+                  </div>
+                </div>
 
-            <div className="col-md-4 offset-md-4 mt-4">
-              <div style={{ display: "flex", justifyContent: "space-around" }}>
-                <button
-                  className="btn btn-light"
-                  onClick={() => {
-                    setImage(null);
-                    setModel("");
-                    setEditingProduct(null);
-                  }}
-                >
-                  Cancel
-                </button>&nbsp;&nbsp;
-                <button
-                  className="btn btn-success"
-                  onClick={submit}
-                  disabled={loading}
-                >
-                  Submit
-                </button>
+                <div className="col-md-4 offset-md-4 mt-4">
+                  <div
+                    style={{ display: "flex", justifyContent: "space-around" }}
+                  >
+                    <button
+                      className="btn btn-light"
+                      onClick={() => {
+                        setImage(null);
+                        setModel("");
+                        setEditingProduct(null);
+                      }}
+                    >
+                      Cancel
+                    </button>
+                    &nbsp;&nbsp;
+                    <button
+                      className="btn btn-success"
+                      onClick={submit}
+                      disabled={loading}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </Paper>
+            </Paper>
           </div>
         </div>
-
       </div>
 
       {loading && (
@@ -289,7 +293,7 @@ const PrimaryProduct = () => {
         </Box>
       )}
 
-      <div className="container mt-5">
+      {/* <div className="container mt-5">
         <h3>Products List</h3>
         <TableContainer>
           <Table>
@@ -372,7 +376,7 @@ const PrimaryProduct = () => {
             </TableBody>
           </Table>
         </TableContainer>
-      </div>
+      </div> */}
 
       {/* Modal for Editing */}
       <Modal

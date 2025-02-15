@@ -10,6 +10,9 @@ import hand from "./hand.png";
 import mobilesurf from "./mobilesurf.png";
 import bikereceive from "./bikereceive.png";
 import smallbattery from "./car-battery (2).png";
+import motorcycle from "./motorcycle.png";
+import loading from "./loading.png";
+import speedometer from "./speedometer.png";
 import CallIcon from "@mui/icons-material/Call";
 import Footer from "../Footer/Footer";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -25,7 +28,7 @@ import BottomNav from "../BottomNav/BottomNav";
 const ProductView = () => {
   const { userData, setUserData } = useContext(UserContext);
 
-  const smallScreen = useMediaQuery("(max-width:990px)");
+  const smallScreen = useMediaQuery("(max-width:768px)");
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -39,6 +42,7 @@ const ProductView = () => {
   const [loader, setLoader] = useState(false);
   const [goToCart, setGoToCart] = useState(false);
   const [product, setProduct] = useState();
+  const [slideShow, setSlideShow] = useState();
 
   useEffect(() => {
     fetchSelected();
@@ -57,6 +61,7 @@ const ProductView = () => {
 
       if (getSelectedProducts.status === 200) {
         setProduct(prod);
+        setSlideShow(prod.image[1]?.url);
       }
     } catch (error) {
       console.log(error);
@@ -139,6 +144,10 @@ const ProductView = () => {
     navigate("/cart", { state: { id } });
   };
 
+  const slideImgSelect = (imgUrl) => {
+    setSlideShow(imgUrl);
+  };
+
   return (
     <>
       {/* <ProductViewHeader /> */}
@@ -149,22 +158,27 @@ const ProductView = () => {
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-4">
-              <img
-                src={product.image.url}
-                alt="img"
-                style={{
-                  objectFit: "cover",
-                  width: "100%",
-                  height: "350px",
-                  objectFit: "cover",
-                  marginTop: "-20px",
-                }}
-              />
+              <div className="product_view_image">
+                <img src={slideShow} alt="img" />
+              </div>
+              <div className="product_slideshow">
+                {product.image &&
+                  product.image.map((eachImage, index) => {
+                    return index !== 0 ? (
+                      <img
+                        src={eachImage.url}
+                        onClick={() => slideImgSelect(eachImage.url)}
+                      />
+                    ) : null;
+                  })}
+              </div>
 
               <div
+                className="button-container-product"
                 style={{
                   display: "flex",
                   justifyContent: "center",
+                  flexWrap: "wrap",
                 }}
               >
                 <button
@@ -325,7 +339,7 @@ const ProductView = () => {
                     className="col-md-12 col-lg-4 mb-3"
                     style={{ display: "flex" }}
                   >
-                    <img src={motor} alt="Car" />
+                    <img src={speedometer} alt="Car" />
                     <div>
                       <p style={{ margin: "0", color: "#767f88" }}>Range</p>
                       <p style={{ fontSize: "16px", fontWeight: "500" }}>
@@ -365,7 +379,7 @@ const ProductView = () => {
                     className="col-md-12 col-lg-4 mb-3"
                     style={{ display: "flex" }}
                   >
-                    <img src={motor} alt="Car" />
+                    <img src={motorcycle} alt="Car" />
                     <div>
                       <p style={{ margin: "0", color: "#767f88" }}>
                         Ground Clearance
@@ -381,7 +395,7 @@ const ProductView = () => {
                     className="col-md-12 col-lg-4 mb-3"
                     style={{ display: "flex" }}
                   >
-                    <img src={motor} alt="Car" />
+                    <img src={loading} alt="Car" />
                     <div>
                       <p style={{ margin: "0", color: "#767f88" }}>Payload</p>
                       <p style={{ fontSize: "16px", fontWeight: "500" }}>
@@ -477,7 +491,17 @@ const ProductView = () => {
         </div>
       )}
 
-      <div className="mt-3">{smallScreen ? <BottomNav /> : <Footer />}</div>
+      {smallScreen && (
+        <div
+          className=""
+          style={{
+            position: "sticky",
+            bottom: "0px",
+          }}
+        >
+          <BottomNav />
+        </div>
+      )}
       {loader && <Loader />}
     </>
   );

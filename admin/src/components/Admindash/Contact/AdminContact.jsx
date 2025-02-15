@@ -348,7 +348,7 @@ const AdminContact = () => {
                 >
                     <MenuItem value="8:00 AM - 9:00 PM">8:00 AM - 9:00 PM</MenuItem>
                     <MenuItem value="10:00 AM - 8:00 PM">10:00 AM - 8:00 PM</MenuItem>
-                    <MenuItem value="9:00 AM - 5:00 PM">9:00 AM - 5:00 PM</MenuItem>
+                    <MenuItem value="9:00 AM - 6:00 PM">9:00 AM - 6:00 PM</MenuItem>
                 </Select>
             </FormControl>
         </Grid>

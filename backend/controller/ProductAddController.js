@@ -8,74 +8,91 @@ const storage = multer.memoryStorage();
 
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 1024 * 1024 * 5 }, 
+  limits: { fileSize: 1024 * 1024 * 5 },
 });
 
-exports.uploadFile = upload.single("image");
+exports.uploadFile = upload.array("image");
 
 exports.resizeImage = async (req, res, next) => {
-  
-
-  if (!req.file) {
-    
+  if (!req.files) {
     console.log("No image provided, skipping resize");
     return next();
   }
 
   try {
-    //console.log("Original File Size:", req.file.size);
-    req.fileBuffer = await sharp(req.file.buffer).toFormat("png").toBuffer();
-    //console.log("Resized File Buffer Size:", req.fileBuffer.length);
+    req.filesBuffer = await Promise.all(
+      req.files.map(async (file) => {
+        return {
+          originalname: file.originalname,
+          buffer: await sharp(file.buffer).toFormat("png").toBuffer(),
+        };
+      })
+    );
+
+    console.log("resize image");
+
     next();
   } catch (err) {
-    //console.log("Error resizing image:", err);
     res.status(500).json({ message: "Error resizing image" });
   }
 };
 
 exports.saveImage = async (req, res, next) => {
-  if (!req.fileBuffer) {
-    // If no image buffer is present, skip to the next middleware
+  if (!req.filesBuffer) {
     console.log("No image buffer, skipping saveImage");
     return next();
   }
 
+  console.log("upload all images to cloudinary");
+
   try {
-    const fileName = `scooter_${Date.now()}.png`;
-    const Stream = Cloudinary.uploader.upload_stream(
-      {
-        folder: "scooter_image",
-        public_id: fileName,
-        resource_type: "auto",
-        format: "png",
-      },
-      (err, result) => {
-        if (err) {
-          //console.log("Error uploading to Cloudinary:", err);
-          return res.status(404).json({ message: "Cannot save image" });
-        } else {
-          console.log("Upload result:", result);
-          req.result = result;
-          next();
-        }
-      }
-    );
-    streamifier.createReadStream(req.fileBuffer).pipe(Stream);
+    const uploadPromises = req.filesBuffer.map(({ buffer, originalname }) => {
+      return new Promise((resolve, reject) => {
+        const fileName = `scooter_${Date.now()}_${
+          originalname.split(".")[0]
+        }.png`;
+
+        const stream = Cloudinary.uploader.upload_stream(
+          {
+            folder: "scooter_image",
+            public_id: fileName,
+            resource_type: "auto",
+            format: "png",
+          },
+          (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+          }
+        );
+
+        streamifier.createReadStream(buffer).pipe(stream);
+        // console.log('stream completed');
+      });
+    });
+
+    const results = await Promise.all(uploadPromises);
+    console.log(results);
+    req.uploadResults = results;
+    next();
   } catch (err) {
-    //console.log("Error in saveImage:", err);
     res.status(500).json({ message: "Error saving image" });
   }
 };
 
 exports.savePrimary = async (req, res, next) => {
   const { model } = req.body;
-  const { url, public_id } = req.result;
   const modelLowerCase = model.toLowerCase();
+  console.log(req.uploadResults);
+
+  const images = req.uploadResults.map((eachUploadResult) => ({
+    url: eachUploadResult.url,
+    pid: eachUploadResult.public_id,
+  }));
 
   try {
     const newModel = await projectmodel.create({
       model: modelLowerCase,
-      image: { url: url, pid: public_id },
+      image: images,
     });
     if (newModel) {
       res.status(200).json({
@@ -102,7 +119,7 @@ exports.productadd = async (req, res, next) => {
     price,
   } = req.body;
 
-  console.log(charging);
+  // console.log(charging);
 
   try {
     let findModel = await projectmodel.find({ model });
@@ -140,7 +157,7 @@ exports.getPrimary = async (req, res, next) => {
   try {
     const primary = await projectmodel.distinct("model");
     // const primary = await projectmodel.find();
-    console.log(primary);
+    // console.log(primary);
 
     if (primary) {
       res.status(200).json({
@@ -172,7 +189,7 @@ exports.getSelected = async (req, res, next) => {
   console.log("selectedproduct");
 
   const { id } = req.query;
-  console.log(id);
+  // console.log(id);
 
   try {
     let selected = await projectmodel.findById(id);
@@ -189,9 +206,9 @@ exports.getSelected = async (req, res, next) => {
 };
 
 exports.updateProject = async (req, res) => {
-  //console.log("this update get triggered");
+  // console.log("this update get triggered");
   const { updatedProduct, id } = req.body;
-  console.log(updatedProduct, id);
+  // console.log(updatedProduct, id);
 
   try {
     const updatedDoc = await projectmodel.updateOne(
@@ -199,14 +216,13 @@ exports.updateProject = async (req, res) => {
       { $set: { "SubModel.$": updatedProduct } }
     );
 
-    console.log(updatedDoc);
-    if(updatedDoc){
+    // console.log(updatedDoc);
+    if (updatedDoc) {
       return res.status(200).json({
         status: "success",
         message: "Updated successfully",
       });
     }
-
   } catch (error) {
     console.log(error);
   }

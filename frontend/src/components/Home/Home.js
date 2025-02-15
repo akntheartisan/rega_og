@@ -15,6 +15,8 @@ import Aboutus from "../About/Aboutus";
 import AboutSection from "../About/AboutSection";
 import MVission from "../About/MVission";
 import AboutCircle from "../About/AboutCircle";
+import { useMediaQuery } from "@mui/material";
+import BottomNav from "../BottomNav/BottomNav";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -23,6 +25,8 @@ const Home = () => {
 
   const val = localStorage.getItem("user");
   const login_val = localStorage.getItem("authToken");
+
+  const smallScreen = useMediaQuery("(max-width:900px)");
 
   useEffect(() => {
     // Check if user data exists and show the corresponding dialog
@@ -42,7 +46,7 @@ const Home = () => {
       if (!login_val) {
         setShowAnotherDialog(true);
       }
-    }, 20000);
+    }, 100000);
   };
 
   const handleConfirm = () => {
@@ -62,7 +66,6 @@ const Home = () => {
   return (
     <>
       <Header />
-
       <Carousel />
       <Aboutus />
       <AboutSection />
@@ -70,6 +73,13 @@ const Home = () => {
       <MVission />
       <AboutCircle />
       <Footer />
+
+      {smallScreen && <div className="" style={{
+        position:"sticky",
+        bottom:"0px",
+        borderTop:"0.05em solid white"
+      }} ><BottomNav />
+      </div>}
 
       {/* Existing Dialog */}
       <Dialog

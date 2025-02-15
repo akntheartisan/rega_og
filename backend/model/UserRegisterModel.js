@@ -41,6 +41,9 @@ const UserRegister = new mongoose.Schema(
       type: String,
       select: false,
     },
+    active:{
+      type:Boolean
+    },
     mobile: {
       type: String,
     },
@@ -61,6 +64,9 @@ const UserRegister = new mongoose.Schema(
     },
     passwordResetToken: {
       type: String,
+    },
+    otp:{
+      type:String
     },
     otpExpiresAt:{
       type:Number

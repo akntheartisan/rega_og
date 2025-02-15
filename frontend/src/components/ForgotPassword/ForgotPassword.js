@@ -15,11 +15,19 @@ const ForgotPassword = () => {
   const [error,setError] = useState(false);
   console.log(mail);
 
+  const mailPattern = /\S+@\S\.\S+/;
+
   const submitMail = async () => {
     if(!mail){
       setError(true);
       return false;
     }
+
+    if(!mailPattern.test(mail)){
+      setError(true);
+      return false;
+    }
+    
     setLoader(true);
     try {
       const forgotPasswordMail = await client.post("/user/forgotpassword", {
@@ -58,6 +66,7 @@ const ForgotPassword = () => {
                 Enter your registered mail here
               </p>
               <TextField
+                type="mail"
                 id="outlined-basic"
                 label="MailId"
                 variant="outlined"
@@ -69,8 +78,6 @@ const ForgotPassword = () => {
                     setMail(value);
                   }
                 }}
-                
-                required
               />
               {error ? <p style={{color:'red',fontWeight:'550'}}>Please Enter Your registered mail</p> : ''}
               <div

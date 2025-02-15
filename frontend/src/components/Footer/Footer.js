@@ -1,8 +1,31 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./footer.css";
+import { client } from "../Client/Client";
+import logo from "./logo.png"
 
 const Footer = () => {
+
+    const [location, setLocation] = useState('');
+    const [timing, setTiming] = useState('');
+    const [contact, setContact] = useState({ phone: '', email: '' });
+  
+    useEffect(() => {
+      const fetchContactDetails = async () => {
+        try {
+          const response = await client.get('/contact/contactdetails');
+          const data = response.data;
+          setLocation(data.shopaddress);
+          setTiming(data.shophours);
+          setContact({ phone: data.shopmobile, email: data.shopemail });
+        } catch (error) {
+          console.error('Error fetching contact details:', error);
+        }
+      };
+  
+      fetchContactDetails();
+    }, []);
+  
   return (
     <>
       <div>
@@ -11,7 +34,7 @@ const Footer = () => {
             <div className="row">
               <div className="col-md-4 futer_detail">
                 <div className="footer-box about-widget">
-                  <h2 className="widget-title">Rega</h2>
+                  <img src={logo} alt="logo" style={{width:"clamp(150px,4.5vw,200px)",marginBottom:'3px'}}/>
                   <p>
                     Rega Scooter is redefining urban mobility with our
                     innovative range of eco-friendly electric scooters. Our
@@ -82,9 +105,12 @@ const Footer = () => {
                 <div className="footer-box get-in-touch">
                   <h2 className="widget-title">Get in Touch</h2>
                   <ul>
-                    <li>34/8, East Hukupara, Gifirtok, Sadan.</li>
-                    <li>support@fruitkha.com</li>
-                    <li>+00 111 222 3333</li>
+                    <li>{location}</li>
+                    <li>{contact.email}</li>
+                    {/* {contact.phone.split(",").map((each,index)=>{
+                      return <li key={index}>{each}</li>
+                    })} */}
+                   
                   </ul>
                 </div>
               </div>

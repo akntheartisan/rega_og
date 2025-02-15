@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const dotenv = require('dotenv');
+dotenv.config({path:'./config.env'});
 const app = express();
 const adminroute = require("./route/AdminRoute");
 const userroute = require("./route/UserRoute");
@@ -13,12 +15,21 @@ const contactroute = require('./route/ContactRoute');
 const enquiryRoutes = require('./route/EnquiryRoutes');
 const cookieParser = require("cookie-parser");
 // const pdfdownroute= require("./route/pdfRoute");
-// const ratingRoute = require("./route/ratingRoute")
+// const ratingRoute = require("./route/ratingRoute") 
+
+
 
 app.use(express.json()); 
 app.use(cookieParser());
+// console.log(app.get('env'));
+
+if(process.env.NODE_ENV === 'development'){
+  console.log('i am in development mode');
+}
+
+
 app.use(express.urlencoded({ extended: true }));
-//const allowedOrigins = ["http://localhost:3000", "http://localhost:5173"];
+// const allowedOrigins = ["http://localhost:3000", "http://localhost:5173"];
 
 const allowedOrigins = ["https://rega-og.vercel.app", "https://rega-og-admin.vercel.app"];
 

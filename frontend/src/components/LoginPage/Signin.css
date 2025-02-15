@@ -6,3 +6,9 @@
     height: 80vh;
     gap: 10px;
   }
+
+  .css-1ajzxwu{
+    height: auto !important;
+    min-height: 100vh; 
+    padding: 20px 0px;
+  }

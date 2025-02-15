@@ -6,7 +6,7 @@
 }
 
 .checkhead .checklogo {
-  width: 150px;
+  width: 200px;
 }
 
 .checkfooter {
@@ -24,4 +24,10 @@
     .sidemenu{
         display: none;
     }
+}
+
+@media only screen and (max-width:600px){
+  .checkhead .checklogo {
+    width: 150px;
+  }
 }

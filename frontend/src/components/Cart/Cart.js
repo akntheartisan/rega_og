@@ -1,26 +1,37 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../Header/Header";
 import CartDetails from "./CartDetails/CartDetails";
 import Footer from "../Footer/Footer";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CheckoutHeader from "../Checkout/CheckoutHeader";
 import { useMediaQuery } from "@mui/material";
 import BottomNav from "../BottomNav/BottomNav";
 
 const Cart = () => {
     const location = useLocation();
-    const {id} = location.state;
+    const {id} = location.state || "";
     console.log(id);
+    const navigate = useNavigate();
 
-    const smallScreen = useMediaQuery('(max-width:768px)')
+   useEffect(()=>{
+    if(id === undefined){
+       navigate("/")
+    }
+   },[id]);
+
+  const smallScreen = useMediaQuery('(max-width:902px)')
     
   return (
     <>
       <CheckoutHeader/>
       <CartDetails id={id}/>
-      <div className="mt-3">
-        {smallScreen ? <BottomNav /> : <Footer />}
-      </div>
+   
+       {smallScreen && <div className="" style={{
+        position:"sticky",
+        bottom:"0px",
+        borderTop:"0.05em solid white"
+      }} ><BottomNav />
+      </div>}
         
     
     </>
