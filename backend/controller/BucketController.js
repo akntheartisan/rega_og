@@ -37,24 +37,38 @@ exports.getBucket = async (req, res) => {
 
     const result = await bucketmodel.aggregate([
       // Unwind the array of objects
+      //this line unwind the list array in bucketcollection
       { $unwind: "$list" },
       // Perform the lookup to join with the product collection
       {
         $lookup: {
+          //this product is product collection
           from: "products",
+          //save the submodel id and model name from bucket collection in submodelId and modelName variable
           let: { subModelId: "$list.subModelId", modelName: "$list.model" },
           pipeline: [
+            //unwind the SubModel array in product collection
             { $unwind: "$SubModel" },
+            
             {
               $match: {
+                //$expr allows you to compare fields within the same document or use variables inside $match.
                 $expr: {
+                  //and operator
                   $and: [
+                    //match the variables value and actual value in product collection to get the matched value
                     { $eq: ["$SubModel._id", "$$subModelId"] },
                     { $eq: ["$model", "$$modelName"] },
                   ],
                 },
               },
             },
+
+            //If removing/renaming fields → ✅ $project (reshape the result)
+            //If adding new fields without removing others → ✅ $addFields
+            //If removing specific fields → ✅ $unset
+
+            //from the answer 0- unneccasary, 1- neccasary, change the iamge url into image
             { $project: { _id: 0, image: "$image.url", SubModel: 1 } },
           ],
           as: "productDetails",
@@ -71,7 +85,7 @@ exports.getBucket = async (req, res) => {
       },
     ]);
 
-    console.log(result);
+    console.log("aggregate result:",result);
 
     if (result) {
       res.status(200).json({
