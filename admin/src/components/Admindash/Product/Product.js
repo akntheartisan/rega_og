@@ -197,7 +197,7 @@ const Product = () => {
             />
             <TextField
               fullWidth
-              label="Range"
+              label="Mileage"
               variant="outlined"
               size="small"
               value={product.range}
