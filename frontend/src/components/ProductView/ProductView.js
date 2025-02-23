@@ -9,12 +9,10 @@ import frame from "./frame.png";
 import hand from "./hand.png";
 import mobilesurf from "./mobilesurf.png";
 import bikereceive from "./bikereceive.png";
-import smallbattery from "./car-battery (2).png";
 import motorcycle from "./motorcycle.png";
 import loading from "./loading.png";
 import speedometer from "./speedometer.png";
 import CallIcon from "@mui/icons-material/Call";
-import Footer from "../Footer/Footer";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FlashOnIcon from "@mui/icons-material/FlashOn";
 import { UserContext } from "../../App";
@@ -24,6 +22,12 @@ import Loader from "./Loader";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import { useMediaQuery } from "@mui/material";
 import BottomNav from "../BottomNav/BottomNav";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import BatteryChargingFullIcon from "@mui/icons-material/BatteryChargingFull";
+import ElectricMopedIcon from "@mui/icons-material/ElectricMoped";
 
 const ProductView = () => {
   const { userData, setUserData } = useContext(UserContext);
@@ -70,11 +74,17 @@ const ProductView = () => {
     }
   };
 
-  const getSelectModel = (battery) => {
+  const handleFilteredModel = (e) => {
+    console.log(e.target.value);
+
+    const { name, value } = e.target;
     setLoader(true);
     setGoToCart(false);
+
+    const filterKey = name === "selectBattery" ? "battery" : "range";
+
     const selectedModel = product.SubModel.find(
-      (each) => each.battery === battery
+      (each) => each[filterKey] === value
     );
 
     setTimeout(() => {
@@ -277,8 +287,49 @@ const ProductView = () => {
                </span> */}
               </div>
 
-              <h5>Battery Variants</h5>
-              <div
+              <h5>Bike Variants</h5>
+              <div className="row">
+                <div className="col-md-4 offset-md-2">
+                  <FormControl variant="filled" sx={{ m: 1, minWidth: "100%" }}>
+                    <InputLabel id="battery-select-label">
+                      <BatteryChargingFullIcon />
+                      Battery
+                    </InputLabel>
+                    <Select
+                      name="selectBattery"
+                      value={selected?.battery || ""} 
+                      onChange={handleFilteredModel}
+                    >
+                      {product.SubModel.map((each) => (
+                        <MenuItem key={each._id} value={each.battery}>
+                          {each.battery}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </div>
+
+                <div className="col-md-4">
+                  <FormControl variant="filled" sx={{ m: 1, minWidth: "100%" }}>
+                    <InputLabel id="mileage-select-label">
+                      <ElectricMopedIcon />
+                      Milleage
+                    </InputLabel>
+                    <Select
+                      name="selectMilleage"
+                      value={selected?.range || ""} 
+                      onChange={handleFilteredModel}
+                    >
+                      {product.SubModel.map((each) => (
+                        <MenuItem key={each._id} value={each.range}>
+                          {each.range} km/charge
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+              {/* <div
                 style={{
                   display: "flex",
                   justifyContent: "space-around",
@@ -297,7 +348,7 @@ const ProductView = () => {
                     {each.battery}
                   </button>
                 ))}
-              </div>
+              </div> */}
 
               <div className="spec">
                 <h6
@@ -341,9 +392,10 @@ const ProductView = () => {
                   >
                     <img src={speedometer} alt="Car" />
                     <div>
-                      <p style={{ margin: "0", color: "#767f88" }}>Range</p>
+                      <p style={{ margin: "0", color: "#767f88" }}>Mileage</p>
                       <p style={{ fontSize: "16px", fontWeight: "500" }}>
-                        {!selected ? product.SubModel[0].range : selected.range}
+                        {!selected ? product.SubModel[0].range : selected.range}{" "}
+                        km/charge
                       </p>
                     </div>
                   </div>
@@ -387,7 +439,8 @@ const ProductView = () => {
                       <p style={{ fontSize: "16px", fontWeight: "500" }}>
                         {!selected
                           ? product.SubModel[0].ground
-                          : selected.ground}
+                          : selected.ground}{" "}
+                        mm
                       </p>
                     </div>
                   </div>
@@ -401,7 +454,8 @@ const ProductView = () => {
                       <p style={{ fontSize: "16px", fontWeight: "500" }}>
                         {!selected
                           ? product.SubModel[0].payload
-                          : selected.payload}
+                          : selected.payload}{" "}
+                        kg
                       </p>
                     </div>
                   </div>
@@ -417,7 +471,8 @@ const ProductView = () => {
                       <p style={{ fontSize: "16px", fontWeight: "500" }}>
                         {!selected
                           ? product.SubModel[0].chargingtime
-                          : selected.chargingtime}
+                          : selected.chargingtime}{" "}
+                        hr
                       </p>
                     </div>
                   </div>

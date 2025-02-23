@@ -124,7 +124,7 @@ exports.productadd = async (req, res, next) => {
   try {
     let findModel = await projectmodel.find({ model });
     if (findModel) {
-      await projectmodel.updateOne(
+      const projectSubModel = await projectmodel.updateOne(
         { model: model },
         {
           $push: {
@@ -143,7 +143,17 @@ exports.productadd = async (req, res, next) => {
           },
         }
       );
+
+      if(projectSubModel){
+        res.status(200).json({
+          message:'success'
+        })
+      }
     }
+
+    
+
+
   } catch (error) {
     //console.log(error);
     res.status(400).json({
