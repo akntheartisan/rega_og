@@ -16,18 +16,22 @@ const AdminEnquiry = () => {
   const [enquiries, setEnquiries] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
-  const [page,setPage] = useState()
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState();
+  const [limit, setLimit] = useState(5);
 
   useEffect(() => {
-    console.log('i am again and again refresh');
     console.log(page);
-    
-    
+
     const fetchEnquiries = async () => {
       try {
-        const response = await client.get("/enquiryUser/getenquiries");
+        const response = await client.get(
+          `/enquiryUser/getenquiries?page=${page}&limit=${limit}`
+        );
+        // console.log(response);
 
-        setEnquiries(response.data);
+        setEnquiries(response.data.pageEnquiry);
+        setTotalPage(response.data.totalPages);
       } catch (error) {
         console.error("Error fetching enquiries:", error);
       }
@@ -63,10 +67,8 @@ const AdminEnquiry = () => {
     setOpenDialog(false);
   };
 
-  const handlePag = (e) => {
-    const target = e.target.textContent.trim().toLowerCase();
-    setPage(target)
-    
+  const handlePag = (pagenum) => {
+    setPage(pagenum);
   };
 
   return (
@@ -105,24 +107,42 @@ const AdminEnquiry = () => {
               ))}
             </tbody>
           </table>
-          <nav aria-label="Page navigation example mt-5">
-            <ul className="pagination justify-content-end" onClick={handlePag}>
-              <li className="page-item disabled">
-                <button className="page-link" tabIndex="-1">
+          <nav aria-label="Page navigation example" style={{marginTop:'15px'}}>
+            <ul className="pagination justify-content-center">
+              <li className="page-item">
+                <button
+                  className="page-link"
+                  tabIndex="-1"
+                  onClick={() => handlePag(page - 1)}
+                  disabled={page === 1}
+                >
                   Previous
                 </button>
               </li>
+
+              {totalPage &&
+                Array.from({ length: totalPage }).map((_, i) => {
+                  return (
+                    <div key={i}>
+                      <li className="page-item">
+                        <button
+                          className="page-link"
+                          onClick={() => handlePag(i + 1)}
+                        >
+                          {i + 1}
+                        </button>
+                      </li>
+                    </div>
+                  );
+                })}
               <li className="page-item">
-                <button className="page-link">1</button>
-              </li>
-              <li className="page-item">
-                <button className="page-link">2</button>
-              </li>
-              <li className="page-item">
-                <button className="page-link">3</button>
-              </li>
-              <li className="page-item">
-                <button className="page-link">Next</button>
+                <button
+                  className="page-link"
+                  onClick={() => handlePag(page + 1)}
+                  disabled={page === totalPage}
+                >
+                  Next
+                </button>
               </li>
             </ul>
           </nav>
