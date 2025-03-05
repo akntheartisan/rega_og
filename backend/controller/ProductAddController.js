@@ -14,10 +14,6 @@ const upload = multer({
 exports.uploadFile = upload.array("image");
 
 exports.resizeImage = async (req, res, next) => {
-  console.log("resize image controller");
-
-  // console.log(req.files);
-
   if (!req.files) {
     console.log("No image provided, skipping resize");
     return next();

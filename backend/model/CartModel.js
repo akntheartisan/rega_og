@@ -27,18 +27,18 @@ const Cart = new mongoose.Schema(
       ref:'userregister',
     },
     Purchased: [PurchasedItems],
-    total: {
-      type: String,
-    },
-    deliverystatus: {
-      type: String,
-    },
-    order_id:{
-      type:String,
-    },
-    payment_id:{
-      type:String,
-    }
+    // total: {
+    //   type: String,
+    // },
+    // deliverystatus: {
+    //   type: String,
+    // },
+    // order_id:{
+    //   type:String,
+    // },
+    // payment_id:{
+    //   type:String,
+    // }
   },
   { timestamps: true }
 );

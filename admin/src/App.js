@@ -13,14 +13,13 @@ export const AdminContext = createContext();
 
 function App() {
   const [admin, setAdmin] = useState("");
-  console.log(admin);
+ 
 
   const getProtected = useCallback(async () => {
     try {
       const response = await client.get("/admin/authuser", {
         withCredentials: true,
       });
-      console.log(response.data.user);
       const adminDetails = response.data.user;
       if (adminDetails) {
         setAdmin(adminDetails);
