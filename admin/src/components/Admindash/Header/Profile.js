@@ -75,7 +75,7 @@ export default function Profile() {
         }}
       >
         {/* <MenuItem>Profile</MenuItem> */}
-        <MenuItem onClick={passwordUpdate}>Password Update</MenuItem>
+        {/* <MenuItem onClick={passwordUpdate}>Password Update</MenuItem> */}
         <MenuItem onClick={logout}>Logout</MenuItem>
       </Menu>
       {/* <EditProfile

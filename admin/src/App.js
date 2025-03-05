@@ -4,8 +4,10 @@ import { Routes, Route } from "react-router-dom";
 import AdminDash from "./components/Admindash/AdminDash";
 import { Toaster } from "react-hot-toast";
 import { client } from "./Client/Clientaxios";
-import AdminForgetPassword from './components/Adminlogin/AdminForgetPassword'; 
+import AdminForgetPassword from "./components/Adminlogin/AdminForgetPassword";
 import AdminResetPass from "./components/Adminlogin/AdminResetPass/AdminResetPass";
+import Error from "./components/Error";
+import RegaDashboard from "./components/Admindash/Dashboard/RegaDashboard";
 
 export const AdminContext = createContext();
 
@@ -13,7 +15,6 @@ function App() {
   const [admin, setAdmin] = useState("");
   console.log(admin);
 
- 
   const getProtected = useCallback(async () => {
     try {
       const response = await client.get("/admin/authuser", {
@@ -27,12 +28,11 @@ function App() {
     } catch (error) {
       console.log(error);
     }
-  }, []); 
+  }, []);
 
-  
   useEffect(() => {
     getProtected();
-  }, [getProtected]); 
+  }, [getProtected]);
 
   return (
     <>
@@ -42,13 +42,13 @@ function App() {
             success: {
               style: {
                 background: "#b5e550",
-                color: 'white'
+                color: "white",
               },
             },
             error: {
               style: {
                 background: "#ff5252",
-                color: 'white'
+                color: "white",
               },
             },
           }}
@@ -64,8 +64,15 @@ function App() {
               )
             }
           />
-          <Route path="/forgotadminpassword" element={<AdminForgetPassword />} />
+          <Route
+            path="/forgotadminpassword"
+            element={<AdminForgetPassword />}
+          />
           <Route path="/admin/resetPassword/:id" element={<AdminResetPass />} />
+          <Route
+            path="/admin/"
+            element={<LoginForm setAdmin={setAdmin} admin={admin} />}
+          />
         </Routes>
       </AdminContext.Provider>
     </>

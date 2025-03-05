@@ -227,7 +227,7 @@ localStorage.setItem("TotalPrize", totalPrice);
   return (
     <>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer sx={{ maxHeight: 440 }}>
+        <TableContainer>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -309,17 +309,7 @@ localStorage.setItem("TotalPrize", totalPrice);
                 >
                   Order Status
                 </TableCell>
-                <TableCell
-                  align="center"
-                  style={{
-                    minWidth: 170,
-                    backgroundColor: "black",
-                    color: "white",
-                    fontSize: "18px",
-                  }}
-                >
-                  Action
-                </TableCell>
+             
               </TableRow>
             </TableHead>
             <TableBody>
@@ -488,11 +478,6 @@ localStorage.setItem("TotalPrize", totalPrice);
                           );
                         });
                       })}
-                    </TableCell>
-                    <TableCell align="center">
-                      <IconButton aria-label="delete">
-                        <DeleteIcon color="error" />
-                      </IconButton>
                     </TableCell>
                   </TableRow>
                 ))}

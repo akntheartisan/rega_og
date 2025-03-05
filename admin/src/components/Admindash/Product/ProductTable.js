@@ -77,7 +77,7 @@ export default function ProductTable({ product, setProduct }) {
 
   return (
     <>
-      <Paper sx={{ width: "100%", overflow: "hidden" }}>
+      <Paper sx={{ width: "70%", overflow: "hidden",marginLeft:'auto',marginRight:'auto' }}>
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
@@ -93,7 +93,7 @@ export default function ProductTable({ product, setProduct }) {
                 >
                   Model
                 </TableCell>
-                <TableCell
+                {/* <TableCell
                   align="center"
                   style={{
                     minWidth: 170,
@@ -103,8 +103,8 @@ export default function ProductTable({ product, setProduct }) {
                   }}
                 >
                   Motor
-                </TableCell>
-                <TableCell
+                </TableCell> */}
+                {/* <TableCell
                   align="center"
                   style={{
                     minWidth: 170,
@@ -114,8 +114,8 @@ export default function ProductTable({ product, setProduct }) {
                   }}
                 >
                   Image
-                </TableCell>
-                <TableCell
+                </TableCell> */}
+                {/* <TableCell
                   align="center"
                   style={{
                     minWidth: 170,
@@ -125,7 +125,7 @@ export default function ProductTable({ product, setProduct }) {
                   }}
                 >
                   Range
-                </TableCell>
+                </TableCell> */}
                 <TableCell
                   align="center"
                   style={{
@@ -146,16 +146,16 @@ export default function ProductTable({ product, setProduct }) {
                     key={each._id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row" align="center">
+                    <TableCell component="th" scope="row" align="center" style={{fontSize:'18px',fontWeight:'bolder'}}>
                       {each.model}
                     </TableCell>
-                    <TableCell align="center">{each.motor}</TableCell>
-                    <TableCell align="center">
+                    {/* <TableCell align="center">{each.motor}</TableCell> */}
+                    {/* <TableCell align="center">
                       <Link to={each.image.url} target="_blank">
                         {each.image.pid}
                       </Link>
-                    </TableCell>
-                    <TableCell align="center">{each.range}</TableCell>
+                    </TableCell> */}
+                    {/* <TableCell align="center">{each.range}</TableCell> */}
                     <TableCell align="center">
                       <IconButton aria-label="edit" onClick={()=>handleClickOpen(each)}>
                         <EditIcon color="primary" />

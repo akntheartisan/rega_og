@@ -3,7 +3,7 @@ const usermodel = require("../model/UserRegisterModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const JWT_SECRET = "fhsdkfhksdhfjksdhfkjsdhiy";
-const JWT_EXPIRATION = "24hr";
+const JWT_EXPIRATION = "1m";
 const sendMail = require("../Utility/Mail");
 const crypto = require("crypto");
 const { isErrored } = require("stream");
@@ -41,26 +41,24 @@ exports.userOTP = async (req, res, next) => {
       const newuser = await usermodel.create({
         name,
         username,
-        password:await bcrypt.hash(password, 12),
+        password: await bcrypt.hash(password, 12),
         active: status,
         otp: otp,
         //otpExpiresAt,
       });
 
-        const message = `Your 6 digit otp is ${otp}`;
+      const message = `Your 6 digit otp is ${otp}`;
 
-        await sendMail({
-          email: username,
-          subject: "Your SignUp OTP",
-          message: message,
-        });
+      await sendMail({
+        email: username,
+        subject: "Your SignUp OTP",
+        message: message,
+      });
 
-        return res.status(200).json({ status: "success" });
-      
+      return res.status(200).json({ status: "success" });
     }
 
-    if(exist && exist.active === false){
-
+    if (exist && exist.active === false) {
       const otp = Math.floor(100000 + Math.random() * 900000);
 
       exist.otp = otp;
@@ -76,7 +74,6 @@ exports.userOTP = async (req, res, next) => {
       });
 
       return res.status(200).json({ status: "success" });
-
     }
   } catch (error) {
     res.status(400).json({
@@ -194,23 +191,17 @@ exports.userSignIn = async (req, res, next) => {
 
 exports.protect = async (req, res, next) => {
   let token;
-  //console.log("req.cookies.jwt:", req.cookies.jwt);
 
   if (req.cookies && req.cookies.token) {
     token = req.cookies.token;
   } else {
-    return res.status(401).json({
-      status: "fail",
-      message: "Not authenticated",
-    });
+    return res.redirect("/logout");
   }
 
   try {
     let decoded = jwt.verify(token, JWT_SECRET);
 
     const checkUser = await usermodel.findById(decoded.id);
-
-    //console.log(checkUser);
 
     if (!checkUser) {
       return res.status(401).json({
@@ -220,7 +211,10 @@ exports.protect = async (req, res, next) => {
     }
 
     req.user = checkUser;
-    next();
+    res.status(200).json({
+      status: "success",
+      user: req.user,
+    });
   } catch (error) {
     console.error("Token verification error:", error.message);
     return res.status(401).json({

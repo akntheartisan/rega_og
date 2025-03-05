@@ -120,7 +120,7 @@ const Product = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    // if (!validateForm()) return;
+    if (!validateForm()) return;
 
     const formData = new FormData();
 

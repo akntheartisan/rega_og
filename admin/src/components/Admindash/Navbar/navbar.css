@@ -1,32 +1,53 @@
-.list{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    text-align: center;
-
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: center;
 }
 
 .listitem {
-    padding: 6px 0;
-    border-radius: 0;
-    transition: all 0.3s ease;
-    transform: translateX(0);
+  padding: 6px 0;
+  border-radius: 0;
+  transition: all 0.3s ease;
+  transform: translateX(0);
 }
 
-.listitem a {
-    color: white;
-    text-decoration: none;
+ a {
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
 }
 
-.listitem:hover {
+.activetab {
+  background-color: rgba(255, 255, 255, 0.4);
+  padding: 6px 6px 6px 12px;
+  border-radius: 0 25px 25px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* transform: translateX(5px); */
+}
+
+a:hover{
+  background-color: rgba(255, 255, 255, 0.4);
+  padding: 6px 6px 6px 12px;
+  border-radius: 0 25px 25px 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateX(5px); 
+}
+
+.logo{
+  display: flex;
+  justify-content: center;
+}
+
+.logo img {
+  max-width: 180px;
+}
+
+.logout-btn{
     background-color: rgba(255, 255, 255, 0.4);
-    padding: 6px 6px 6px 12px; 
-    border-radius: 0 25px 25px 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-    transform: translateX(5px);
-}
-.logo
-{
-    text-align: center;
-    margin-top: 15px;
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    border-radius: 20px;
+    color: white;
 }

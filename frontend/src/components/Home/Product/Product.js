@@ -50,7 +50,6 @@ const Product = () => {
 
           {product &&
             product.map((each) => {
-              console.log(each.SubModel);
               return (
                 <div
                   className="col-lg-4 col-md-6 productshow mt-3"
@@ -130,19 +129,19 @@ const Product = () => {
                           {each.model}
                         </p>
                         <span style={{ color: "#616161" }}>
-                          {each.SubModel[0].battery}
+                          {each?.SubModel[0]?.battery}
                         </span>
                         &nbsp;&nbsp;&nbsp;
                         <span style={{ color: "#616161" }}>
-                          {each.SubModel[0].motor}
+                          {each?.SubModel[0]?.motor}
                         </span>
                         <br />
                         <span style={{ color: "#616161" }}>
-                          {each.SubModel[0].range}
+                          {each?.SubModel[0]?.range}
                         </span>
                         &nbsp;&nbsp;&nbsp;
                         <span style={{ color: "#616161" }}>
-                          {each.SubModel[0].payload}
+                          {each?.SubModel[0]?.payload}
                         </span>
                         <hr />
                         <div
@@ -159,20 +158,20 @@ const Product = () => {
                               fontWeight: "600",
                             }}
                           >
-                            ₹ {each.SubModel[0].price}
+                            ₹ {each?.SubModel[0]?.price}
                           </span>
 
                           <div style={{ display: "flex", gap: "3px" }}>
                             <Rating
                               name="half-rating-read"
-                              value={each.SubModel[0].rating}
+                              value={each?.SubModel[0]?.rating}
                               precision={0.1}
                               readOnly
                             />
                             <span
                               style={{ fontStyle: "normal", fontWeight: "500" }}
                             >
-                              {each.SubModel[0].rating}
+                              {each?.SubModel[0]?.rating}
                             </span>
                           </div>
                         </div>

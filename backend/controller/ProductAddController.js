@@ -148,16 +148,12 @@ exports.productadd = async (req, res, next) => {
         }
       );
 
-      if(projectSubModel){
+      if (projectSubModel) {
         res.status(200).json({
-          message:'success'
-        })
+          message: "success",
+        });
       }
     }
-
-    
-
-
   } catch (error) {
     //console.log(error);
     res.status(400).json({
@@ -282,15 +278,14 @@ exports.deletePrimaryProduct = async (req, res) => {
 };
 
 exports.updatePrimaryProduct = async (req, res, next) => {
-  const { id } = req.params; // Get the product ID from the request parameters
-  const { model } = req.body; // Get the model name from the request body
-  const hasImage = req.result; // Check if the image upload result exists (from Cloudinary)
+  const { id } = req.params;
+  const { model } = req.body;
+  const hasImage = req.uploadResults;
+  console.log("primary product image update:", hasImage);
 
   try {
-    // Find the current product by ID
     const currentProduct = await projectmodel.findById(id);
 
-    // If the product is not found, return an error
     if (!currentProduct) {
       return res.status(404).json({
         success: false,
@@ -298,21 +293,6 @@ exports.updatePrimaryProduct = async (req, res, next) => {
       });
     }
 
-    // Prepare the data for updating
-    const updateData = {};
-
-    // Check if model is provided and add it to updateData
-    if (model) {
-      updateData.model = model.toLowerCase(); // Convert the model to lowercase and update
-    }
-
-    // Check if image is provided and add it to updateData
-    if (hasImage) {
-      const { url, public_id } = req.result; // Extract image details from the Cloudinary result
-      updateData.image = { url: url, pid: public_id }; // Update with the new image URL and public_id
-    }
-
-    // If neither model nor image is provided, return an error
     if (!model && !hasImage) {
       return res.status(400).json({
         success: false,
@@ -320,12 +300,22 @@ exports.updatePrimaryProduct = async (req, res, next) => {
       });
     }
 
-    // Update the product in the database
-    const productUpdate = await projectmodel.findByIdAndUpdate(id, updateData, {
-      new: true,
+    const image = hasImage.map((eachImg) => {
+
+      return ({ url: eachImg.url, pid: eachImg.public_id });
     });
 
-    // Return the updated product in the response
+    console.log(image);
+    
+
+    const productUpdate = await projectmodel.findByIdAndUpdate(
+      id,
+      { model: model.toLowerCase(), image: image },
+      {
+        new: true,
+      }
+    );
+
     return res.status(200).json({
       success: true,
       message: "Product updated successfully",

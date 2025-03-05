@@ -18,6 +18,7 @@ import {
   Modal,
   Typography,
 } from "@mui/material";
+import {useNavigate} from "react-router-dom"
 
 const PrimaryProduct = () => {
   const [image, setImage] = useState(null);
@@ -33,6 +34,8 @@ const PrimaryProduct = () => {
   const modelRegexAlphabetic = /^[a-zA-Z]+$/;
   const modelRegexLength = /^.{3,30}$/;
   const maxFileSize = 1 * 1024 * 1024;
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchProducts();
@@ -70,9 +73,12 @@ const PrimaryProduct = () => {
   const handleEdit = (product) => {
     console.log("kansha");
 
+    console.log('primaryproduct:',product);
+    
+
     setModel(product.model);
     setImage(product.image.url);
-    setCurrentimage(product.image.url);
+    setCurrentimage(product.image);
     console.log("Kansha");
     console.log(Image);
 
@@ -85,7 +91,11 @@ const PrimaryProduct = () => {
     if (modelError || imageError) return; // Prevent update if there are errors
 
     const formData = new FormData();
-    if (image) formData.append("image", image);
+    // if (image) formData.append("image", image);
+
+    image.forEach((each)=>{
+      formData.append("image",each)
+    })
     formData.append("model", model);
     formData.append("_id", editingProduct._id);
 
@@ -204,6 +214,11 @@ const PrimaryProduct = () => {
     }
   };
 
+
+  const imageView = (image)=>{
+      window.open(image)
+  }
+
   return (
     <>
       <div className="container">
@@ -293,8 +308,8 @@ const PrimaryProduct = () => {
         </Box>
       )}
 
-      {/* <div className="container mt-5">
-        <h3>Products List</h3>
+      <div className="container mt-5">
+        <h4>Primary Product</h4>
         <TableContainer>
           <Table>
             <TableHead>
@@ -310,7 +325,7 @@ const PrimaryProduct = () => {
                 >
                   Product Name
                 </TableCell>
-                <TableCell
+                {/* <TableCell
                   sx={{
                     backgroundColor: "black",
                     color: "white",
@@ -320,7 +335,7 @@ const PrimaryProduct = () => {
                   }}
                 >
                   Image
-                </TableCell>
+                </TableCell> */}
                 <TableCell
                   sx={{
                     backgroundColor: "black",
@@ -340,13 +355,13 @@ const PrimaryProduct = () => {
                   <TableCell sx={{ textAlign: "center" }}>
                     {product.model}
                   </TableCell>
-                  <TableCell sx={{ textAlign: "center" }}>
+                  {/* <TableCell sx={{ textAlign: "center" }}>
                     <img
-                      src={product.image.url}
+                      src={product?.image[0]?.url}
                       alt={product.model}
                       style={{ width: "50px", height: "50px" }}
                     />
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell sx={{ textAlign: "center" }}>
                     <Tooltip title="Edit">
                       <Button
@@ -376,7 +391,7 @@ const PrimaryProduct = () => {
             </TableBody>
           </Table>
         </TableContainer>
-      </div> */}
+      </div>
 
       {/* Modal for Editing */}
       <Modal
@@ -416,7 +431,7 @@ const PrimaryProduct = () => {
             {modelError && <div className="text-danger">{modelError}</div>}
           </div>
 
-          {image && (
+          {currentimage && (
             <div className="mt-2">
               <label
                 className="form-label"
@@ -425,19 +440,26 @@ const PrimaryProduct = () => {
                 Current Image
               </label>
               <div
-                className="iamge-container-1"
-                style={{ width: "60px", height: "60px" }}
+                style={{ width: "60px", height: "60px",display:'flex',gap:'5px' }}
               >
-                <img
-                  src={currentimage}
-                  alt="Current"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    marginBottom: "10px",
-                  }}
-                />
+
+                {currentimage && currentimage.map((eachImage)=>{
+                  return (
+                    <img
+                    src={eachImage?.url}
+                    alt="Current"
+                    onClick={()=>imageView(eachImage.url)}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      marginBottom: "10px",
+                      cursor:'pointer'
+                    }}
+                  />
+                  )
+                })}
+             
               </div>
             </div>
           )}
@@ -453,6 +475,7 @@ const PrimaryProduct = () => {
               onChange={handleImageChange}
               className="form-control"
               accept="image/*"
+              multiple
             />
             {imageError && <div className="text-danger">{imageError}</div>}
           </div>
