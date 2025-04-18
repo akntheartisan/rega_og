@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 import { client } from "../../../Client/Clientaxios";
 import RegaDashboard from "../Dashboard/RegaDashboard";
 
-
 const WorkSpace = () => {
   const [users, setUsers] = useState([]);
   useEffect(() => {
@@ -31,15 +30,16 @@ const WorkSpace = () => {
     <>
       <Header />
       <Routes>
+        <Route
+          path="/dashboard"
+          element={<RegaDashboard userCount={summa} users={users} />}
+        />
         <Route path="/primary" element={<PrimaryProduct />} />
         <Route path="/project" element={<Product />} />
         <Route path="/order" element={<Order />} />
         <Route path="/contact" element={<AdminContact />} />
         <Route path="/users" element={<UserLogin users={users} />} />
-        <Route
-          path="/dashboard"
-          element={<RegaDashboard userCount={summa} users={users} />}
-        />
+
         <Route path="/enquiry" element={<AdminEnquiry />} />
       </Routes>
     </>
