@@ -35,7 +35,7 @@ exports.adminsignin = async (req, res, next) => {
       });
     } else {
       const jwtSecret = "sdflkjsadlfhasldfjsdlk";
-      const jwtExpiration = "1hr";
+      const jwtExpiration = "30d";
 
       const token = jwt.sign({ id: adminCheck._id }, jwtSecret, {
         expiresIn: jwtExpiration,

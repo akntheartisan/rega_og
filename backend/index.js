@@ -23,9 +23,9 @@ app.use(express.json());
 app.use(cookieParser());
 // console.log(app.get('env'));
 
-if(process.env.NODE_ENV === 'development'){
-  console.log('i am in development mode');
-}
+// if(process.env.NODE_ENV === 'development'){
+//   console.log('i am in development mode');
+// }
 
 
 app.use(express.urlencoded({ extended: true }));

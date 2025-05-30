@@ -27,7 +27,7 @@ var multiCartData;
 var singleCartData;
 var cartItemsQuantity ;
 
-var total;
+
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -51,6 +51,7 @@ const Checkout = () => {
   const [singleQuantity, setSingleQuantity] = useState(0);
   const [cartData, setCartData] = useState();
   const [loader, setLoader] = useState(false);
+  const [total,setTotal] = useState()
 
   const smallScreen = useMediaQuery("(max-width:768px)");
 
@@ -78,10 +79,13 @@ const Checkout = () => {
         multiCartData = location.state.cartDetails ;
         singleCartData =location.state.singleItem;
         cartItemsQuantity = location.state.cartItemsQuantity;
-        const singleQuantityPrice = singleQuantity  ? singleQuantity * singleCartData.subModelDetails.price: 0;                    
-         total = location.state.total ? location.state.total: singleQuantityPrice;
+        const singleQuantityPrice = singleQuantity  ? singleQuantity * singleCartData.subModelDetails.price: 0;
+        const total1=location.state.total ? location.state.total: singleQuantityPrice;
+        setTotal(total1)                    
+         
       }
-      },[location,navigate,singleQuantity,total])
+      },[location,navigate,singleQuantity,setTotal])
+
       console.log("single"+ singleCartData);
       console.log("Total "+total);
  
@@ -367,6 +371,8 @@ const Checkout = () => {
   };
 
   const addQuantity = () => {
+    console.log('add quantity');
+    
     setSingleQuantity((prev) => prev + 1);
   };
 
@@ -1039,7 +1045,7 @@ const Checkout = () => {
                     <tbody className="order-details-body">
                       <tr>
                         <td style={{ fontSize: "14px", fontWeight: "500" }}>
-                          Product ({cartItemsQuantity ? cartItemsQuantity : 1}{" "}
+                          Product ({cartItemsQuantity ? cartItemsQuantity : 1}
                           Items)
                         </td>
                         <td style={{ fontSize: "14px", fontWeight: "500" }}>
