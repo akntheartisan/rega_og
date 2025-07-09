@@ -212,17 +212,21 @@ exports.getSelected = async (req, res, next) => {
 };
 
 exports.updateProject = async (req, res) => {
-  // console.log("this update get triggered");
   const { updatedProduct, id } = req.body;
-  // console.log(updatedProduct, id);
+  const availability = updatedProduct.availability.split(",");
+  const uniqueAvailability = Array.from(new Set(availability))
+  updatedProduct.availability = uniqueAvailability;
 
   try {
     const updatedDoc = await projectmodel.updateOne(
       { _id: id, "SubModel._id": updatedProduct._id },
-      { $set: { "SubModel.$": updatedProduct } }
+      {
+        $set: {
+          "SubModel.$": updatedProduct,
+        },
+      }
     );
 
-    // console.log(updatedDoc);
     if (updatedDoc) {
       return res.status(200).json({
         status: "success",
@@ -297,12 +301,10 @@ exports.updatePrimaryProduct = async (req, res, next) => {
     }
 
     const image = hasImage.map((eachImg) => {
-
-      return ({ url: eachImg.url, pid: eachImg.public_id });
+      return { url: eachImg.url, pid: eachImg.public_id };
     });
 
     console.log(image);
-    
 
     const productUpdate = await projectmodel.findByIdAndUpdate(
       id,

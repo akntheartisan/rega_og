@@ -25,9 +25,7 @@ const intial = {
 
 var multiCartData;
 var singleCartData;
-var cartItemsQuantity ;
-
-
+var cartItemsQuantity;
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -35,7 +33,7 @@ const Checkout = () => {
   const { userData, setUserData } = useContext(UserContext);
   const [checked, setChecked] = useState(false);
   const [shipAddress, setShipAddress] = useState(intial);
-  const [error,setError]=useState({
+  const [error, setError] = useState({
     name: "",
     username: "",
     address: "",
@@ -43,7 +41,7 @@ const Checkout = () => {
     state: "",
     pincode: "",
     mobile: "",
-  })
+  });
   const [pod, setPod] = useState();
   const [online, setOnline] = useState();
   const [model, setModel] = useState(true);
@@ -51,7 +49,7 @@ const Checkout = () => {
   const [singleQuantity, setSingleQuantity] = useState(0);
   const [cartData, setCartData] = useState();
   const [loader, setLoader] = useState(false);
-  const [total,setTotal] = useState()
+  const [total, setTotal] = useState();
 
   const smallScreen = useMediaQuery("(max-width:768px)");
 
@@ -61,34 +59,31 @@ const Checkout = () => {
     );
   };
 
-
-  
-
- 
-
   const location = useLocation();
   // const {state}=location  || {};
-  
 
-  console.log("state value " + location.state)
+  console.log("state value " + location.state);
 
-    useEffect(()=>{
-      if(location.state ===null ){
-        navigate("/")
-      }else{
-        multiCartData = location.state.cartDetails ;
-        singleCartData =location.state.singleItem;
-        cartItemsQuantity = location.state.cartItemsQuantity;
-        const singleQuantityPrice = singleQuantity  ? singleQuantity * singleCartData.subModelDetails.price: 0;
-        const total1=location.state.total ? location.state.total: singleQuantityPrice;
-        setTotal(total1)                    
-         
-      }
-      },[location,navigate,singleQuantity,setTotal])
+  useEffect(() => {
+    if (location.state === null) {
+      navigate("/");
+    } else {
+      multiCartData = location.state.cartDetails;
+      singleCartData = location.state.singleItem;
+      cartItemsQuantity = location.state.cartItemsQuantity;
+      const singleQuantityPrice = singleQuantity
+        ? singleQuantity * singleCartData.subModelDetails.price
+        : 0;
+      const total1 = location.state.total
+        ? location.state.total
+        : singleQuantityPrice;
+      setTotal(total1);
+    }
+  }, [location, navigate, singleQuantity, setTotal]);
 
-      console.log("single"+ singleCartData);
-      console.log("Total "+total);
- 
+  console.log("single" + singleCartData);
+  console.log("Total " + total);
+
   // const total = actualTotal ? actualTotal : cartData.price;
   // const quantity = location.state.quantity;
 
@@ -96,62 +91,62 @@ const Checkout = () => {
     navigate("/");
   };
 
-
-  const errorMessage=(fname,value)=>{
-    
+  const errorMessage = (fname, value) => {
     let message;
-    if(value===""){
-      message =`${fname} is Reqiured`
+    if (value === "") {
+      message = `${fname} is Reqiured`;
     }
 
-    if(fname==="name"){
-      if(value.length<3){
-           message =`${fname} is Invalid`
-    }else{
-      message = "";
-    }
-  }
-
-  if(fname==="username"){
-    if(value.length<3){
-      message = `${fname} is Invalid`
-      }else{
+    if (fname === "name") {
+      if (value.length < 3) {
+        message = `${fname} is Invalid`;
+      } else {
         message = "";
       }
+    }
 
-  }
+    if (fname === "username") {
+      if (value.length < 3) {
+        message = `${fname} is Invalid`;
+      } else {
+        message = "";
+      }
+    }
 
-  if(fname==="address"){
-    if(value.length<10){
-      message = `${fname} is Invalid`
-  }else{
-    message = "";
-  }}
+    if (fname === "address") {
+      if (value.length < 10) {
+        message = `${fname} is Invalid`;
+      } else {
+        message = "";
+      }
+    }
 
+    if (fname === "district") {
+      if (value.length < 3) {
+        message = `${fname} is Invalid`;
+      } else {
+        message = "";
+      }
+    }
 
-  if(fname==="district"){
-    if(value.length<3){
-      message = `${fname} is Invalid`
-  }else{
-    message = "";
-  }}
+    if (fname === "state") {
+      if (value.length < 3) {
+        message = `${fname} is Invalid`;
+      } else {
+        message = "";
+      }
+    }
 
-  if(fname==="state"){
-    if(value.length<3){
-      message = `${fname} is Invalid`
-  }else{
-    message = "";
-  }}
+    if (fname === "pincode") {
+      if (value.length < 6) {
+        message = `${fname} is Invalid`;
+      } else {
+        message = "";
+      }
+    }
 
-  if(fname==="pincode"){
-    if(value.length<6){
-      message = `${fname} is Invalid`
-  }else{
-    message = "";
-  }}
-
-  if(fname==="mobile"){
-    const numericValue = value.replace(/[^0-9]/g, "");
+    if (fname === "mobile") {
+      const numericValue = value.replace(/[^0-9]/g, "");
 
       if (numericValue.length < 10) {
         message = "Phone number needs 10 characters";
@@ -164,31 +159,24 @@ const Checkout = () => {
         } else {
           message = "";
         }
-      }}
+      }
+    }
 
+    return { message: message };
+  };
 
-
-
-
-
-    return {message:message}
-  }
-
-
-  console.log("Error" + error.name)
+  console.log("Error" + error.name);
   const handleBillChange = (e) => {
     const { name, value } = e.target;
 
-    const error=errorMessage(name,value).message;
+    const error = errorMessage(name, value).message;
 
-  setError((prev)=>{
-     return(
-      {
+    setError((prev) => {
+      return {
         ...prev,
-        [name]:error
-      }
-     )
-  })
+        [name]: error,
+      };
+    });
 
     setShipAddress((prev) => ({
       ...prev,
@@ -290,7 +278,7 @@ const Checkout = () => {
 
     const options = {
       key: "rzp_test_ooBBvuCJO2yhPh",
-      amount: 200,
+      amount: data.amount,
       currency: data.currency,
       name: "REGA SCOOTER",
       description: "Test Transaction",
@@ -371,12 +359,12 @@ const Checkout = () => {
   };
 
   const addQuantity = () => {
-    console.log('add quantity');
-    
+    console.log("add quantity");
+
     setSingleQuantity((prev) => prev + 1);
   };
 
-  console.log(singleQuantity)
+  console.log(singleQuantity);
 
   const minusQuantity = () => {
     if (singleQuantity === 0) {
@@ -533,25 +521,30 @@ const Checkout = () => {
                             <form>
                               <p>
                                 <input
-                                max={20}
+                                  max={20}
                                   type="text"
                                   name="name"
                                   value={
                                     checked ? userData.name : shipAddress.name
                                   }
-                                  onKeyDown={
-                                    (e)=>{
-                                      if( checked ? userData.name.length : shipAddress.name.length===0 && e.key===" "){
-                                        e.preventDefault();
-                                        return
-                                      }
+                                  onKeyDown={(e) => {
+                                    if (
+                                      checked
+                                        ? userData.name.length
+                                        : shipAddress.name.length === 0 &&
+                                          e.key === " "
+                                    ) {
+                                      e.preventDefault();
+                                      return;
                                     }
-                                  }
+                                  }}
                                   placeholder="Name"
                                   onChange={handleBillChange}
                                   {...(checked ? { readOnly: true } : {})}
                                 />
-                                 {error.name !== "" && <div className="error">{error.name}</div>}
+                                {error.name !== "" && (
+                                  <div className="error">{error.name}</div>
+                                )}
                               </p>
                               <p>
                                 <input
@@ -562,7 +555,6 @@ const Checkout = () => {
                                       ? userData.username
                                       : shipAddress.username
                                   }
-
                                   onKeyDown={(e) => {
                                     const allowedKeys = [
                                       "Backspace",
@@ -572,7 +564,7 @@ const Checkout = () => {
                                       "Tab",
                                     ];
                                     const allowedCharPattern = /^[0-9a-z._@-]$/;
-                        
+
                                     if (
                                       !allowedKeys.includes(e.key) &&
                                       !allowedCharPattern.test(e.key)
@@ -584,11 +576,13 @@ const Checkout = () => {
                                   onChange={handleBillChange}
                                   {...(checked ? { readOnly: true } : {})}
                                 />
-                                  {error.username !== "" && <div className="error">{error.username}</div>}
+                                {error.username !== "" && (
+                                  <div className="error">{error.username}</div>
+                                )}
                               </p>
                               <p>
                                 <input
-                                max={40}
+                                  max={40}
                                   type="text"
                                   name="address"
                                   value={
@@ -596,105 +590,125 @@ const Checkout = () => {
                                       ? userData.address
                                       : shipAddress.address
                                   }
-                                  onKeyDown={
-                                    (e)=>{
-                                      if( checked ? userData.address.length : shipAddress.address.length===0 && e.key===" "){
-                                        e.preventDefault();
-                                        return
-                                      }
+                                  onKeyDown={(e) => {
+                                    if (
+                                      checked
+                                        ? userData.address.length
+                                        : shipAddress.address.length === 0 &&
+                                          e.key === " "
+                                    ) {
+                                      e.preventDefault();
+                                      return;
                                     }
-                                  }
+                                  }}
                                   placeholder="Address"
                                   onChange={handleBillChange}
                                   {...(checked ? { readOnly: true } : {})}
                                 />
-                              {error.address !== "" && <div className="error">{error.address}</div>}
-                              
+                                {error.address !== "" && (
+                                  <div className="error">{error.address}</div>
+                                )}
                               </p>
                               <p style={{ display: "flex", gap: "10px" }}>
                                 <p>
-                                <input
-                                max={30}
-                                  type="text"
-                                  name="district"
-                                  value={
-                                    checked
-                                      ? userData.district
-                                      : shipAddress.district
-                                  }
-                                  onKeyDown={
-                                    (e)=>{
-                                      if( checked ? userData.district.length : shipAddress.district.length===0 && e.key===" "){
-                                        e.preventDefault();
-                                        return
-                                      }
+                                  <input
+                                    max={30}
+                                    type="text"
+                                    name="district"
+                                    value={
+                                      checked
+                                        ? userData.district
+                                        : shipAddress.district
                                     }
-                                  }
-                                  placeholder="district"
-                                  onChange={handleBillChange}
-                                  {...(checked ? { readOnly: true } : {})}
-                                />
-                                {error.district !== "" && <div className="error">{error.district}</div>}
+                                    onKeyDown={(e) => {
+                                      if (
+                                        checked
+                                          ? userData.district.length
+                                          : shipAddress.district.length === 0 &&
+                                            e.key === " "
+                                      ) {
+                                        e.preventDefault();
+                                        return;
+                                      }
+                                    }}
+                                    placeholder="district"
+                                    onChange={handleBillChange}
+                                    {...(checked ? { readOnly: true } : {})}
+                                  />
+                                  {error.district !== "" && (
+                                    <div className="error">
+                                      {error.district}
+                                    </div>
+                                  )}
                                 </p>
                                 <p>
-                                <input
-                                max={30}
-                                  type="text"
-                                  name="state"
-                                  value={
-                                    checked ? userData.state : shipAddress.state
-                                  }
-                                  onKeyDown={
-                                    (e)=>{
-                                      if( checked ? userData.state.length : shipAddress.state.length===0 && e.key===" "){
+                                  <input
+                                    max={30}
+                                    type="text"
+                                    name="state"
+                                    value={
+                                      checked
+                                        ? userData.state
+                                        : shipAddress.state
+                                    }
+                                    onKeyDown={(e) => {
+                                      if (
+                                        checked
+                                          ? userData.state.length
+                                          : shipAddress.state.length === 0 &&
+                                            e.key === " "
+                                      ) {
                                         e.preventDefault();
-                                        return
+                                        return;
                                       }
+                                    }}
+                                    placeholder="state"
+                                    onChange={handleBillChange}
+                                    {...(checked ? { readOnly: true } : {})}
+                                  />
+                                  {error.state !== "" && (
+                                    <div className="error">{error.state}</div>
+                                  )}
+                                </p>
+                                <p>
+                                  <input
+                                    max={6}
+                                    type="text"
+                                    name="pincode"
+                                    value={
+                                      checked
+                                        ? userData.pincode
+                                        : shipAddress.pincode
                                     }
-                                  }
-                                  placeholder="state"
-                                  onChange={handleBillChange}
-                                  {...(checked ? { readOnly: true } : {})}
-                                />
-                                {error.state !== "" && <div className="error">{error.state}</div>}
-</p>
-<p>
-                                <input
-                                max={6}
-                                  type="text"
-                                  name="pincode"
-                                  value={
-                                    checked
-                                      ? userData.pincode
-                                      : shipAddress.pincode
-                                  }
-                                  placeholder="pincode"
-                                  onKeyDown={(e) => {
-                                    const allowedKeys = [
-                                      "Backspace",
-                                      "ArrowLeft",
-                                      "ArrowRight",
-                                      "Delete",
-                                      "Tab",
-                                    ];
-                                    const allowedCharPattern = /^[0-9]$/;
-                        
-                                    if (
-                                      !allowedKeys.includes(e.key) &&
-                                      !allowedCharPattern.test(e.key)
-                                    ) {
-                                      e.preventDefault();
-                                    }
-                                  }}
-                                  onChange={handleBillChange}
-                                  {...(checked ? { readOnly: true } : {})}
-                                />
-                                {error.pincode !== "" && <div className="error">{error.pincode}</div>}
+                                    placeholder="pincode"
+                                    onKeyDown={(e) => {
+                                      const allowedKeys = [
+                                        "Backspace",
+                                        "ArrowLeft",
+                                        "ArrowRight",
+                                        "Delete",
+                                        "Tab",
+                                      ];
+                                      const allowedCharPattern = /^[0-9]$/;
+
+                                      if (
+                                        !allowedKeys.includes(e.key) &&
+                                        !allowedCharPattern.test(e.key)
+                                      ) {
+                                        e.preventDefault();
+                                      }
+                                    }}
+                                    onChange={handleBillChange}
+                                    {...(checked ? { readOnly: true } : {})}
+                                  />
+                                  {error.pincode !== "" && (
+                                    <div className="error">{error.pincode}</div>
+                                  )}
                                 </p>
                               </p>
                               <p>
                                 <input
-                                max={10}
+                                  max={10}
                                   type="text"
                                   name="mobile"
                                   value={
@@ -712,7 +726,7 @@ const Checkout = () => {
                                       "Tab",
                                     ];
                                     const allowedCharPattern = /^[0-9]$/;
-                        
+
                                     if (
                                       !allowedKeys.includes(e.key) &&
                                       !allowedCharPattern.test(e.key)
@@ -723,8 +737,9 @@ const Checkout = () => {
                                   onChange={handleBillChange}
                                   {...(checked ? { readOnly: true } : {})}
                                 />
-                                {error.mobile !== "" && <div className="error">{error.mobile}</div>}
-
+                                {error.mobile !== "" && (
+                                  <div className="error">{error.mobile}</div>
+                                )}
                               </p>
                             </form>
                             <button
@@ -894,7 +909,7 @@ const Checkout = () => {
                                 >
                                   <div>
                                     <img
-                                      src={each.image}
+                                      src={each.image[0]}
                                       style={{
                                         width: "150px",
                                         height: "150px",
@@ -1086,12 +1101,22 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-      {smallScreen ? <div className="mt-3" style={{
-        position:"sticky",
-        bottom:"0px",
-        borderTop:"0.05em solid white"
-      }} ><BottomNav />
-      </div> :  <div className="mt-3" ><Footer /></div>}
+      {smallScreen ? (
+        <div
+          className="mt-3"
+          style={{
+            position: "sticky",
+            bottom: "0px",
+            borderTop: "0.05em solid white",
+          }}
+        >
+          <BottomNav />
+        </div>
+      ) : (
+        <div className="mt-3">
+          <Footer />
+        </div>
+      )}
     </>
   );
 };

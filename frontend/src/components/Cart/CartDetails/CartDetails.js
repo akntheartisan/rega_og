@@ -134,7 +134,7 @@ const CartDetails = ({ id }) => {
                               >
                                 <td>
                                   <img
-                                    src={each.image}
+                                    src={each.image[0]}
                                     alt="model"
                                     style={{ width: "150px" }}
                                   />

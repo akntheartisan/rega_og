@@ -47,6 +47,9 @@ const ProductView = () => {
   const [goToCart, setGoToCart] = useState(false);
   const [product, setProduct] = useState();
   const [slideShow, setSlideShow] = useState();
+  const [pincodeError, setPincodeError] = useState(false);
+  const [pincode, setPincode] = useState();
+  const [availableStatus, setAvailableStatus] = useState(false);
 
   useEffect(() => {
     fetchSelected();
@@ -99,7 +102,7 @@ const ProductView = () => {
     if (!userData) {
       navigate("/register");
     } else {
-      const image = product.image.url;
+      const image = product.image[0].url;
       const model = product.model;
 
       let subModelDetails;
@@ -157,6 +160,39 @@ const ProductView = () => {
   const slideImgSelect = (imgUrl) => {
     setSlideShow(imgUrl);
   };
+
+  const handlePincodeCheck = (e) => {
+    // console.log(e);
+
+    const { name, value } = e.target;
+
+    if (value.length > 6 || value.length < 6) {
+      setPincodeError(true);
+      setPincode(value);
+    } else {
+      setPincodeError(false);
+      setPincode(value);
+    }
+  };
+
+  useEffect(() => {
+    availabilityCheck();
+  }, [pincode]);
+
+  const availabilityCheck = () => {
+    const battery = selected?.battery || product?.SubModel[0];
+    const findSubmodel = product?.SubModel.find((each) => {
+      return each.battery == battery;
+    });
+    console.log(findSubmodel);
+
+    const findArea = findSubmodel?.availability.includes(pincode);
+    console.log(findArea);
+
+    setAvailableStatus(findArea);
+  };
+
+  console.log(pincode?.length);
 
   return (
     <>
@@ -297,7 +333,7 @@ const ProductView = () => {
                     </InputLabel>
                     <Select
                       name="selectBattery"
-                      value={selected?.battery || ""} 
+                      value={selected?.battery || ""}
                       onChange={handleFilteredModel}
                     >
                       {product.SubModel.map((each) => (
@@ -317,7 +353,7 @@ const ProductView = () => {
                     </InputLabel>
                     <Select
                       name="selectMilleage"
-                      value={selected?.range || ""} 
+                      value={selected?.range || ""}
                       onChange={handleFilteredModel}
                     >
                       {product.SubModel.map((each) => (
@@ -349,6 +385,30 @@ const ProductView = () => {
                   </button>
                 ))}
               </div> */}
+
+              <div className="availability mt-1">
+                <h5>Availability Check In</h5>
+                <label>Enter your pincode</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  maxLength="6"
+                  name="pincode"
+                  onChange={(e) => handlePincodeCheck(e)}
+                />
+                {pincodeError && (
+                  <p style={{ marginTop: "1px", color: "red" }}>
+                    only 6 digit needed
+                  </p>
+                )}
+
+                {pincode?.length === 6 && (
+                  <p style={{ color: availableStatus ? "green" : "red" }}>
+                    Selected Model is{" "}
+                    {availableStatus ? " Available" : " Not Available"}
+                  </p>
+                )}
+              </div>
 
               <div className="spec">
                 <h6

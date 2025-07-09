@@ -267,6 +267,21 @@ export default function ProductUpdate({
                     />
                   </div>
                 </div>
+                <div className="col-md-12">
+                  <div className="mb-3">
+                    <label htmlFor="availability" className="form-label">
+                      Availability
+                    </label>
+                    <textarea
+                      type="text"
+                      className="form-control"
+                      id="charging"
+                      name="availability"
+                      value={updatedProduct.availability}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </DialogContentText>

@@ -43,6 +43,9 @@ const SubProduct = new mongoose.Schema(
       max: 5,
       get: (val) => Math.round(val * 10) / 10,
     },
+    availability: {
+      type: Array,
+    },
   },
   { _id: true }
 );
