@@ -46,6 +46,9 @@ const SubProduct = new mongoose.Schema(
     availability: {
       type: Array,
     },
+    color: {
+      type: Array,
+    },
   },
   { _id: true }
 );

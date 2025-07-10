@@ -33,7 +33,7 @@ export default function ProductUpdate({
   const handleChange = (e) => {
     const { name, value } = e.target;
     console.log(name);
-    
+
     setUpdatedProduct((prev) => ({
       ...prev,
       [name]: value,
@@ -47,17 +47,32 @@ export default function ProductUpdate({
     console.log(e.target.value);
     const batteryValue = e.target.value;
 
-    const selectedBatteryModel = product.SubModel.filter((eachModel) =>
+    const selectedBatteryModel = product.SubModel.find((eachModel) =>
       eachModel.battery.includes(batteryValue)
     );
 
+    selectedBatteryModel.availability =
+      selectedBatteryModel.availability.join(",");
+      
+    selectedBatteryModel.color = selectedBatteryModel.color.join(",");
+
+
     // setFilteredProduct(selectedBatteryModel[0]);
-    setUpdatedProduct(selectedBatteryModel[0]);
+    setUpdatedProduct(selectedBatteryModel);
   };
 
   const updateSubmit = async () => {
     console.log(updatedProduct);
     const id = product._id;
+
+    const availability = updatedProduct.availability.split(",");
+    const colorAvailability = updatedProduct.color.split(",");
+
+    const uniqueAvailability = Array.from(new Set(availability));
+    const uniqueColorAvail = Array.from(new Set(colorAvailability));
+
+    updatedProduct.availability = uniqueAvailability;
+    updatedProduct.color = uniqueColorAvail;
 
     try {
       const response = await client.post("/project/updateproject", {
@@ -77,7 +92,7 @@ export default function ProductUpdate({
       console.error("Error while updating product:", error);
     }
   };
-  
+
   return (
     <React.Fragment>
       <Dialog
@@ -270,7 +285,7 @@ export default function ProductUpdate({
                 <div className="col-md-12">
                   <div className="mb-3">
                     <label htmlFor="availability" className="form-label">
-                      Availability
+                      Pincode Availability
                     </label>
                     <textarea
                       type="text"
@@ -278,6 +293,21 @@ export default function ProductUpdate({
                       id="charging"
                       name="availability"
                       value={updatedProduct.availability}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div className="col-md-12">
+                  <div className="mb-3">
+                    <label htmlFor="availability" className="form-label">
+                      Color Availability
+                    </label>
+                    <textarea
+                      type="text"
+                      className="form-control"
+                      id="charging"
+                      name="color"
+                      value={updatedProduct.color}
                       onChange={handleChange}
                     />
                   </div>

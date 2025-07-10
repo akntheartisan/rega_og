@@ -213,9 +213,6 @@ exports.getSelected = async (req, res, next) => {
 
 exports.updateProject = async (req, res) => {
   const { updatedProduct, id } = req.body;
-  const availability = updatedProduct.availability.split(",");
-  const uniqueAvailability = Array.from(new Set(availability))
-  updatedProduct.availability = uniqueAvailability;
 
   try {
     const updatedDoc = await projectmodel.updateOne(

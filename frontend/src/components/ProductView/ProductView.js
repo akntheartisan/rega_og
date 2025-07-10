@@ -194,6 +194,10 @@ const ProductView = () => {
 
   console.log(pincode?.length);
 
+  const selectColor = (color) => {
+    console.log(color);
+  };
+
   return (
     <>
       {/* <ProductViewHeader /> */}
@@ -410,7 +414,27 @@ const ProductView = () => {
                 )}
               </div>
 
-              <div className="spec">
+              <div className="color-picker">
+                <h5>Choose a Color:</h5>
+                {!selected
+                  ? product.SubModel[0].color.map((each) => {
+                      return (
+                        <button
+                          className="color-button"
+                          onClick={() => selectColor(each)}
+                        >
+                          {each.toUpperCase()}
+                        </button>
+                      );
+                    })
+                  : selected.color.map((each) => {
+                      return <button className="color-button">{each}</button>;
+                    })}
+              </div>
+
+              {/* {!selected ? product.SubModel[0].color : selected.color} */}
+
+              <div className="spec mt-5">
                 <h6
                   style={{
                     margin: "15px 0 0 15px",

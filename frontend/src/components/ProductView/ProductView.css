@@ -6,42 +6,43 @@
   border: 1px solid rgba(54, 53, 53, 0.2);
   border-radius: 10px;
 }
-.checkhead{
-
+.checkhead {
   background-color: #051922;
   display: flex;
   justify-content: space-between;
   padding: 20px;
-
 }
 
-.checkhead .checklogo{
+.checkhead .checklogo {
   width: 150px;
 }
 
-.batteryvariant{
+.batteryvariant {
   background-color: #fff1de54;
   border: 1px ridge #fff1de75;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) ;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
   transition: 500ms;
 }
 
-.batteryvariant:hover{
+.batteryvariant:hover {
   transform: scale(1.2);
 }
 
-.loader{
+.loader {
   height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 2;
-  background: linear-gradient(rgba(171,162,162,0.4),rgba(171,162,162,0.4));
+  background: linear-gradient(
+    rgba(171, 162, 162, 0.4),
+    rgba(171, 162, 162, 0.4)
+  );
 }
 
-.starrating{
+.starrating {
   background-color: #f28123;
   color: white;
   padding: 3px;
@@ -55,14 +56,14 @@
   margin: 15px auto;
 }
 
-.product_slideshow{
+.product_slideshow {
   width: 100%;
   display: flex;
   justify-content: space-between;
   margin: 15px 0;
 }
 
-.product_slideshow img{
+.product_slideshow img {
   width: 50px;
   height: 50px;
 }
@@ -83,29 +84,46 @@
 
 /* For portrait mode on tablets and large phones */
 
-.product_view_image >img{
+.product_view_image > img {
   width: 100%;
- height: 100%;
- margin: 10px auto;
- display: block;
- /* margin-bottom: 20px; */
- object-fit:cover ;
-  
+  height: 100%;
+  margin: 10px auto;
+  display: block;
+  /* margin-bottom: 20px; */
+  object-fit: cover;
 }
 
+.color-button {
+  background-color: transparent;
+  border-color: rgb(242, 129, 35);
+  outline: none;
+  border-radius: 12px;
+  color: black;
+  padding: 5px 18px;
+  font-size: 12px;
+  font-weight: 550;
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
 
-@media (max-width: 768px) { /* Tablet and smaller screens */
+.color-button:focus {
+  background-color: rgb(242, 129, 35);
+  border-color: rgb(242, 129, 35);
+  color: white;
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  /* Tablet and smaller screens */
   .product_view_image {
     margin-top: 0; /* Remove negative margin on smaller screens */
-   
   }
-
 
   .button-container-product {
     flex-direction: column; /* Stack buttons vertically on smaller screens */
   }
 
-  .button-container-product  button {
+  .button-container-product button {
     margin-bottom: 5px; /* Add space between buttons */
   }
 }
