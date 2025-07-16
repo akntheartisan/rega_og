@@ -7,6 +7,7 @@ const JWT_EXPIRATION = "30d";
 const sendMail = require("../Utility/Mail");
 const crypto = require("crypto");
 const { isErrored } = require("stream");
+const razorpay = require("razorpay");
 
 let otpCheck;
 
@@ -442,8 +443,8 @@ exports.deliveryStatus = async (req, res) => {
   }
 };
 
-exports.cancelProducts = async (req, res) => {
-  const { id, purchased_id, cartId } = req.body;
+exports.cancelProducts = async (req, res, next) => {
+  const { id, purchased_id, cartId, paidAmount, paymentId } = req.body;
   console.log(id, purchased_id, cartId);
 
   const userId = new mongoose.Types.ObjectId(id);
@@ -472,12 +473,53 @@ exports.cancelProducts = async (req, res) => {
     );
 
     if (cancelProduct) {
+      req.refundData = { paidAmount, paymentId, cancelProduct };
+      next();
+    }
+
+    console.log(cancelProduct);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.refund = async (req, res) => {
+  const { paidAmount, paymentId, cancelProduct } = req.refundData;
+  console.log("refundreqbody", req.refundData);
+
+  try {
+    const razorPayInstance = new razorpay({
+      key_id: "rzp_test_ooBBvuCJO2yhPh",
+      key_secret: "Sza1b1bUrEAKO4ITERLLVGYi",
+    });
+
+    const fetchPaymentDetails = await razorPayInstance.payments.fetch(
+      paymentId
+    );
+    console.log("refundDetails", fetchPaymentDetails);
+
+    if (
+      fetchPaymentDetails.status === "refunded" &&
+      fetchPaymentDetails.amount_refunded > 0
+    ) {
+      return res.status(400).json({ message: "Payment is already refunded" });
+    }
+
+    const refund = await razorPayInstance.payments.refund(paymentId, {
+      amount: paidAmount * 100,
+      speed: "normal",
+    });
+
+    console.log("refund", refund);
+
+    if (refund.status === "processed") {
       return res.status(200).json({
         status: "success",
         message: cancelProduct,
       });
     }
-
-    console.log(cancelProduct);
-  } catch (error) {}
+  } catch (error) {
+    console.log("refunderror", error);
+    return res.status(400).json({ message: "Refund Process already Started" });
+  }
 };

@@ -5,6 +5,9 @@ const ListItem = new mongoose.Schema({
     model:{
         type:String
     },
+    color:{
+      type:String
+    },
     subModelId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Product"

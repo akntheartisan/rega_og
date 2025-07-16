@@ -37,8 +37,6 @@ const Product = () => {
   const [errors, setErrors] = useState({});
   const [primary, setPrimary] = useState("");
 
-  
-
   // const handleFileChange = (e) => {
   //   const file = e.target.files[0];
   //   if (file) {
@@ -47,24 +45,23 @@ const Product = () => {
   // };
 
   const handleChange = (e) => {
-   
     const { name, value } = e.target;
     setProduct((prev) => ({
       ...prev,
       [name]: value,
     }));
-    
+
     validateField(name, value);
   };
   const validateField = (name, value) => {
     let errorMessage = "";
-  
+
     if (name === "price" && isNaN(value)) {
       errorMessage = "Price must be a number.";
     } else if (/\s/.test(value) && name !== "price") {
       errorMessage = "Spaces are not allowed.";
     }
-  
+
     setErrors((prevErrors) => ({
       ...prevErrors,
       [name]: errorMessage,
@@ -113,7 +110,7 @@ const Product = () => {
         newErrors[field] = "Spaces are not allowed.";
       }
     });
-  
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -306,6 +303,34 @@ const Product = () => {
               error={!!errors.frame}
             />
           </Stack>
+          <Stack direction={isMobile ? "column" : "row"} spacing={2}>
+            <TextField
+              fullWidth
+              label="Area Availability"
+              variant="outlined"
+              size="small"
+              value={product.availability}
+              onChange={handleChange}
+              name="availability"
+              helperText={errors.availability}
+              error={!!errors.availability}
+            />
+          </Stack>
+
+          <Stack direction={isMobile ? "column" : "row"} spacing={2}>
+            <TextField
+              fullWidth
+              label="A"
+              variant="outlined"
+              size="small"
+              value={product.availability}
+              onChange={handleChange}
+              name="availability"
+              helperText={errors.availability}
+              error={!!errors.availability}
+            />
+          </Stack>
+
           <Stack direction={"row"} spacing={2} justifyContent={"center"}>
             <Button variant="contained" color="warning">
               Cancel

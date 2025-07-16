@@ -33,6 +33,6 @@ router.post("/resetPassword", cont.resetPassword);
 router.get("/validateResetToken/:id", cont.validateResetToken);
 router.get("/getOrderedProducts", cont.getOrderedProducts);
 router.post("/delivery", cont.deliveryStatus);
-router.post("/cancelProducts", cont.cancelProducts);
+router.post("/cancelProducts", cont.cancelProducts,cont.refund);
 
 module.exports = router;

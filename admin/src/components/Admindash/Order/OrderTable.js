@@ -31,88 +31,83 @@ export default function OrderTable({ product, setProduct }) {
   const [offlineCount, setOfflineCount] = useState(0);
 
   console.log(orderData);
-//   let totalPrice = 0; 
-//  let districts=[];
-//   orderData.forEach((user) => {
-//     user.Purchased.forEach((purchased) => {
-//       purchased.cartData.forEach((cartData) => {
-//         console.log("Checking cartData:", cartData); 
-  
-      
-//         if (cartData.deliverystatus === "Delivered") {
-          
-//           console.log(cartData.subModelDetails); 
-          
-         
-//           console.log("Delivery Status:", cartData.deliveryStatus);
-//           console.log("Price:", cartData.subModelDetails.price);
-          
-  
-//           districts.push(user.district)
-//           totalPrice += Number(cartData.subModelDetails.price); 
-//         }
-//       });
-//     });
-//   });
-//   console.log(districts);
-// let totalPrice = 0; 
-// let districts = [];
+  //   let totalPrice = 0;
+  //  let districts=[];
+  //   orderData.forEach((user) => {
+  //     user.Purchased.forEach((purchased) => {
+  //       purchased.cartData.forEach((cartData) => {
+  //         console.log("Checking cartData:", cartData);
 
-// Keep track of which user has already added their district
-// let userDistricts = new Set(); 
+  //         if (cartData.deliverystatus === "Delivered") {
 
-// orderData.forEach((user) => {
-//   user.Purchased.forEach((purchased) => {
-//     purchased.cartData.forEach((cartData) => {
-//       // Normalize district name to lowercase
-//       let normalizedDistrict = user.district.toLowerCase();
-      
-//       if (cartData.deliverystatus === "Delivered") {
-//         if (cartData.subModelDetails && cartData.subModelDetails.price) {
-//           // Check if this user's district has already been added
-//           if (!userDistricts.has(user.id + normalizedDistrict)) {
-//             districts.push(user.district); // Add the district in its original form
-//             userDistricts.add(user.id + normalizedDistrict); // Mark this user's district as added
-//           }
+  //           console.log(cartData.subModelDetails);
 
-//           // Calculate total price
-//           totalPrice += Number(cartData.subModelDetails.price);
-//         }
-//       }
-//     });
-//   });
-// });
+  //           console.log("Delivery Status:", cartData.deliveryStatus);
+  //           console.log("Price:", cartData.subModelDetails.price);
 
-// console.log("Total Price:", totalPrice);
-// console.log("Districts with delivered orders (allowing different users to add the same district):", districts);
+  //           districts.push(user.district)
+  //           totalPrice += Number(cartData.subModelDetails.price);
+  //         }
+  //       });
+  //     });
+  //   });
+  //   console.log(districts);
+  // let totalPrice = 0;
+  // let districts = [];
 
-let totalPrice = 0; 
-let districts = []; // To hold final districts
+  // Keep track of which user has already added their district
+  // let userDistricts = new Set();
 
-orderData.forEach((user) => {
-  let userDistricts = new Set();
+  // orderData.forEach((user) => {
+  //   user.Purchased.forEach((purchased) => {
+  //     purchased.cartData.forEach((cartData) => {
+  //       // Normalize district name to lowercase
+  //       let normalizedDistrict = user.district.toLowerCase();
 
-  user.Purchased.forEach((purchased) => {
-    purchased.cartData.forEach((cartData) => {
-      console.log("Checking cartData:", cartData); 
-  
-      if (cartData.deliverystatus === "Delivered") {
-        console.log(cartData.subModelDetails); 
-        console.log("Delivery Status:", cartData.deliveryStatus);
-        console.log("Price:", cartData.subModelDetails.price);
-        
-      
-        userDistricts.add(user.district);
-        totalPrice += Number(cartData.subModelDetails.price); 
-      }
+  //       if (cartData.deliverystatus === "Delivered") {
+  //         if (cartData.subModelDetails && cartData.subModelDetails.price) {
+  //           // Check if this user's district has already been added
+  //           if (!userDistricts.has(user.id + normalizedDistrict)) {
+  //             districts.push(user.district); // Add the district in its original form
+  //             userDistricts.add(user.id + normalizedDistrict); // Mark this user's district as added
+  //           }
+
+  //           // Calculate total price
+  //           totalPrice += Number(cartData.subModelDetails.price);
+  //         }
+  //       }
+  //     });
+  //   });
+  // });
+
+  // console.log("Total Price:", totalPrice);
+  // console.log("Districts with delivered orders (allowing different users to add the same district):", districts);
+
+  let totalPrice = 0;
+  let districts = []; // To hold final districts
+
+  orderData.forEach((user) => {
+    let userDistricts = new Set();
+
+    user.Purchased.forEach((purchased) => {
+      purchased.cartData.forEach((cartData) => {
+        console.log("Checking cartData:", cartData);
+
+        if (cartData.deliverystatus === "Delivered") {
+          console.log(cartData.subModelDetails);
+          console.log("Delivery Status:", cartData.deliveryStatus);
+          console.log("Price:", cartData.subModelDetails.price);
+
+          userDistricts.add(user.district);
+          totalPrice += Number(cartData.subModelDetails.price);
+        }
+      });
     });
+
+    districts = districts.concat(Array.from(userDistricts));
   });
-
-  districts = districts.concat(Array.from(userDistricts)); 
-});
-localStorage.setItem("regaDistrict", districts);
-localStorage.setItem("TotalPrize", totalPrice);
-
+  localStorage.setItem("regaDistrict", districts);
+  localStorage.setItem("TotalPrize", totalPrice);
 
   const openEdit = (order) => {
     console.log("particular order");
@@ -155,24 +150,24 @@ localStorage.setItem("TotalPrize", totalPrice);
     data.forEach((order) => {
       order.Purchased.forEach((purchased) => {
         if (purchased.hasOwnProperty("order_id")) {
-          online += purchased.cartData.length; 
+          online += purchased.cartData.length;
         } else {
-          offline += purchased.cartData.length; 
+          offline += purchased.cartData.length;
         }
       });
     });
 
-    setOnlineCount(online); 
-    setOfflineCount(offline); 
+    setOnlineCount(online);
+    setOfflineCount(offline);
   };
 
   useEffect(() => {
     getOrder();
   }, []);
- console.log(onlineCount, offlineCount);
- localStorage.setItem('onlineCount', onlineCount);
- localStorage.setItem('offlineCount', offlineCount);
- 
+  console.log(onlineCount, offlineCount);
+  localStorage.setItem("onlineCount", onlineCount);
+  localStorage.setItem("offlineCount", offlineCount);
+
   const handleChangeValues = (values, cartId) => {
     setValues((prev) => ({
       ...prev,
@@ -242,7 +237,7 @@ localStorage.setItem("TotalPrize", totalPrice);
                 >
                   Customer Name
                 </TableCell>
-                  <TableCell
+                <TableCell
                   align="center"
                   style={{
                     minWidth: 170,
@@ -252,7 +247,7 @@ localStorage.setItem("TotalPrize", totalPrice);
                   }}
                 >
                   Phone
-                </TableCell>  
+                </TableCell>
                 <TableCell
                   align="center"
                   style={{
@@ -273,9 +268,20 @@ localStorage.setItem("TotalPrize", totalPrice);
                     fontSize: "18px",
                   }}
                 >
+                  Color
+                </TableCell>
+                <TableCell
+                  align="center"
+                  style={{
+                    minWidth: 170,
+                    backgroundColor: "black",
+                    color: "white",
+                    fontSize: "18px",
+                  }}
+                >
                   Quantity
                 </TableCell>
-              
+
                 <TableCell
                   align="center"
                   style={{
@@ -286,6 +292,28 @@ localStorage.setItem("TotalPrize", totalPrice);
                   }}
                 >
                   Payment Mode
+                </TableCell>
+                <TableCell
+                  align="center"
+                  style={{
+                    minWidth: 170,
+                    backgroundColor: "black",
+                    color: "white",
+                    fontSize: "18px",
+                  }}
+                >
+                  Total Amount
+                </TableCell>
+                <TableCell
+                  align="center"
+                  style={{
+                    minWidth: 170,
+                    backgroundColor: "black",
+                    color: "white",
+                    fontSize: "18px",
+                  }}
+                >
+                  Paid Amount
                 </TableCell>
                 <TableCell
                   align="center"
@@ -309,7 +337,6 @@ localStorage.setItem("TotalPrize", totalPrice);
                 >
                   Order Status
                 </TableCell>
-             
               </TableRow>
             </TableHead>
             <TableBody>
@@ -347,6 +374,20 @@ localStorage.setItem("TotalPrize", totalPrice);
                             <>
                               <div>
                                 <hr />
+                                <p>{eachCartData.color}</p>
+                              </div>
+                            </>
+                          );
+                        });
+                      })}
+                    </TableCell>
+                    <TableCell align="center">
+                      {each.Purchased.map((eachPurchased) => {
+                        return eachPurchased.cartData.map((eachCartData) => {
+                          return (
+                            <>
+                              <div>
+                                <hr />
                                 <p>{eachCartData.quantity}</p>
                               </div>
                             </>
@@ -354,7 +395,7 @@ localStorage.setItem("TotalPrize", totalPrice);
                         });
                       })}
                     </TableCell>
-                    
+
                     <TableCell align="center">
                       {each.Purchased.map((eachPurchased) => {
                         if (eachPurchased.hasOwnProperty("order_id")) {
@@ -374,7 +415,7 @@ localStorage.setItem("TotalPrize", totalPrice);
                         } else {
                           return (
                             <>
-                                 {eachPurchased.cartData.map((eachOrder) => {
+                              {eachPurchased.cartData.map((eachOrder) => {
                                 return (
                                   <>
                                     <hr />
@@ -387,6 +428,34 @@ localStorage.setItem("TotalPrize", totalPrice);
                             </>
                           );
                         }
+                      })}
+                    </TableCell>
+                    <TableCell align="center">
+                      {each.Purchased.map((eachPurchased) => {
+                        return eachPurchased.cartData.map((eachCartData) => {
+                          return (
+                            <>
+                              <div>
+                                <hr />
+                                <p>{eachCartData.quantity * eachCartData.subModelDetails.price}</p>
+                              </div>
+                            </>
+                          );
+                        });
+                      })}
+                    </TableCell>
+                    <TableCell align="center">
+                      {each.Purchased.map((eachPurchased) => {
+                        return eachPurchased.cartData.map((eachCartData,i,arr) => {
+                          return (
+                            <>
+                              <div>
+                                <hr />
+                                <p>{Math.round(eachPurchased.paidAmount / arr.length)}</p>
+                              </div>
+                            </>
+                          );
+                        });
                       })}
                     </TableCell>
                     <TableCell align="center">
@@ -423,6 +492,7 @@ localStorage.setItem("TotalPrize", totalPrice);
                         });
                       })}
                     </TableCell>
+
                     <TableCell align="center">
                       {each.Purchased.map((eachPurchased) => {
                         return eachPurchased.cartData.map((eachCartData) => {

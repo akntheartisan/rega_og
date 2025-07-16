@@ -28,6 +28,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import BatteryChargingFullIcon from "@mui/icons-material/BatteryChargingFull";
 import ElectricMopedIcon from "@mui/icons-material/ElectricMoped";
+import toast from "react-hot-toast";
 
 const ProductView = () => {
   const { userData, setUserData } = useContext(UserContext);
@@ -36,11 +37,11 @@ const ProductView = () => {
 
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log(id);
+  // //console.log(id);
 
   // const location = useLocation();
   // const product = location.state;
-  // console.log(product);
+  // //console.log(product);
 
   const [selected, setSelected] = useState("");
   const [loader, setLoader] = useState(false);
@@ -50,6 +51,7 @@ const ProductView = () => {
   const [pincodeError, setPincodeError] = useState(false);
   const [pincode, setPincode] = useState();
   const [availableStatus, setAvailableStatus] = useState(false);
+  const [color, setColor] = useState();
 
   useEffect(() => {
     fetchSelected();
@@ -58,12 +60,12 @@ const ProductView = () => {
   const fetchSelected = async () => {
     setLoader(true);
     try {
-      console.log("getSelectedProducts");
+      // //console.log("getSelectedProducts");
 
       const getSelectedProducts = await client.get("/project/getSelected", {
         params: { id },
       });
-      console.log(getSelectedProducts.data.selected);
+      //console.log(getSelectedProducts.data.selected);
       const prod = getSelectedProducts.data.selected;
 
       if (getSelectedProducts.status === 200) {
@@ -71,14 +73,14 @@ const ProductView = () => {
         setSlideShow(prod.image[1]?.url);
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     } finally {
       setLoader(false);
     }
   };
 
   const handleFilteredModel = (e) => {
-    console.log(e.target.value);
+    // //console.log(e.target.value);
 
     const { name, value } = e.target;
     setLoader(true);
@@ -97,11 +99,15 @@ const ProductView = () => {
   };
 
   const buynow = () => {
-    console.log(product);
+    // //console.log(product);
 
     if (!userData) {
       navigate("/register");
     } else {
+      if (!color) {
+        toast.error("Please choose a color");
+        return false;
+      }
       const image = product.image[0].url;
       const model = product.model;
 
@@ -112,7 +118,7 @@ const ProductView = () => {
         subModelDetails = selected;
       }
 
-      const details = { image, model, subModelDetails };
+      const details = { image, model, subModelDetails, color };
 
       navigate("/checkout", { state: { singleItem: details } });
     }
@@ -122,6 +128,10 @@ const ProductView = () => {
     if (!userData) {
       navigate("/register");
     } else {
+      if (!color) {
+        toast.error("Please choose a color");
+        return false;
+      }
       const userId = userData._id;
       const image = product.image.url;
       const model = product.model;
@@ -138,7 +148,9 @@ const ProductView = () => {
         modelId = selected._id;
       }
 
-      const details = { userId, model, modelId };
+      const details = { userId, model, modelId, color };
+      //console.log("colorDetails", details);
+
       addBucketList(details);
       setGoToCart(true);
     }
@@ -148,7 +160,7 @@ const ProductView = () => {
     try {
       const addBucketList = await client.post("/bucket/addnew", list);
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 
@@ -162,7 +174,7 @@ const ProductView = () => {
   };
 
   const handlePincodeCheck = (e) => {
-    // console.log(e);
+    // //console.log(e);
 
     const { name, value } = e.target;
 
@@ -176,27 +188,42 @@ const ProductView = () => {
   };
 
   useEffect(() => {
-    availabilityCheck();
+    if (pincode?.length === 6) {
+      availabilityCheck();
+    }
   }, [pincode]);
 
   const availabilityCheck = () => {
-    const battery = selected?.battery || product?.SubModel[0];
+    const battery = selected?.battery || product?.SubModel[0].battery;
     const findSubmodel = product?.SubModel.find((each) => {
       return each.battery == battery;
     });
-    console.log(findSubmodel);
 
-    const findArea = findSubmodel?.availability.includes(pincode);
-    console.log(findArea);
+    // const findArea = findSubmodel?.availability.includes(pincode);
+    let leftPointer = 0;
+    let rightPointer = findSubmodel?.availability.length - 1;
 
-    setAvailableStatus(findArea);
+    let found = false;
+
+    while (leftPointer <= rightPointer) {
+      let midPointer = Math.floor(rightPointer + leftPointer / 2);
+      let midValue = findSubmodel?.availability[midPointer];
+      if (pincode === midValue) {
+        found = true;
+        break;
+      } else if (midValue > pincode) {
+        rightPointer = midPointer - 1;
+      } else {
+        leftPointer = midPointer + 1;
+      }
+    }
+
+    setAvailableStatus(found);
+
+    console.log("hi");
   };
 
-  console.log(pincode?.length);
-
-  const selectColor = (color) => {
-    console.log(color);
-  };
+  //console.log(color);
 
   return (
     <>
@@ -205,7 +232,7 @@ const ProductView = () => {
       <CheckoutHeader />
 
       {product && (
-        <div className="container-fluid">
+        <div className="container-fluid" key={product._id}>
           <div className="row">
             <div className="col-md-4">
               <div className="product_view_image">
@@ -421,14 +448,21 @@ const ProductView = () => {
                       return (
                         <button
                           className="color-button"
-                          onClick={() => selectColor(each)}
+                          onClick={() => setColor(each)}
                         >
                           {each.toUpperCase()}
                         </button>
                       );
                     })
                   : selected.color.map((each) => {
-                      return <button className="color-button">{each}</button>;
+                      return (
+                        <button
+                          className="color-button"
+                          onClick={() => setColor(each)}
+                        >
+                          {each.toUpperCase()}
+                        </button>
+                      );
                     })}
               </div>
 

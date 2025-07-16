@@ -44,6 +44,7 @@ const Checkout = () => {
   });
   const [pod, setPod] = useState();
   const [online, setOnline] = useState();
+  const [partial, setPartial] = useState();
   const [model, setModel] = useState(true);
   const [totalShow, setTotalShow] = useState(true);
   const [singleQuantity, setSingleQuantity] = useState(0);
@@ -195,12 +196,21 @@ const Checkout = () => {
   const handlePaymentDelivery = (e) => {
     setPod(e.target.checked);
     setOnline(false);
+    setPartial(false);
     scrollToTop();
   };
 
   const handlePaymentOnline = (e) => {
     setOnline(e.target.checked);
     setPod(false);
+    setPartial(false);
+    scrollToTop();
+  };
+
+  const handlePaymentPartial = (e) => {
+    setPartial(e.target.checked);
+    setPod(false);
+    setOnline(false);
     scrollToTop();
   };
 
@@ -208,13 +218,18 @@ const Checkout = () => {
     setLoader(true);
 
     if (pod) {
-      console.log("payment on delivery");
+      // console.log("payment on delivery");
       addSelectedProduct("offline");
     }
 
     if (online) {
-      console.log("online payment");
+      // console.log("online payment");
       addSelectedProduct("online");
+    }
+
+    if (partial) {
+      // console.log("online payment");
+      addSelectedProduct("partial");
     }
   };
 
@@ -233,14 +248,14 @@ const Checkout = () => {
       singleCartArray.push(updateSingleCartData);
     }
 
-    console.log(singleCartArray);
+    // console.log(singleCartArray);
 
     if (checked) {
       userDetails = { ...userData, userId };
-      console.log(userDetails);
+      // console.log(userDetails);
     } else {
       userDetails = { ...shipAddress, userId };
-      console.log(userDetails);
+      // console.log(userDetails);
     }
 
     try {
@@ -250,8 +265,6 @@ const Checkout = () => {
         paymentMode,
         cartData: multiCartData ? multiCartData : [...singleCartArray],
       });
-
-      console.log(cartOffline);
 
       if (cartOffline.data.message === "offline") {
         navigate("/");
@@ -296,7 +309,8 @@ const Checkout = () => {
           if (verify.data.message === "Payment Verified Sucessfully") {
             addCartOnlinePayment(
               response.razorpay_order_id,
-              response.razorpay_payment_id
+              response.razorpay_payment_id,
+              data.amount
             );
           }
         } catch (error) {
@@ -309,7 +323,7 @@ const Checkout = () => {
     rzp1.open();
   };
 
-  const addCartOnlinePayment = async (order, payment) => {
+  const addCartOnlinePayment = async (order, payment,amount) => {
     var userDetails;
     const userId = userData._id;
     const order_id = order;
@@ -337,6 +351,7 @@ const Checkout = () => {
       const cartOnline = await client.post("/cart/addCartOnline", {
         userDetails,
         total,
+        paidAmount:amount,
         cartData: multiCartData ? multiCartData : [...singleCartArray],
         order_id,
         payment_id,
@@ -360,6 +375,12 @@ const Checkout = () => {
 
   const addQuantity = () => {
     console.log("add quantity");
+    toast.dismiss();
+
+    if (singleQuantity === 1) {
+      toast.error("Maxium 1 item per order");
+      return false;
+    }
 
     setSingleQuantity((prev) => prev + 1);
   };
@@ -926,6 +947,10 @@ const Checkout = () => {
                                       <strong>Battery Variant :</strong>{" "}
                                       {each.subModelDetails.battery}
                                     </p>
+                                    <p style={{ marginBottom: "10px" }}>
+                                      <strong>Color Variant :</strong>{" "}
+                                      {each.color}
+                                    </p>
                                   </div>
                                 </div>
                               );
@@ -1031,6 +1056,26 @@ const Checkout = () => {
                                   </label>
                                 </div>
                               </div>
+                              <div className="form-check">
+                                <div>
+                                  <input
+                                    className="form-check-input"
+                                    type="radio"
+                                    name="flexRadioDefault"
+                                    id="flexRadioDefault3"
+                                    value={partial}
+                                    onChange={handlePaymentPartial}
+                                    checked={partial}
+                                    // {...(pod ? { checked } : {})}
+                                  />
+                                  <label
+                                    className="form-check-label"
+                                    htmlFor="flexRadioDefault3"
+                                  >
+                                    Partial Payment
+                                  </label>
+                                </div>
+                              </div>
                             </div>
                             <button
                               className="stepper_button_back"
@@ -1080,7 +1125,7 @@ const Checkout = () => {
                     </tbody>
                   </table>
 
-                  {(pod || online) && (
+                  {(pod || online || partial) && (
                     <button
                       onClick={!loader ? placeorder : undefined}
                       style={{

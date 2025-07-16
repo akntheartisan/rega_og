@@ -22,7 +22,7 @@ import Error from "./components/404/Error.jsx";
 export const UserContext = createContext();
 function App() {
   const [userData, setUserData] = useState("");
-  console.log(userData);
+  // console.log(userData);
 
   const getUserData = async () => {
     try {

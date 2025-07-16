@@ -5,7 +5,10 @@ const crypto = require("crypto");
 const PurchasedItems = new mongoose.Schema(
   {
     total: {
-      type: String,
+      type: Number,
+    },
+    paidAmount: {
+      type: Number,
     },
     cartData: {
       type: Array,
@@ -41,8 +44,8 @@ const UserRegister = new mongoose.Schema(
       type: String,
       select: false,
     },
-    active:{
-      type:Boolean
+    active: {
+      type: Boolean,
     },
     mobile: {
       type: String,
@@ -65,15 +68,13 @@ const UserRegister = new mongoose.Schema(
     passwordResetToken: {
       type: String,
     },
-    otp:{
-      type:String
+    otp: {
+      type: String,
     },
-    otpExpiresAt:{
-      type:Number
+    otpExpiresAt: {
+      type: Number,
     },
     passwordResetExpiresAt: Number,
-
-    
 
     Purchased: [PurchasedItems],
   },
@@ -105,7 +106,5 @@ UserRegister.methods.createPasswordResetToken = function () {
 
   return resetToken;
 };
-
-
 
 module.exports = mongoose.model("userregister", UserRegister);

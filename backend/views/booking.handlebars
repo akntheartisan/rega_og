@@ -1,0 +1,60 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Order Confirmation</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      body { font-family: Arial, sans-serif; color: #333; } .container {
+      background-color: #f9f9f9; } .heading { color: #008448; } .details {
+      margin-top: 20px; } .footer { margin-top: 30px; font-size: 12px; color:
+      #999; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2 class="heading">Order Confirmed!</h2>
+
+      <p>Hi {{name}},</p>
+      <p>Thank you for booking your order with us. Here are your order details:</p>
+
+      <table class="table table-striped-columns table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Product Name</th>
+            <th scope="col">Battery Type</th>
+            <th scope="col">Color</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+            <th scope="col">PaidAmount</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>We will notify you once your order is out for delivery.</p>
+
+      <div class="footer">
+        If you have any questions, reply to this email or contact support.
+      </div>
+    </div>
+  </body>
+</html>

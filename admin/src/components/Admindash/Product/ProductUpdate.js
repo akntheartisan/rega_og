@@ -53,9 +53,8 @@ export default function ProductUpdate({
 
     selectedBatteryModel.availability =
       selectedBatteryModel.availability.join(",");
-      
-    selectedBatteryModel.color = selectedBatteryModel.color.join(",");
 
+    selectedBatteryModel.color = selectedBatteryModel.color.join(",");
 
     // setFilteredProduct(selectedBatteryModel[0]);
     setUpdatedProduct(selectedBatteryModel);
@@ -65,7 +64,7 @@ export default function ProductUpdate({
     console.log(updatedProduct);
     const id = product._id;
 
-    const availability = updatedProduct.availability.split(",");
+    const availability = updatedProduct.availability.split(",").sort();
     const colorAvailability = updatedProduct.color.split(",");
 
     const uniqueAvailability = Array.from(new Set(availability));

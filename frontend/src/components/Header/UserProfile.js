@@ -38,7 +38,7 @@ export default function UserProfile() {
   const navigate = useNavigate();
 
   const { userData, setUserData } = useContext(UserContext);
-  console.log(userData);
+  // console.log(userData);
   
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openProfile, setOpenProfile] = useState(false);

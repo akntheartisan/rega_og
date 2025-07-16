@@ -27,8 +27,8 @@ app.use(cookieParser());
 
 app.use(express.urlencoded({ extended: true }));
 
-// const allowedOrigins = ["http://localhost:3000", "http://localhost:5173"];
-const allowedOrigins = ["https://rega-og.vercel.app", "https://rega-og-admin.vercel.app"];
+const allowedOrigins = ["http://localhost:3000", "http://localhost:5173"];
+// const allowedOrigins = ["https://rega-og.vercel.app", "https://rega-og-admin.vercel.app"];
 
 const corsOptions = {
   origin: (origin, callback) => {

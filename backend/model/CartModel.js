@@ -1,30 +1,34 @@
 const mongoose = require("mongoose");
 
-
-const PurchasedItems = new mongoose.Schema({
-  
-  total: {
-    type: String,
-  },
-  cartData:{
-    type:Array,
-    deliverystatus: {
+const PurchasedItems = new mongoose.Schema(
+  {
+    total: {
+      type: Number,
+    },
+    paidAmount: {
+      type: Number,
+    },
+    cartData: {
+      type: Array,
+      deliverystatus: {
+        type: String,
+      },
+    },
+    order_id: {
+      type: String,
+    },
+    payment_id: {
       type: String,
     },
   },
-  order_id:{
-    type:String,
-  },
-  payment_id:{
-    type:String,
-  }
-},{_id:true});
+  { _id: true }
+);
 
 const Cart = new mongoose.Schema(
   {
-    userId:{
-      type:mongoose.Schema.Types.ObjectId,
-      ref:'userregister',
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "userregister",
     },
     Purchased: [PurchasedItems],
     // total: {

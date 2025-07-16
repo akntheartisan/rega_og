@@ -4,7 +4,7 @@ const projectmodel = require("../model/ProductsModel");
 
 exports.addBucket = async (req, res) => {
   console.log(req.body);
-  const { userId, model, modelId } = req.body;
+  const { userId, model, modelId, color } = req.body;
   try {
     const addBucket = await bucketmodel.updateOne(
       { _id: userId },
@@ -14,6 +14,7 @@ exports.addBucket = async (req, res) => {
           list: {
             model: model,
             subModelId: modelId,
+            color,
           },
         },
       },
@@ -49,7 +50,7 @@ exports.getBucket = async (req, res) => {
           pipeline: [
             //unwind the SubModel array in product collection
             { $unwind: "$SubModel" },
-            
+
             {
               $match: {
                 //$expr allows you to compare fields within the same document or use variables inside $match.
@@ -79,13 +80,14 @@ exports.getBucket = async (req, res) => {
       {
         $project: {
           model: "$list.model",
+          color:"$list.color",
           image: { $arrayElemAt: ["$productDetails.image", 0] },
           subModelDetails: { $arrayElemAt: ["$productDetails.SubModel", 0] },
         },
       },
     ]);
 
-    console.log("aggregate result:",result);
+    console.log("aggregate result:", result);
 
     if (result) {
       res.status(200).json({
@@ -99,19 +101,19 @@ exports.getBucket = async (req, res) => {
 };
 
 exports.deleteBucket = async (req, res) => {
-  console.log("deletebucket"); 
-  const { id, userId } = req.body; 
+  console.log("deletebucket");
+  const { id, userId } = req.body;
   console.log(id, userId);
 
   try {
     const userBucket = await bucketmodel.findOneAndUpdate(
       { _id: userId },
       { $pull: { list: { subModelId: id } } },
-      {new:true}
+      { new: true }
     );
-     console.log(userBucket);
+    console.log(userBucket);
     return res.status(200).json({
-      message:'bucket item deleted',
+      message: "bucket item deleted",
     });
   } catch (error) {
     console.log(error);

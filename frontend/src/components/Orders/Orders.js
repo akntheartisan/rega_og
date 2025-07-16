@@ -65,6 +65,7 @@ const Orders = () => {
       });
       setOrdered(response.data.purchased);
       setFiltered(response.data.purchased);
+      console.log("ordered data", response.data.purchased);
     } catch (error) {
       console.error(error);
     }
@@ -108,12 +109,14 @@ const Orders = () => {
     setFiltered(filteredOrder);
   };
 
-  const cancelProduct = async (purchased_id, cartId) => {
+  const cancelProduct = async (purchased_id, cartId, paidAmount,paymentId) => {
     try {
       await client.post("/user/cancelProducts", {
         id: userData._id,
         purchased_id,
         cartId,
+        paidAmount,
+        paymentId
       });
       getOrderedProducts();
     } catch (error) {
@@ -235,7 +238,7 @@ const Orders = () => {
                       <div className="row">
                         <div className="col-md-3 col-6 d-flex justify-content-center">
                           <img
-                            src={order.image}
+                            src={order.image[0]}
                             alt="Order"
                             className="order_image"
                           />
@@ -244,7 +247,7 @@ const Orders = () => {
                           <p>
                             {order.model} {order.subModelDetails.battery}
                           </p>
-                          <p>{order.subModelDetails.range}</p>
+                          <p>{order.subModelDetails.range} km/hr</p>
                         </div>
                         <div
                           className="col-md-3 col-6"
@@ -311,7 +314,13 @@ const Orders = () => {
                               <br />
                               <Button
                                 onClick={() =>
-                                  cancelProduct(eachOrder._id, order.cartId)
+                                  cancelProduct(
+                                    eachOrder._id,
+                                    order.cartId,
+                                    eachOrder.paidAmount,
+                                    eachOrder.payment_id
+
+                                  )
                                 }
                                 color="error"
                                 variant="contained"

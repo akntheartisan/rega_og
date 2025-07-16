@@ -40,7 +40,12 @@ const CartDetails = ({ id }) => {
   };
 
   const handleQuantity = (e, id) => {
+    toast.dismiss();
     const updatedQuantity = e.target.value;
+    if (updatedQuantity > 1) {
+      toast.error("Only one quantity per booking allowed");
+      return false;
+    }
     const updatedBucket = bucket.map((item) => {
       if (item.subModelDetails._id === id) {
         return { ...item, quantity: updatedQuantity };
@@ -120,6 +125,7 @@ const CartDetails = ({ id }) => {
                             <th className="product-image">Product Image</th>
                             <th className="product-name">Model</th>
                             <th className="product-price">Price(₹)</th>
+                            <th className="product-price">Color</th>
                             <th className="product-quantity">Quantity</th>
                             <th className="product-total">Total</th>
                             <th className="product-quantity">Remove</th>
@@ -148,10 +154,11 @@ const CartDetails = ({ id }) => {
                                 <td className="product-price">
                                   {each.subModelDetails.price}
                                 </td>
+                                <td className="product-price">{each.color}</td>
                                 <td className="product-quantity">
                                   <input
                                     type="number"
-                                    min = {0}
+                                    min={0}
                                     value={each.quantity}
                                     onChange={(e) =>
                                       handleQuantity(
