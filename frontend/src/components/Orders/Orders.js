@@ -21,6 +21,7 @@ import EmptyCart from "../Cart/CartDetails/EmptyCart";
 import { useMediaQuery } from "@mui/material";
 import BottomNav from "../BottomNav/BottomNav";
 import Footer from "../Footer/Footer";
+import { Button as AntButton, message, Popconfirm } from "antd";
 
 const initialCheckBox = {
   delivered: false,
@@ -109,14 +110,14 @@ const Orders = () => {
     setFiltered(filteredOrder);
   };
 
-  const cancelProduct = async (purchased_id, cartId, paidAmount,paymentId) => {
+  const cancelProduct = async (purchased_id, cartId, paidAmount, paymentId) => {
     try {
       await client.post("/user/cancelProducts", {
         id: userData._id,
         purchased_id,
         cartId,
         paidAmount,
-        paymentId
+        paymentId,
       });
       getOrderedProducts();
     } catch (error) {
@@ -312,14 +313,30 @@ const Orders = () => {
                               ></div>{" "}
                               Not Delivered
                               <br />
-                              <Button
+                              <Popconfirm
+                                title="Delete the task"
+                                description="Are you sure to cancel the product"
+                                onConfirm={() =>
+                                  cancelProduct(
+                                    eachOrder._id,
+                                    order.cartId,
+                                    eachOrder.paidAmount,
+                                    eachOrder.payment_id
+                                  )
+                                }
+                                // onCancel={cancel}
+                                okText="Yes"
+                                cancelText="No"
+                              >
+                                <AntButton type="primary" danger>Cancel</AntButton>
+                              </Popconfirm>
+                              {/* <Button
                                 onClick={() =>
                                   cancelProduct(
                                     eachOrder._id,
                                     order.cartId,
                                     eachOrder.paidAmount,
                                     eachOrder.payment_id
-
                                   )
                                 }
                                 color="error"
@@ -328,7 +345,7 @@ const Orders = () => {
                                 className="order_cancel"
                               >
                                 Cancel
-                              </Button>
+                              </Button> */}
                             </>
                           ) : order.deliverystatus === "cancelled" ? (
                             <>

@@ -13,8 +13,7 @@ exports.addCart = async (req, res, next) => {
 
   const { cartData, total, paymentMode } = req.body;
 
-  console.log('cartData',cartData);
-  
+  console.log("cartData", cartData);
 
   const deliverystatus = "Not Delivered";
 
@@ -42,7 +41,7 @@ exports.addCart = async (req, res, next) => {
       const findUser = await usermodel.findById(userId);
 
       if (findUser) {
-     await usermodel.findOneAndUpdate(
+        await usermodel.findOneAndUpdate(
           { _id: userId },
           {
             $push: {
@@ -59,10 +58,14 @@ exports.addCart = async (req, res, next) => {
           { new: true }
         );
       }
-      let bookingDetails = {cartData,name:findUser.name,email:findUser.username}
+      let bookingDetails = {
+        cartData,
+        name: findUser.name,
+        email: findUser.username,
+        total,
+      };
 
       console.log(bookingDetails);
-      
 
       await bookingMail(bookingDetails);
 
@@ -211,6 +214,19 @@ exports.addCartOnline = async (req, res, next) => {
           },
         }
       );
+
+      let bookingDetails = {
+        cartData,
+        name: findUser.name,
+        email: findUser.username,
+        total,
+        paidAmount: paidAmount / 100,
+        paymentId: payment_id,
+      };
+
+      console.log(bookingDetails);
+
+      await bookingMail(bookingDetails);
 
       if (addPurchasedItem) {
         console.log("return addpurchaseditem");

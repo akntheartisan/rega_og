@@ -28,10 +28,19 @@ const sendBookMail = async (options) => {
   const mailOptions = {
     from: "aravinthkumaran410@gmail.com",
     to: options.email,
-    subject: 'your booking details',
+    subject:"Order Confirmation mail",
     template: "booking",
     context: {
       name: options.name,
+      total: options.total,
+      paidAmount: options.paidAmount ? options.paidAmount : "-",
+      paymentId: options.paymentId ? options.paymentId : "-",
+      order: options.cartData.map((each) => ({
+        productName: each.model,
+        batteryType: each.subModelDetails.battery,
+        color: each.color,
+        quantity: each.quantity,
+      })),
     },
   };
 

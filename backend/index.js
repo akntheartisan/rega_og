@@ -16,6 +16,7 @@ const enquiryRoutes = require("./route/EnquiryRoutes");
 const cookieParser = require("cookie-parser");
 // const pdfdownroute= require("./route/pdfRoute");
 // const ratingRoute = require("./route/ratingRoute")
+const refundNotifyRoute = require("./route/refundNotifyRoute");
 
 app.use(express.json());
 app.use(cookieParser());
@@ -27,8 +28,12 @@ app.use(cookieParser());
 
 app.use(express.urlencoded({ extended: true }));
 
-const allowedOrigins = ["http://localhost:3000", "http://localhost:5173"];
-// const allowedOrigins = ["https://rega-og.vercel.app", "https://rega-og-admin.vercel.app"];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:5173",
+  "https://rega-og.vercel.app",
+  "https://rega-og-admin.vercel.app",
+];
 
 const corsOptions = {
   origin: (origin, callback) => {
@@ -57,6 +62,8 @@ app.use("/pdfdown", pdfdownroute);
 app.use("/contact", contactroute);
 app.use("/enquiryUser", enquiryRoutes);
 app.use("/rating", ratingRoute);
+app.use("/refund-webhoooks", refundNotifyRoute);
+
 const mongo_uri =
   "mongodb+srv://aravinthkumaran410:iRPBg1ArJBqv3ayN@cluster0.2eiliwy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 

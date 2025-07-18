@@ -259,6 +259,17 @@ export default function OrderTable({ product, setProduct }) {
                 >
                   Order
                 </TableCell>
+                                <TableCell
+                  align="center"
+                  style={{
+                    minWidth: 170,
+                    backgroundColor: "black",
+                    color: "white",
+                    fontSize: "18px",
+                  }}
+                >
+                  OrderId
+                </TableCell>
                 <TableCell
                   align="center"
                   style={{
@@ -367,6 +378,23 @@ export default function OrderTable({ product, setProduct }) {
                         });
                       })}
                     </TableCell>
+                          <TableCell align="center">
+                      {each.Purchased.map((eachPurchased) => {
+                        return eachPurchased.cartData.map((eachCartData) => {
+                          return (
+                            <>
+                              <div>
+                                <hr />
+                                <p>
+                                  {eachCartData.cartId}
+                                  
+                                </p>
+                              </div>
+                            </>
+                          );
+                        });
+                      })}
+                    </TableCell>
                     <TableCell align="center">
                       {each.Purchased.map((eachPurchased) => {
                         return eachPurchased.cartData.map((eachCartData) => {
@@ -406,7 +434,7 @@ export default function OrderTable({ product, setProduct }) {
                                 return (
                                   <>
                                     <hr />
-                                    <p>{eachPurchased.order_id}</p>
+                                    <p>{eachPurchased.payment_id}</p>
                                   </>
                                 );
                               })}
