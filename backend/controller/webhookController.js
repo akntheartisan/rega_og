@@ -6,7 +6,7 @@ const refundModel = require("../model/RefundDataModel");
 exports.notification = async (req, res) => {
   console.log("refundnofification", JSON.stringify(req.body));
 
-  const webhookObject = JSON.stringify(req.body);
+  const webhookObject = req.body;
 
   try {
     const refundDetails = await refundModel.create({
