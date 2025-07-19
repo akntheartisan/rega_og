@@ -17,7 +17,7 @@ const refundSchema = new mongoose.Schema({
     type: String,
   },
   createdAt: {
-    type: Date,
+    type: String,
   },
   arn: {
     type: String,

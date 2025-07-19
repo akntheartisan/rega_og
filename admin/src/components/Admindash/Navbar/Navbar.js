@@ -1,28 +1,31 @@
 import React, { useContext } from "react";
-import { NavLink,useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./navbar.css";
 import { client } from "../../../Client/Clientaxios";
 import { AdminContext } from "../../../App";
 
 const Navbar = () => {
-
-  const {admin,setAdmin} = useContext(AdminContext)
+  const { admin, setAdmin } = useContext(AdminContext);
 
   const navigate = useNavigate();
 
-   const logout = async () => {
-      const logout = await client.post('/admin/logout',{},{withCredentials:true});
-      console.log(logout);
-  
-      if(logout.status === 200){
-        setAdmin('');
-        navigate("/admin");
-      }
-    };
+  const logout = async () => {
+    const logout = await client.post(
+      "/admin/logout",
+      {},
+      { withCredentials: true }
+    );
+    console.log(logout);
+
+    if (logout.status === 200) {
+      setAdmin("");
+      navigate("/admin");
+    }
+  };
   return (
     <>
       <div className="logo mt-4" style={{ color: "white" }}>
-        <img src="/assets/logo.png" alt="logo"/>
+        <img src="/assets/logo.png" alt="logo" />
       </div>
 
       <div className="list mt-5">
@@ -56,6 +59,13 @@ const Navbar = () => {
 
         <NavLink
           className={({ isActive }) => (isActive ? "listitem activetab" : "")}
+          to="/admin/refund"
+        >
+          Refund Details
+        </NavLink>
+
+        <NavLink
+          className={({ isActive }) => (isActive ? "listitem activetab" : "")}
           to="/admin/contact"
         >
           Contact
@@ -74,7 +84,9 @@ const Navbar = () => {
         >
           Enquiry
         </NavLink>
-        <button className="logout-btn" onClick={logout}>logout</button>
+        <button className="logout-btn" onClick={logout}>
+          logout
+        </button>
       </div>
     </>
   );

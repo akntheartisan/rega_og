@@ -1,12 +1,12 @@
 const express = require("express");
 const userModel = require("../model/UserRegisterModel");
 const nodemailer = require("nodemailer");
-const refundModel = require("../model/RefundDataModel")
+const refundModel = require("../model/RefundDataModel");
 
 exports.notification = async (req, res) => {
   console.log("refundnofification", JSON.stringify(req.body));
 
-  const webhookObject = req.body
+  const webhookObject = req.body;
 
   try {
     const transporter = nodemailer.createTransport({
@@ -36,5 +36,21 @@ exports.notification = async (req, res) => {
       arn: webhookObject.payload.refund.entity.acquirer_data.arn,
       method: webhookObject.payload.payment.entity.method,
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    
+  }
+};
+
+exports.refundDetails = async (req, res) => {
+  try {
+    const refundDetails = await refundModel.find();
+    console.log(refundDetails);
+
+    if (refundDetails) {
+      res.status(200).json({ message: "success", refundDetails });
+    }
+  } catch (error) {
+    console.log();
+  }
 };
