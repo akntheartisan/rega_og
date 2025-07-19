@@ -296,6 +296,10 @@ const Checkout = () => {
       name: "REGA SCOOTER",
       description: "Test Transaction",
       order_id: data.id,
+      // prefill: {
+      //   email: customer.email, 
+      //   contact: customer.contact, 
+      // },
       handler: async (response) => {
         console.log("Test Transaction:");
         console.log(response);
@@ -323,7 +327,7 @@ const Checkout = () => {
     rzp1.open();
   };
 
-  const addCartOnlinePayment = async (order, payment,amount) => {
+  const addCartOnlinePayment = async (order, payment, amount) => {
     var userDetails;
     const userId = userData._id;
     const order_id = order;
@@ -351,7 +355,7 @@ const Checkout = () => {
       const cartOnline = await client.post("/cart/addCartOnline", {
         userDetails,
         total,
-        paidAmount:amount,
+        paidAmount: amount,
         cartData: multiCartData ? multiCartData : [...singleCartArray],
         order_id,
         payment_id,
