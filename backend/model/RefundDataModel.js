@@ -1,18 +1,32 @@
 const mongoose = require("mongoose");
 
 const refundSchema = new mongoose.Schema({
-  refundAmount: Number,
-  paymentId: String,
-  refundId: String,
-  currency: String,
-  refundStatus: String,
-  createdAt: Date,
-  arn: String,
-  email: String,
-  contact: String,
-  method: String,
-  walletOrCard: String,
+  refundAmount: {
+    type: Number,
+  },
+  paymentId: {
+    type: String,
+  },
+  refundId: {
+    type: String,
+  },
+  currency: {
+    type: String,
+  },
+  refundStatus: {
+    type: String,
+  },
+  createdAt: {
+    type: String,
+  },
+  arn: {
+    type: String,
+  },
+  method: {
+    type: String,
+  },
 });
+
 
 
 module.exports = mongoose.model('refund',refundSchema)
