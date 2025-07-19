@@ -19,8 +19,23 @@ exports.notification = async (req, res) => {
       arn: webhookObject.payload.refund.entity.acquirer_data.arn,
       method: webhookObject.payload.payment.entity.method,
     });
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "aravinthkumaran410@gmail.com",
+        pass: "aioy tkzr gazv atah",
+      },
+    });
+
+    const mailOptions = {
+      from: "aravinthkumaran410@gmail.com",
+      to: "aravinthkumaran410@gmail.com",
+      text: webhookObject,
+    };
+
+    await transporter.sendMail(mailOptions);
   } catch (error) {
     console.log(error);
-    
   }
 };
