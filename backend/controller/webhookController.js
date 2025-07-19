@@ -27,12 +27,12 @@ exports.notification = async (req, res) => {
     await transporter.sendMail(mailOptions);
 
     const refundDetails = await refundModel.create({
-      refundAmount: webhookObject.payload.payment.entity.amount_refunded,
+      refundAmount: webhookObject.payload.payment.entity.amount_refunded / 100,
       paymentId: webhookObject.payload.refund.entity.payment_id,
       refundId: webhookObject.payload.refund.entity.id,
       currency: webhookObject.payload.refund.entity.currency,
       refundStatus: webhookObject.payload.payment.entity.status,
-      createdAt: new Date(webhookObject.createdAt * 1000).toDateString(),
+      createdAt: new Date(webhookObject.created_at * 1000).toDateString(),
       arn: webhookObject.payload.refund.entity.acquirer_data.arn,
       method: webhookObject.payload.payment.entity.method,
     });
