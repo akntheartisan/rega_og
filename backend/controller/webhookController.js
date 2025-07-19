@@ -8,6 +8,7 @@ exports.notification = async (req, res) => {
   const webHookObj = req.body
 
   try {
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
