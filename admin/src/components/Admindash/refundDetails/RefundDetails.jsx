@@ -88,6 +88,17 @@ const RefundDetails = () => {
                     fontSize: "18px",
                   }}
                 >
+                  Date
+                </TableCell>
+                <TableCell
+                  align="center"
+                  style={{
+                    minWidth: 170,
+                    backgroundColor: "black",
+                    color: "white",
+                    fontSize: "18px",
+                  }}
+                >
                   Payment Id
                 </TableCell>
                 <TableCell
@@ -166,6 +177,7 @@ const RefundDetails = () => {
                     key={each._id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
+                    <TableCell align="center">{each.createdAt}</TableCell>
                     <TableCell component="th" scope="row" align="center">
                       {each.paymentId}
                     </TableCell>

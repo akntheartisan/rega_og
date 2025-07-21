@@ -303,7 +303,7 @@ const Product = () => {
               error={!!errors.frame}
             />
           </Stack>
-          <Stack direction={isMobile ? "column" : "row"} spacing={2}>
+          {/* <Stack direction={isMobile ? "column" : "row"} spacing={2}>
             <TextField
               fullWidth
               label="Area Availability"
@@ -329,7 +329,7 @@ const Product = () => {
               helperText={errors.availability}
               error={!!errors.availability}
             />
-          </Stack>
+          </Stack> */}
 
           <Stack direction={"row"} spacing={2} justifyContent={"center"}>
             <Button variant="contained" color="warning">
