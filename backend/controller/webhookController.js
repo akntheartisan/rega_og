@@ -20,8 +20,6 @@ exports.notification = async (req, res) => {
   // if (receivedSignature === expectedSignature) {
 
   try {
-    res.status(200).send("Webhook verified");
-
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -49,6 +47,8 @@ exports.notification = async (req, res) => {
       arn: webhookObject.payload.refund.entity.acquirer_data?.arn || null,
       method: webhookObject.payload.payment.entity.method,
     });
+
+    res.status(200).send("Webhook verified");
   } catch (error) {
     console.log(error);
   }
