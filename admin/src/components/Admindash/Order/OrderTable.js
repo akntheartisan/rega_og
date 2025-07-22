@@ -259,7 +259,7 @@ export default function OrderTable({ product, setProduct }) {
                 >
                   Order
                 </TableCell>
-                                <TableCell
+                <TableCell
                   align="center"
                   style={{
                     minWidth: 170,
@@ -378,17 +378,14 @@ export default function OrderTable({ product, setProduct }) {
                         });
                       })}
                     </TableCell>
-                          <TableCell align="center">
+                    <TableCell align="center">
                       {each.Purchased.map((eachPurchased) => {
                         return eachPurchased.cartData.map((eachCartData) => {
                           return (
                             <>
                               <div>
                                 <hr />
-                                <p>
-                                  {eachCartData.cartId}
-                                  
-                                </p>
+                                <p>{eachCartData.cartId}</p>
                               </div>
                             </>
                           );
@@ -465,7 +462,10 @@ export default function OrderTable({ product, setProduct }) {
                             <>
                               <div>
                                 <hr />
-                                <p>{eachCartData.quantity * eachCartData.subModelDetails.price}</p>
+                                <p>
+                                  {eachCartData.quantity *
+                                    eachCartData.subModelDetails.price}
+                                </p>
                               </div>
                             </>
                           );
@@ -474,16 +474,18 @@ export default function OrderTable({ product, setProduct }) {
                     </TableCell>
                     <TableCell align="center">
                       {each.Purchased.map((eachPurchased) => {
-                        return eachPurchased.cartData.map((eachCartData,i,arr) => {
-                          return (
-                            <>
-                              <div>
-                                <hr />
-                                <p>{Math.round(eachPurchased.paidAmount / arr.length)}</p>
-                              </div>
-                            </>
-                          );
-                        });
+                        return eachPurchased.cartData.map(
+                          (eachCartData, i, arr) => {
+                            return (
+                              <>
+                                <div>
+                                  <hr />
+                                  <p>{eachPurchased.paidAmount}</p>
+                                </div>
+                              </>
+                            );
+                          }
+                        );
                       })}
                     </TableCell>
                     <TableCell align="center">

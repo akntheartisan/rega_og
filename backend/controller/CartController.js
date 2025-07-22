@@ -119,7 +119,12 @@ exports.addCart = async (req, res, next) => {
       });
     }
 
-    req.userId = userId;
+    const cartCleanData = {
+      userId: userId,
+      itemId: cartData[0].subModelDetails._id,
+    };
+
+    req.cartCleanData = cartCleanData;
     console.log("req.userId set in addCart:", req.userId);
     next();
   } catch (error) {
@@ -129,12 +134,13 @@ exports.addCart = async (req, res, next) => {
 };
 
 exports.deleteCartData = async (req, res) => {
-  const userId = req.userId;
-  console.log("User ID:", userId);
+  const cartCleanData = req.cartCleanData;
+  console.log("cartCleanData:", cartCleanData);
+  const { userId, itemId } = req.cartCleanData;
   try {
     const deleteCartData = await bucketmodel.updateOne(
       { _id: userId },
-      { $set: { list: [] } }
+      { $pull: { list: { subModelId: itemId } } }
     );
   } catch (error) {
     console.log(error);

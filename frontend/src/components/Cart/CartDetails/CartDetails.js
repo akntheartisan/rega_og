@@ -56,15 +56,17 @@ const CartDetails = ({ id }) => {
     setBucket(updatedBucket);
   };
 
-  const calculateTotal = () => {
-    return bucket.reduce((total, item) => {
-      return total + item.quantity * item.subModelDetails.price;
-    }, 0);
+  const calculateTotal = (item) => {
+    console.log(item);
+
+    return item.quantity * item.subModelDetails.price;
   };
 
-  const checkout = () => {
+  const checkout = (eachItem) => {
+    console.log(eachItem);
+
     toast.dismiss();
-    const total = calculateTotal();
+    const total = calculateTotal(eachItem);
 
     console.log(total);
 
@@ -80,8 +82,8 @@ const CartDetails = ({ id }) => {
 
     navigate("/checkout", {
       state: {
-        cartDetails: bucket,
-        cartItemsQuantity: cartItemsQuantity,
+        cartDetails: [eachItem],
+        cartItemsQuantity: 1,
         total: total,
       },
     });
@@ -117,7 +119,7 @@ const CartDetails = ({ id }) => {
             <div className="cart-section mt-5 mb-5">
               <div className="container">
                 <div className="row">
-                  <div className="col-lg-8 col-md-12">
+                  <div className="col-md-12">
                     <div className="cart-table-wrap">
                       <table className="cart-table">
                         <thead className="cart-table-head">
@@ -128,7 +130,7 @@ const CartDetails = ({ id }) => {
                             <th className="product-price">Color</th>
                             <th className="product-quantity">Quantity</th>
                             <th className="product-total">Total</th>
-                            <th className="product-quantity">Remove</th>
+                            <th className="product-quantity">Action</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -178,9 +180,40 @@ const CartDetails = ({ id }) => {
                                     style={{
                                       display: "flex",
                                       justifyContent: "center",
+                                      gap: "10px",
                                     }}
                                   >
-                                    <IconButton
+                                    <button
+                                      style={{
+                                        backgroundColor: "rgb(242, 129, 35)",
+                                        color: "white",
+                                        borderColor: "rgb(242, 129, 35)",
+                                        padding: "5px 40px",
+                                        borderRadius: "60px",
+                                        marginTop: "15px",
+                                      }}
+                                      onClick={() => checkout(each)}
+                                    >
+                                      Check Out
+                                    </button>
+
+                                    <button
+                                      style={{
+                                        backgroundColor: "red",
+                                        color: "white",
+                                        borderColor: "red",
+                                        padding: "5px 40px",
+                                        borderRadius: "60px",
+                                        marginTop: "15px",
+                                      }}
+                                      onClick={() =>
+                                        deleteCartItem(each.subModelDetails._id)
+                                      }
+                                    >
+                                      Cancel
+                                    </button>
+
+                                    {/* <IconButton
                                       onClick={() =>
                                         deleteCartItem(each.subModelDetails._id)
                                       }
@@ -188,7 +221,7 @@ const CartDetails = ({ id }) => {
                                       <RemoveShoppingCartIcon
                                         sx={{ color: "red" }}
                                       />
-                                    </IconButton>
+                                    </IconButton> */}
                                   </div>
                                 </td>
                               </tr>
@@ -197,7 +230,7 @@ const CartDetails = ({ id }) => {
                       </table>
                     </div>
                   </div>
-                  <div className="col-lg-4">
+                  {/* <div className="col-lg-4">
                     <div className="total-section">
                       <table className="total-table">
                         <thead className="total-table-head">
@@ -237,7 +270,7 @@ const CartDetails = ({ id }) => {
                         </button>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
