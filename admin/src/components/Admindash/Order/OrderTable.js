@@ -480,7 +480,7 @@ export default function OrderTable({ product, setProduct }) {
                               <>
                                 <div>
                                   <hr />
-                                  <p>{eachPurchased.paidAmount}</p>
+                                  <p>{eachPurchased.paidAmount ? eachPurchased.paidAmount : 'Offline'}</p>
                                 </div>
                               </>
                             );

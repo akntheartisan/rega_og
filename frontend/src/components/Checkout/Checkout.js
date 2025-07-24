@@ -12,6 +12,7 @@ import minus from "./minus-button.png";
 import add from "./add.png";
 import { useMediaQuery } from "@mui/material";
 import BottomNav from "../BottomNav/BottomNav";
+import Loader from "../ProductView/Loader";
 
 const intial = {
   name: "",
@@ -1036,7 +1037,7 @@ const Checkout = () => {
                                     className="form-check-label"
                                     htmlFor="flexRadioDefault1"
                                   >
-                                    Pay on Delivery
+                                    Pay At Showroom
                                   </label>
                                 </div>
                               </div>
@@ -1166,6 +1167,8 @@ const Checkout = () => {
           <Footer />
         </div>
       )}
+
+      {loader && <Loader/>}
     </>
   );
 };

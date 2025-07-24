@@ -236,10 +236,11 @@ const Orders = () => {
                         padding: "20px",
                       }}
                     >
+                      <p style={{textAlign:'left',opacity:0.7}}>Order Id&nbsp;&nbsp; #{eachOrder.cartData[0].cartId}</p>
                       <div className="row">
                         <div className="col-md-3 col-6 d-flex justify-content-center">
                           <img
-                            src={order.image}
+                            src={order.image[0] ? order.image[0] : order.image}
                             alt="Order"
                             className="order_image"
                           />

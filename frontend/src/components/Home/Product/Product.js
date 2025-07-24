@@ -137,11 +137,11 @@ const Product = () => {
                         </span>
                         <br />
                         <span style={{ color: "#616161" }}>
-                          {each?.SubModel[0]?.range}
+                          {each?.SubModel[0]?.range} km-charge
                         </span>
                         &nbsp;&nbsp;&nbsp;
                         <span style={{ color: "#616161" }}>
-                          {each?.SubModel[0]?.payload}
+                          {each?.SubModel[0]?.payload} kg
                         </span>
                         <hr />
                         <div

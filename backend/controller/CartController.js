@@ -17,11 +17,18 @@ exports.addCart = async (req, res, next) => {
 
   const deliverystatus = "Not Delivered";
 
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
     if (paymentMode === "offline") {
-      console.log("offline");
+      const findUser = await usermodel.findById(
+        userId,
+        { name: 1, username: 1 },
+        { session }
+      );
 
-      const orderPlace = await cartmodel.updateOne(
+      await usermodel.findOneAndUpdate(
         { _id: userId },
         {
           $push: {
@@ -35,29 +42,9 @@ exports.addCart = async (req, res, next) => {
             },
           },
         },
-        { upsert: true }
+        { new: true,session }
       );
 
-      const findUser = await usermodel.findById(userId);
-
-      if (findUser) {
-        await usermodel.findOneAndUpdate(
-          { _id: userId },
-          {
-            $push: {
-              Purchased: {
-                total,
-                cartData: cartData.map((item) => ({
-                  ...item,
-                  deliverystatus: deliverystatus,
-                  cartId: new mongoose.Types.ObjectId(),
-                })),
-              },
-            },
-          },
-          { new: true }
-        );
-      }
       let bookingDetails = {
         cartData,
         name: findUser.name,
@@ -65,9 +52,9 @@ exports.addCart = async (req, res, next) => {
         total,
       };
 
-      console.log(bookingDetails);
-
       await bookingMail(bookingDetails);
+
+      await session.commitTransaction();
 
       res.json({
         success: "offline order success",
@@ -129,7 +116,11 @@ exports.addCart = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
+    await session.abortTransaction();
     return res.status(500).json({ error: "Internal Server Error" });
+  } finally {
+    session.endSession();
+    
   }
 };
 
@@ -200,6 +191,7 @@ exports.addCartOnline = async (req, res, next) => {
 
     const findUser = await usermodel.findById(userId);
     console.log(findUser);
+
     if (findUser) {
       const addPurchasedItem = await usermodel.updateOne(
         { _id: userId },

@@ -335,7 +335,7 @@ const ProductView = () => {
                 </span>
                 &nbsp;&nbsp;
                 <span style={{ fontSize: "15px", fontWeight: "500" }}>
-                  {!selected ? product.SubModel[0].range : selected.range}
+                  {!selected ? product.SubModel[0].range : selected.range} km-charge
                 </span>
               </div>
 
