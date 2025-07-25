@@ -91,6 +91,7 @@
   display: block;
   /* margin-bottom: 20px; */
   object-fit: cover;
+  cursor: pointer;
 }
 
 .color-button {

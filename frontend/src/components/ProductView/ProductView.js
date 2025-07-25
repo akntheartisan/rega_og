@@ -47,11 +47,12 @@ const ProductView = () => {
   const [loader, setLoader] = useState(false);
   const [goToCart, setGoToCart] = useState(false);
   const [product, setProduct] = useState();
-  const [slideShow, setSlideShow] = useState();
+  const [slideShow, setSlideShow] = useState(false);
   const [pincodeError, setPincodeError] = useState(false);
   const [pincode, setPincode] = useState();
   const [availableStatus, setAvailableStatus] = useState(false);
   const [color, setColor] = useState();
+  const [preview, setPreview] = useState(false);
 
   useEffect(() => {
     fetchSelected();
@@ -223,7 +224,13 @@ const ProductView = () => {
     console.log("hi");
   };
 
-  //console.log(color);
+  const imgViewer = (img) => {
+    setPreview(img);
+  };
+
+  const closePreview = ()=>{
+    setPreview(false)
+  }
 
   return (
     <>
@@ -231,12 +238,47 @@ const ProductView = () => {
 
       <CheckoutHeader />
 
+      {preview && (
+        <div
+          onClick={closePreview}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0,0,0,0.8)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+          }}
+        >
+          <img
+            src={preview}
+            alt="preview"
+            style={{
+              maxWidth: "90%",
+              maxHeight: "90%",
+              border: "4px solid white",
+              borderRadius: "10px",
+            }}
+          />
+        </div>
+      )}
+
       {product && (
         <div className="container-fluid" key={product._id}>
           <div className="row">
             <div className="col-md-4">
               <div className="product_view_image">
-                <img src={slideShow} alt="img" />
+                <img
+                  src={slideShow ? slideShow : product.image[0].url}
+                  alt="img"
+                  onClick={() =>
+                    imgViewer(slideShow ? slideShow : product.image[0].url)
+                  }
+                />
               </div>
               <div className="product_slideshow">
                 {product.image &&
@@ -335,7 +377,8 @@ const ProductView = () => {
                 </span>
                 &nbsp;&nbsp;
                 <span style={{ fontSize: "15px", fontWeight: "500" }}>
-                  {!selected ? product.SubModel[0].range : selected.range} km-charge
+                  {!selected ? product.SubModel[0].range : selected.range}{" "}
+                  km-charge
                 </span>
               </div>
 

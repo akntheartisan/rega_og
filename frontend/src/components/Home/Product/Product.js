@@ -52,7 +52,7 @@ const Product = () => {
             product.map((each) => {
               return (
                 <div
-                  className="col-lg-4 col-md-6 productshow mt-3"
+                  className="col-lg-4 col-md-6 productshow mt-5"
                   style={{
                     display: "flex",
                     justifyContent: "center",
@@ -61,21 +61,13 @@ const Product = () => {
                   key={each._id}
                   onClick={() => navigate(`/productview/${each._id}`)}
                 >
-                  <Box
-                    sx={{
-                      "& > :not(style)": {
-                        m: 1,
-                        width: 300,
-                        height: 425,
-                      },
-                    }}
-                  >
+                  <div style={{width:'100%'}}>
                     <Paper
                       elevation={5}
                       sx={{
                         display: "flex",
                         flexDirection: "column",
-                        padding: "0 0px 30px 0px",
+                        padding: "0 0px 20px 0px",
                         // border:"1px outset orange"
                       }}
                     >
@@ -84,7 +76,7 @@ const Product = () => {
                           src={each.image[0].url}
                           style={{
                             width: "100%",
-                            height: "250px",
+                            height: "270px",
                             objectFit: "cover",
                             marginTop: "-25px",
                           }}
@@ -195,7 +187,7 @@ const Product = () => {
                         </div> */}
                       </div>
                     </Paper>
-                  </Box>
+                  </div>
                 </div>
               );
             })}

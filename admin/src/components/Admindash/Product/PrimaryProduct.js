@@ -31,7 +31,7 @@ const PrimaryProduct = () => {
   const [editingProduct, setEditingProduct] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const modelRegexAlphabetic = /^[a-zA-Z]+$/;
+  const modelRegexAlphabetic = /^[a-zA-Z0-9 ]+$/;
   const modelRegexLength = /^.{3,30}$/;
   const maxFileSize = 1 * 1024 * 1024;
 

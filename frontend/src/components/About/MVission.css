@@ -5,17 +5,15 @@
 }
 
 .section-mission {
-  background-image: url('../../assets/images/scooty-bg.jpg');
+  background-image: url("../../assets/images/scooty-bg.jpg");
   background-size: cover; /* Ensures the image covers the entire section */
   background-repeat: no-repeat; /* Prevents image from repeating */
   background-attachment: fixed; /* Keeps the background image fixed */
   background-position: center; /* Centers the background image */
-  padding: 20px 0; 
+  padding: 20px 0;
   margin: 0px !important;
- 
 }
-.vm-head
-{
+.vm-head {
   font-size: 30px;
 }
 /* .fac-heading h2 {
@@ -36,14 +34,15 @@
 .fac-content {
   color: white;
   display: flex;
-  flex-direction: column;
-  align-items: center; 
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
-
 
 .fac-item {
   width: 45%;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .fac-img img {
@@ -77,7 +76,18 @@
 
 /* Hover effects */
 .fac:hover .fac-img {
-  transform: translateX(80%);
+  transform: translateX(90%);
+}
+
+.fac-img-right {
+  position: relative;
+  padding: 20px 0;
+  transition: all 800ms;
+  left: 20px;
+}
+
+.fac-right:hover .fac-img-right {
+  transform: translateX(-100%);
 }
 
 .fac:hover .fac-text {
@@ -86,7 +96,7 @@
 }
 
 .fac-text h3 {
-  color: #F28123;
+  color: #f28123;
 }
 
 .fac-text p {
@@ -106,25 +116,23 @@
     width: 100%; /* Make text width 100% */
     padding: 20px; /* Adjust padding as needed */
   }
-  .vm-head
-{
-  font-size: 28px;
-}
+  .vm-head {
+    font-size: 28px;
+  }
 }
 
 @media (max-width: 992px) {
   .fac-item {
     width: 80%; /* Adjust width for tablets and smaller screens */
   }
-  .vm-head
-{
-  font-size: 25px;
-}
+  .vm-head {
+    font-size: 25px;
+  }
 }
 
 @media (max-width: 768px) {
   .fac-item {
-    width: 100%; 
+    width: 100%;
   }
 
   .facilities {
@@ -138,10 +146,9 @@
   .fac-text {
     width: 90%; /* Adjust text width for smaller screens */
   }
-  .vm-head
-{
-  font-size: 22px;
-}
+  .vm-head {
+    font-size: 22px;
+  }
 }
 @media (max-width: 489px) {
   .fac-item {
@@ -157,37 +164,33 @@
   .fac-heading h2 {
     font-size: 1.2rem; /* Adjust heading size for very small screens */
   }
-  .vm-head
-{
-  font-size: 20px;
-}
+  .vm-head {
+    font-size: 20px;
+  }
 }
 
 @media (max-width: 320px) {
   .fac-item {
     width: 100%; /* Full width on extremely small screens */
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
   }
 
   .fac-text {
     width: 100%;
     padding: 2px;
-    font-size: 0.6rem; 
+    font-size: 0.6rem;
   }
 
   .fac-heading h2 {
-    font-size: 1rem; 
+    font-size: 1rem;
   }
-  .vm-head
-  {
+  .vm-head {
     font-size: 18px;
   }
-  .fac-text h3 
-  {
+  .fac-text h3 {
     font-size: 18px;
   }
-  .fac-text p
-  {
+  .fac-text p {
     font-size: 12px;
   }
 }

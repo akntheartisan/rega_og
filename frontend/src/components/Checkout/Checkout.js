@@ -303,7 +303,7 @@ const Checkout = () => {
       // },
       handler: async (response) => {
         console.log("Test Transaction:");
-        console.log(response);
+        console.log("razorpay response",response);
 
         response.razorpay_order_id = data.id;
         response.razorpay_signature = response.razorpay_signature;
