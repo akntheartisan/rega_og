@@ -59,6 +59,13 @@ const Navbar = () => {
 
         <NavLink
           className={({ isActive }) => (isActive ? "listitem activetab" : "")}
+          to="/admin/addComponent"
+        >
+          Components
+        </NavLink>
+
+        <NavLink
+          className={({ isActive }) => (isActive ? "listitem activetab" : "")}
           to="/admin/refund"
         >
           Refund Details
