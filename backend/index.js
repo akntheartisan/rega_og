@@ -17,6 +17,7 @@ const cookieParser = require("cookie-parser");
 // const pdfdownroute= require("./route/pdfRoute");
 // const ratingRoute = require("./route/ratingRoute")
 const refundNotifyRoute = require("./route/refundNotifyRoute");
+const componentRoute = require("./route/componentRoute")
 
 app.use(express.json());
 app.use(cookieParser());
@@ -63,6 +64,7 @@ app.use("/contact", contactroute);
 app.use("/enquiryUser", enquiryRoutes);
 app.use("/rating", ratingRoute);
 app.use("/refund-webhoooks", refundNotifyRoute);
+app.use("/component",componentRoute)
 
 const mongo_uri =
   "mongodb+srv://aravinthkumaran410:iRPBg1ArJBqv3ayN@cluster0.2eiliwy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
