@@ -10,5 +10,8 @@ route.post(
   cont.componentSave
 );
 
+route.get("/getComponent",cont.componentRead)
+route.post("/deleteComponent",cont.componentDelete)
+
 
 module.exports = route

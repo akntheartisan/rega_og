@@ -62,8 +62,8 @@ exports.componentSave = async (req, res) => {
   const { image, name, price, description } = req.body;
   console.log(req.result);
 
-  const { asset_id, secure_url } = req.result;
-  const imageObj = { asset_id, secure_url };
+  const { secure_url, public_id } = req.result;
+  const imageObj = { secure_url, public_id };
   try {
     const componentSaveResponse = await componentModel.create({
       image: imageObj,
@@ -71,6 +71,60 @@ exports.componentSave = async (req, res) => {
       price,
       description,
     });
+
+    if (componentSaveResponse) {
+      res.status(200).json({
+        message: "success",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.componentRead = async (req, res) => {
+  try {
+    const readResponse = await componentModel.find();
+
+    console.log(readResponse);
+
+    if (readResponse) {
+      res.status(200).json({
+        readResponse,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.componentDelete = async (req, res) => {
+  const { publicId, imageId } = req.body;
+  console.log(req.body);
+  
+
+  try {
+    const cloudDelete = await cloudinary.uploader.destroy(publicId, (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("deleteResult", result);
+
+        return result;
+      }
+    });
+
+    console.log(cloudDelete);
+
+    if(cloudDelete.result === 'ok'){
+      const deleteComponent = await componentModel.findByIdAndDelete(imageId)
+      console.log(deleteComponent);
+
+      if(deleteComponent){
+        res.status(200).json({message:'success'})
+      }
+      
+    }
   } catch (error) {
     console.log(error);
   }

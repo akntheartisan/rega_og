@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { client } from "../../../Client/Clientaxios";
+import CircularProgress from "@mui/material/CircularProgress";
 import {
   Box,
   Button,
@@ -10,6 +11,7 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import toast from "react-hot-toast";
+import ExtraComponentManage from "./ExtraComponentManage";
 // import { toast } from "react-hot-toast";
 // import InputLabel from "@mui/material/InputLabel";
 // import MenuItem from "@mui/material/MenuItem";
@@ -25,6 +27,13 @@ const initialState = {
 
 const ExtraComponents = () => {
   const [extraData, setExtraData] = useState(initialState);
+  const [loading, setLoading] = useState(false);
+  const [component, setComponent] = useState([]);
+
+  const imageRef = useRef()
+
+  console.log(extraData);
+  
 
   const handleComponent = (e) => {
     const { name, value, files } = e.target;
@@ -49,6 +58,7 @@ const ExtraComponents = () => {
   };
 
   const submit = async () => {
+    setLoading(true);
     const { image, name, price, description } = extraData;
 
     if (!image || !name || !price || !description) {
@@ -68,13 +78,54 @@ const ExtraComponents = () => {
         formData
       );
       console.log(componentCreate);
+      if (componentCreate.status === 200) {
+        imageRef.current.value = ""
+        setExtraData(initialState);
+        setLoading(false);
+        fetchComponent();
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
+  const fetchComponent = async () => {
+    try {
+      const response = await client.get("/component/getComponent");
+      console.log(response.data.readResponse);
+
+      if (response.status === 200) {
+        setComponent(response.data.readResponse);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchComponent();
+  }, []);
+
   return (
     <>
+      {loading && (
+        <Box
+          sx={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            zIndex: 9999, // Ensures spinner is on top of other elements
+          }}
+        >
+          <CircularProgress size={100} color="primary" />
+        </Box>
+      )}
       <Box
         component="form"
         sx={{
@@ -102,9 +153,10 @@ const ExtraComponents = () => {
               <input
                 type="file"
                 class="form-control"
-                // value={extraData.image?.name}
+                value={extraData.image?.File?.name}
                 name="image"
                 onChange={handleComponent}
+                ref={imageRef}
               />
             </div>
           </div>
@@ -117,7 +169,7 @@ const ExtraComponents = () => {
                 class="form-control"
                 placeholder="Enter the name"
                 name="name"
-                // value={extraData.name}
+                value={extraData.name}
                 onChange={handleComponent}
               />
             </div>
@@ -130,7 +182,7 @@ const ExtraComponents = () => {
                 type="number"
                 class="form-control"
                 placeholder="Enter the price"
-                // value={extraData.price}
+                value={extraData.price}
                 name="price"
                 onChange={handleComponent}
               />
@@ -143,7 +195,7 @@ const ExtraComponents = () => {
               <textarea
                 class="form-control"
                 name="description"
-                // value={extraData.description}
+                value={extraData.description}
                 onChange={handleComponent}
               />
             </div>
@@ -158,6 +210,11 @@ const ExtraComponents = () => {
           <button className="btn btn-warning">Cancel</button>
         </div>
       </Box>
+
+      <ExtraComponentManage
+        component={component}
+        fetchComponent={fetchComponent}
+      />
     </>
   );
 };
