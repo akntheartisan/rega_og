@@ -17,6 +17,7 @@ import MVission from "../About/MVission";
 import AboutCircle from "../About/AboutCircle";
 import { useMediaQuery } from "@mui/material";
 import BottomNav from "../BottomNav/BottomNav";
+import ExtraComponent from "./ExtraComponents/ExtraComponent";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -71,6 +72,7 @@ const Home = () => {
       <AboutSection />
       <Product />
       <MVission />
+      <ExtraComponent/>
       <AboutCircle />
       <Footer />
 

@@ -54,7 +54,7 @@ function App() {
         />
         <Routes>
           <Route
-            path="/admin/*"
+            path="/*"
             element={
               admin ? (
                 <AdminDash />
@@ -69,7 +69,7 @@ function App() {
           />
           <Route path="/admin/resetPassword/:id" element={<AdminResetPass />} />
           <Route
-            path="/admin/"
+            path="/"
             element={<LoginForm setAdmin={setAdmin} admin={admin} />}
           />
         </Routes>

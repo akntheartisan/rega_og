@@ -31,63 +31,63 @@ const Navbar = () => {
       <div className="list mt-5">
         <NavLink
           className={({ isActive }) => (isActive ? "listitem activetab" : "")}
-          to="/admin/dashboard"
+          to="/dashboard"
         >
           DashBoard
         </NavLink>
 
         <NavLink
           className={({ isActive }) => (isActive ? "listitem activetab" : "")}
-          to="/admin/primary"
+          to="/primary"
         >
           Products
         </NavLink>
 
         <NavLink
           className={({ isActive }) => (isActive ? "listitem activetab" : "")}
-          to="/admin/project"
+          to="/project"
         >
           SubProducts
         </NavLink>
 
         <NavLink
           className={({ isActive }) => (isActive ? "listitem activetab" : "")}
-          to="/admin/order"
+          to="/order"
         >
           Orders
         </NavLink>
 
         <NavLink
           className={({ isActive }) => (isActive ? "listitem activetab" : "")}
-          to="/admin/addComponent"
+          to="/addComponent"
         >
           Components
         </NavLink>
 
         <NavLink
           className={({ isActive }) => (isActive ? "listitem activetab" : "")}
-          to="/admin/refund"
+          to="/refund"
         >
           Refund Details
         </NavLink>
 
         <NavLink
           className={({ isActive }) => (isActive ? "listitem activetab" : "")}
-          to="/admin/contact"
+          to="/contact"
         >
           Contact
         </NavLink>
 
         <NavLink
           className={({ isActive }) => (isActive ? "listitem activetab" : "")}
-          to="/admin/users"
+          to="/users"
         >
           Users
         </NavLink>
 
         <NavLink
           className={({ isActive }) => (isActive ? "listitem activetab" : "")}
-          to="/admin/enquiry"
+          to="/enquiry"
         >
           Enquiry
         </NavLink>
