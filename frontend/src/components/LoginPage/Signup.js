@@ -420,7 +420,7 @@ const Signup = () => {
               }
               sx={{ color: "white" }}
             />
-            <NavLink>Terms & Conditions</NavLink>
+            <NavLink to={'/termsConditions'}>Terms & Conditions</NavLink>
           </div>
           {/* <button
             type="button"

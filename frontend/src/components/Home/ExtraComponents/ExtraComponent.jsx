@@ -2,9 +2,19 @@ import React, { useEffect, useState } from "react";
 import "./extraComponent.css";
 import { client } from "../../Client/Client";
 import Paper from "@mui/material/Paper";
+import ComponentModel from "./ComponentModel";
 
 const ExtraComponent = () => {
   const [component, setComponent] = useState([]);
+  const [extraOpen, setExtraOpen] = useState(false);
+  const [selectExtra,setSelectExtra] = useState()
+
+  const handleClickOpen = (details) => {
+    setExtraOpen(true);
+    setSelectExtra(details)
+  };
+
+  
   const fetchComponent = async () => {
     try {
       const response = await client.get("/component/getComponent");
@@ -19,7 +29,7 @@ const ExtraComponent = () => {
   };
 
   useEffect(() => {
-    fetchComponent();
+    fetchComponent(); 
   }, []);
   return (
     <>
@@ -27,7 +37,7 @@ const ExtraComponent = () => {
         <div className="row">
           <div className="section-title col-md-12">
             <h3 style={{ textAlign: "center" }}>
-              <span className="orange-text">Our</span> E‑Bike Components
+              <span className="orange-text">Our</span> E‑Bike Accessories
             </h3>
             <p style={{ textAlign: "center", fontWeight: "600" }}>
               Electric scooters offer a sleek, eco-friendly transportation
@@ -37,7 +47,7 @@ const ExtraComponent = () => {
           {component &&
             component.map((each) => {
               return (
-               <div
+                <div
                   className="col-lg-4 col-md-6 productshow mt-5"
                   style={{
                     display: "flex",
@@ -47,7 +57,7 @@ const ExtraComponent = () => {
                   key={each._id}
                   // onClick={() => navigate(`/productview/${each._id}`)}
                 >
-                  <div style={{width:'100%'}}>
+                  <div style={{ width: "100%" }}>
                     <Paper
                       elevation={5}
                       sx={{
@@ -86,7 +96,6 @@ const ExtraComponent = () => {
                           >
                             {each.name}
                           </p>
-                    
                         </div>
                         <p
                           style={{
@@ -116,25 +125,19 @@ const ExtraComponent = () => {
                             ₹ {each?.price}
                           </span>
 
-                           <button
-                            // onClick={() =>
-                            //   navigate(`/productview`, { state: each })
-                            // }
+                          <button
+                            onClick={()=>handleClickOpen(each)}
                             style={{
                               backgroundColor: "#f28123",
                               borderColor: "#f28123",
                               borderRadius: "8px",
                               color: "white",
-                              padding: "10px",
+                              padding: "5px 25px",
                               fontSize: "15px",
                             }}
                           >
-                           Show More
+                            Show More
                           </button>
-
-                        </div>
-                        <div style={{ display: "flex" }}>
-                         
                         </div>
                       </div>
                     </Paper>
@@ -144,6 +147,7 @@ const ExtraComponent = () => {
             })}
         </div>
       </div>
+      <ComponentModel open={extraOpen} setExtraOpen={setExtraOpen} handleClickOpen={handleClickOpen} selectExtra={selectExtra}/>
     </>
   );
 };

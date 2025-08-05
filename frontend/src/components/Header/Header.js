@@ -94,6 +94,18 @@ const Header = () => {
                       <li>
                         <NavLink
                           style={{ fontSize: "16px" }}
+                          to="/accessories"
+                          className={({ isActive }) =>
+                            isActive ? "active" : undefined
+                          }
+                        >
+                          Accessories
+                        </NavLink>
+                      </li>
+
+                      <li>
+                        <NavLink
+                          style={{ fontSize: "16px" }}
                           to="/contact"
                           className={({ isActive }) =>
                             isActive ? "active" : undefined
@@ -126,7 +138,11 @@ const Header = () => {
                 </div>
               ) : (
                 <div
-                  style={{ display: "flex", justifyContent: "space-between", alignItems:'center' }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
                 >
                   <div style={{ maxWidth: "150px" }}>
                     <NavLink to="/">

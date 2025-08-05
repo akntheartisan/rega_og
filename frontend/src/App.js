@@ -18,6 +18,8 @@ import Orders from "./components/Orders/Orders.js";
 import About from "./components/About/About.js";
 import ProductPage from "./components/ProductPage/ProductPage.js";
 import Error from "./components/404/Error.jsx";
+import Terms from "./components/tems/Terms.jsx";
+import Accessories from "./components/accessories/Accessories.jsx";
 
 export const UserContext = createContext();
 function App() {
@@ -71,6 +73,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/productview/:id" element={<ProductView />} />
           <Route path="/product" element={<ProductPage />} />
+          <Route path="/accessories" element={<Accessories/>}/>
           <Route path="/register" element={<LoginPage />} />
           <Route path="/cart" element={userData ? <Cart /> : <Home />} />
           <Route path="/orders" element={userData ? <Orders /> : <Home />} />
@@ -85,6 +88,7 @@ function App() {
           <Route path="/forgetPasswordPage" element={<ForgotPassword />} />
           <Route path="/users/resetPassword/:id" element={<ResetPassword />} />
           <Route path="*" element={<Error />} />
+          <Route path="/termsConditions" element={<Terms />} />
         </Routes>
       </UserContext.Provider>
     </>

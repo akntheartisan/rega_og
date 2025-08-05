@@ -123,9 +123,7 @@ const ExtraComponentManage = ({component,fetchComponent}) => {
                     <TableCell align="center">{each.price}</TableCell>
                     <TableCell align="center">{each.description}</TableCell>
                     <TableCell align="center">
-                      <IconButton aria-label="edit">
-                        <EditIcon color="primary" />
-                      </IconButton>
+                     
                       <IconButton
                         aria-label="delete"
                         onClick={() =>

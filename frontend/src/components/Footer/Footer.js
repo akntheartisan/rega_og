@@ -1,31 +1,30 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./footer.css";
 import { client } from "../Client/Client";
-import logo from "./logo.png"
+import logo from "./logo.png";
 
 const Footer = () => {
+  const [location, setLocation] = useState("");
+  const [timing, setTiming] = useState("");
+  const [contact, setContact] = useState({ phone: "", email: "" });
 
-    const [location, setLocation] = useState('');
-    const [timing, setTiming] = useState('');
-    const [contact, setContact] = useState({ phone: '', email: '' });
-  
-    useEffect(() => {
-      const fetchContactDetails = async () => {
-        try {
-          const response = await client.get('/contact/contactdetails');
-          const data = response.data;
-          setLocation(data.shopaddress);
-          setTiming(data.shophours);
-          setContact({ phone: data.shopmobile, email: data.shopemail });
-        } catch (error) {
-          console.error('Error fetching contact details:', error);
-        }
-      };
-  
-      fetchContactDetails();
-    }, []);
-  
+  useEffect(() => {
+    const fetchContactDetails = async () => {
+      try {
+        const response = await client.get("/contact/contactdetails");
+        const data = response.data;
+        setLocation(data.shopaddress);
+        setTiming(data.shophours);
+        setContact({ phone: data.shopmobile, email: data.shopemail });
+      } catch (error) {
+        console.error("Error fetching contact details:", error);
+      }
+    };
+
+    fetchContactDetails();
+  }, []);
+
   return (
     <>
       <div>
@@ -34,7 +33,14 @@ const Footer = () => {
             <div className="row">
               <div className="col-md-4 futer_detail">
                 <div className="footer-box about-widget">
-                  <img src={logo} alt="logo" style={{width:"clamp(150px,4.5vw,200px)",marginBottom:'3px'}}/>
+                  <img
+                    src={logo}
+                    alt="logo"
+                    style={{
+                      width: "clamp(150px,4.5vw,200px)",
+                      marginBottom: "3px",
+                    }}
+                  />
                   <p>
                     Rega Scooter is redefining urban mobility with our
                     innovative range of eco-friendly electric scooters. Our
@@ -86,6 +92,18 @@ const Footer = () => {
                       </NavLink>
                     </li>
 
+                       <li>
+                      <NavLink
+                        style={{ fontSize: "16px" }}
+                        to="/accessories"
+                        className={({ isActive }) =>
+                          isActive ? "active" : undefined
+                        }
+                      >
+                        Accessories
+                      </NavLink>
+                    </li>
+
                     <li>
                       <NavLink
                         style={{ fontSize: "16px" }}
@@ -110,7 +128,6 @@ const Footer = () => {
                     {/* {contact.phone.split(",").map((each,index)=>{
                       return <li key={index}>{each}</li>
                     })} */}
-                   
                   </ul>
                 </div>
               </div>
@@ -120,7 +137,7 @@ const Footer = () => {
         <div className="copyright">
           <div className="container">
             <div className="row">
-              <div className="col-lg-6 col-md-12">
+              <div className="col-lg-4 col-md-12 d-flex justify-content-center">
                 <p>
                   Designed By -{" "}
                   <a
@@ -133,7 +150,7 @@ const Footer = () => {
                   <br />
                 </p>
               </div>
-              <div className="col-lg-6 text-right col-md-12">
+              <div className="col-lg-4 col-md-12 d-flex justify-content-center">
                 <div className="social-icons">
                   <ul>
                     <li>
@@ -163,6 +180,12 @@ const Footer = () => {
                     </li>
                   </ul>
                 </div>
+              </div>
+              <div className="col-lg-4 col-md-12 d-flex justify-content-center">
+                <p>
+                  <NavLink to={"/termsConditions"}>Terms & Conditions</NavLink>
+                  <br />
+                </p>
               </div>
             </div>
           </div>

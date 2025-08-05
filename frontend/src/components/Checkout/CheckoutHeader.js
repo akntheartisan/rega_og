@@ -71,6 +71,15 @@ const CheckoutHeader = () => {
                 Product
               </NavLink>
             </li>
+            <li>
+              <NavLink
+                style={{ fontSize: "16px" }}
+                to="/accessories"
+                className={({ isActive }) => (isActive ? "active" : undefined)}
+              >
+                Accessories
+              </NavLink>
+            </li>
 
             <li>
               <NavLink
