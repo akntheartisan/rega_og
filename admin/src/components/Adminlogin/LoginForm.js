@@ -18,6 +18,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { toast } from "react-hot-toast";
 
 
+
 const CustomTextField = styled(TextField)({
   "& .MuiOutlinedInput-root": {
     "& fieldset": {
@@ -83,7 +84,7 @@ const LoginForm = ({ setAdmin, admin }) => {
       if (adminDetails) {
         setAdmin(adminDetails);
         console.log("admin:" + admin);
-        navigate("/admin/dashboard");
+        navigate("/dashboard");
       }
     } catch (error) {
       console.log(error);
@@ -108,6 +109,7 @@ const LoginForm = ({ setAdmin, admin }) => {
           }}
         >
           <Stack direction={"column"} spacing={4}>
+            <img src="" />
             <Typography
               sx={{ textAlign: "center", color: "white", fontSize: "20px" }}
             >
@@ -166,7 +168,7 @@ const LoginForm = ({ setAdmin, admin }) => {
             <Button size="small" variant="contained" onClick={submit}>
               LogIn
             </Button>
-            <button
+            {/* <button
             onClick={forgotAdminPass}
             className="forgotAdminpass"
             style={{
@@ -179,7 +181,7 @@ const LoginForm = ({ setAdmin, admin }) => {
             }}
           >
             Forget Password?
-          </button>
+          </button> */}
           </Stack>
    
         </Box>

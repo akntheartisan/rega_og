@@ -117,6 +117,8 @@ exports.productadd = async (req, res, next) => {
     charging,
     frame,
     price,
+    availability,
+    color
   } = req.body;
 
   // console.log(charging);
@@ -139,6 +141,8 @@ exports.productadd = async (req, res, next) => {
               chargingtime: charging,
               frame,
               price,
+              availability,
+              color
             },
           },
         }

@@ -26,7 +26,7 @@ exports.pdfDownloads = async (req, res, next) => {
 
     // Use pdfService to generate the PDF
     pdfService.generateInvoice(
-       user,cartData,
+       user,cartData,userPurchased.payment_id,
       (chunk) => res.write(chunk),  // Write PDF chunk to response stream
       () => {
         res.end();  // End the stream once PDF generation is complete

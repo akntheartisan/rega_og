@@ -240,7 +240,7 @@ const Orders = () => {
                       <div className="row">
                         <div className="col-md-3 col-6 d-flex justify-content-center">
                           <img
-                            src={order.image[0] ? order.image[0] : order.image}
+                            src={order.image}
                             alt="Order"
                             className="order_image"
                           />

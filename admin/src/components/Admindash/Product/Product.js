@@ -28,6 +28,8 @@ const initial = {
   charging: "",
   frame: "",
   price: "",
+  availability: "",
+  color: "",
 };
 
 const Product = () => {
@@ -36,6 +38,7 @@ const Product = () => {
   const [product, setProduct] = useState(initial);
   const [errors, setErrors] = useState({});
   const [primary, setPrimary] = useState("");
+  const [colorError, setColorError] = useState(false);
 
   // const handleFileChange = (e) => {
   //   const file = e.target.files[0];
@@ -44,8 +47,13 @@ const Product = () => {
   //   }
   // };
 
+  console.log(product);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name == "availability") {
+      console.log(value);
+    }
     setProduct((prev) => ({
       ...prev,
       [name]: value,
@@ -111,6 +119,10 @@ const Product = () => {
       }
     });
 
+    if (product.color === "") {
+      setColorError(true);
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -118,6 +130,15 @@ const Product = () => {
   const submit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
+
+    const availability = product.availability.split(",").sort();
+    const colorAvailability = product.color.split(",");
+
+    const uniqueAvailability = Array.from(new Set(availability));
+    const uniqueColorAvail = Array.from(new Set(colorAvailability));
+
+    product.availability = uniqueAvailability;
+    product.color = uniqueColorAvail;
 
     const formData = new FormData();
 
@@ -303,6 +324,43 @@ const Product = () => {
               error={!!errors.frame}
             />
           </Stack>
+
+          <div className="row">
+            <div className="col-md-12">
+              <div className="mb-3">
+                <label htmlFor="availability" className="form-label">
+                  Pincode Availability
+                </label>
+                <textarea
+                  type="text"
+                  className="form-control"
+                  id="charging"
+                  name="availability"
+                  value={product.availability}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="col-md-12">
+              <div className="mb-3">
+                <label htmlFor="availability" className="form-label">
+                  Color Availability
+                </label>
+                <textarea
+                  type="text"
+                  className="form-control"
+                  id="charging"
+                  name="color"
+                  value={product.color}
+                  onChange={handleChange}
+                />
+                {colorError && (
+                  <p style={{ color: "red" }}>Please fill the colors</p>
+                )}
+              </div>
+            </div>
+          </div>
+
           {/* <Stack direction={isMobile ? "column" : "row"} spacing={2}>
             <TextField
               fullWidth

@@ -1,7 +1,9 @@
 const PDFDocument = require("pdfkit");
 
-function generateInvoice(user,cartData,dataCallback, endCallback) {
+function generateInvoice(user,cartData,payment_id,dataCallback, endCallback) {
   const doc = new PDFDocument({ margin: 50 });
+
+  const PaymentId = payment_id ? payment_id : 'Offline Purchase'
 
   
   
@@ -32,9 +34,9 @@ console.log('pdfservice',invoice,mobile);
   .text(`${cartId}`,108,120) 
   .moveDown(1)
   .fontSize(12)  
-  .text(`Invoice No :`, 50, 140)
+  .text(`Payment Id :`, 50, 140)
   .fontSize(11)
-  .text(`${invoice}`,122,140)  
+  .text(`${PaymentId}`,122,140)  
 
   // Customer Information
   doc

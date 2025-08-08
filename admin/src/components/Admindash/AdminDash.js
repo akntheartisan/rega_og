@@ -25,13 +25,15 @@ const AdminDash = () => {
     setIsDrawerOpen(open);
   };
   const menuItems = [
-    { text: "Dashboard", path: "/admin/dashboard" },
-    { text: "Products", path: "/admin/primary" },
-    { text: "SubProducts", path: "/admin/project" },
-    { text: "Orders", path: "/admin/order" },
-    { text: "Contact", path: "/admin/contact" },
-    { text: "User", path: "/admin/users" },
-    { text: "Enquiry", path: "/admin/enquiry" },
+    { text: "Dashboard", path: "/dashboard" },
+    { text: "Products", path: "/primary" },
+    { text: "SubProducts", path: "/project" },
+    { text: "Orders", path: "/order" },
+    { text: "Components", path: "/addComponent" },
+    { text: "Refund Details", path: "/refund" },
+    { text: "Contact", path: "/contact" },
+    { text: "User", path: "/users" },
+    { text: "Enquiry", path: "/enquiry" },
   ];
   return (
     <>
